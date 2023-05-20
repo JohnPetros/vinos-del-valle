@@ -1,0 +1,31 @@
+{
+  "name": "johnpetros/adega",
+  "description": "Dashboard app for a wine house",
+  "type": "project",
+  "keywords": [
+    "Wine",
+    "Dashboard"
+  ],
+  "authors": [
+    {
+      "name": "João Pedro Carvalho dos Santos",
+      "email": "joaopcarvalho.cds@gmail.com",
+      "role": "Developer"
+    },
+    {
+      "name": "Kaue dos Santos Francisco",
+      "email": "kaue@email.com",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    }
+  },
+  "require": {
+    "ext-json": "*",
+    "php": "^7.3",
+    "ext-pdo": "^7.3"
+  }
+}
