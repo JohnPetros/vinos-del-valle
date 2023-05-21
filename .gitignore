@@ -1,4 +1,7 @@
 .env
-composer.phar
+
+omposer.phar
+
 /vendor/
-debug.php
+
+debug
