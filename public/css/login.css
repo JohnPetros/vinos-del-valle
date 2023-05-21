@@ -40,13 +40,14 @@ form h1 {
   border-color: var(--primary);
 }
 
-.input-wrapper:focus-within i {
-  color: var(--primary);
-}
-
 .input-wrapper i {
   color: var(--base-3);
   font-size: 2.4rem;
+}
+
+i.active,
+.input-wrapper:focus-within i {
+  color: var(--primary);
 }
 
 .input-wrapper input {

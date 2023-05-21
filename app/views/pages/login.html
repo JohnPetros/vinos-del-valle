@@ -12,13 +12,14 @@
     />
     <link rel="stylesheet" href="../../../public/css/global.css" />
     <link rel="stylesheet" href="../../../public/css/login.css" />
+    <script defer src="../../../public/js/form.js"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <title>Vinos Del Valle - Login</title>
   </head>
   <body>
     <main>
       <div class="app">
-        <form>
+        <form method="post" action="">
           <header>
             <img
               src="../../../public/assets/icons/logo.svg"
@@ -30,11 +31,21 @@
           <h1>Faça seu login</h1>
           <div class="input-wrapper">
             <i class="ph-fill ph-envelope"></i>
-            <input type="email" placeholder="E-mail" required />
+            <input
+              class="input"
+              type="email"
+              name="email"
+              placeholder="E-mail"
+            />
           </div>
           <div class="input-wrapper">
             <i class="ph-fill ph-lock"></i>
-            <input type="password" placeholder="Senha" required />
+            <input
+              class="input"
+              type="password"
+              name="password"
+              placeholder="Senha"
+            />
           </div>
           <button>Login</button>
           <p>
