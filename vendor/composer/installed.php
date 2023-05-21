@@ -1,19 +1,19 @@
 <?php return array(
     'root' => array(
-        'name' => 'johnpetros/adega',
+        'name' => 'adega/vinos-del-valle',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '3acec7fb7a3f266167d5bbcd14cc9f288552d7a2',
+        'reference' => 'ac34ed1fc5d04804e7287223d1eaeddcfb835990',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
-        'johnpetros/adega' => array(
+        'adega/vinos-del-valle' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '3acec7fb7a3f266167d5bbcd14cc9f288552d7a2',
+            'reference' => 'ac34ed1fc5d04804e7287223d1eaeddcfb835990',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
