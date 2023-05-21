@@ -1,0 +1,42 @@
+:root {
+  --primary: #8b112e;
+  --secondary: #feebeb;
+  --base-4: #2e2e2e;
+  --base-3: #c7c7c7;
+  --base-2: #f8f8f8;
+  --base-1: #fff;
+
+  font-size: 62.5%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+
+  font-family: "Inter", sans-serif;
+}
+
+html,
+body {
+  max-width: 100vw;
+  max-height: 100vh;
+
+  font-size: 1.6rem;
+}
+
+button {
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
+
+a {
+  text-decoration: none;
+}

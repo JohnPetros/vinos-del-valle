@@ -1,0 +1,91 @@
+main {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  height: 100vh;
+}
+
+main .app {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+form {
+  width: 40rem;
+}
+
+form header {
+  display: flex;
+  color: var(--base-4);
+}
+
+form h1 {
+  margin-top: 2.4rem;
+  margin-bottom: 2.4rem;
+  color: var(--base-4);
+}
+
+.input-wrapper {
+  margin-top: 2.4rem;
+  border: 1px solid var(--base-3);
+  padding: 0.8rem;
+  border-radius: 0.8rem;
+
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper:focus-within {
+  border-color: var(--primary);
+}
+
+.input-wrapper:focus-within i {
+  color: var(--primary);
+}
+
+.input-wrapper i {
+  color: var(--base-3);
+  font-size: 2.4rem;
+}
+
+.input-wrapper input {
+  border: none;
+  flex: 1;
+  outline: none;
+  margin-left: 0.8rem;
+}
+
+form button {
+  background-color: var(--primary);
+  color: var(--base-1);
+  padding: 1.2rem;
+  width: 100%;
+  border-radius: 0.8rem;
+  margin-top: 2.4rem;
+}
+
+form button:focus {
+  box-shadow: 0 0 2px var(--secondary);
+}
+
+form p {
+  text-align: center;
+  margin-top: 2.4rem;
+  font-size: 1.2rem;
+}
+
+form a {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.hero {
+  background-color: var(--secondary);
+}
+
+.hero p {
+  text-align: center;
+  margin-top: 2.4rem;
+  color: var(--primary);
+  font-weight: 500;
+}
