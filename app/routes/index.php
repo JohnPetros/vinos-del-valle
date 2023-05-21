@@ -1,5 +1,5 @@
 <?php
 
-use \App\core\Router;
+// ROTAS DE LOGIN
+include __DIR__ . '/login.php';
 
-// $router = new Router();

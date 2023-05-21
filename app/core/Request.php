@@ -50,6 +50,7 @@ class Request
     $this->postVars = $_POST ?? [];
     $this->headers = getallheaders();
     $this->httpMethod = $_SERVER['REQUEST_METHOD'] ?? '';
+    $this->setUri();
   }
 
   /**
@@ -60,8 +61,8 @@ class Request
     // URI COMPLETA (COM GETS)
     $this->uri = $_SERVER['REQUEST_URI'] ?? '';
 
-    $xUri = explode('?', $this->uri);
-    $this->uri = $xUri[0];
+    $uri = explode('?', $this->uri);
+    $this->uri = $uri[0];
   }
 
   /**
