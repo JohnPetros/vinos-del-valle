@@ -3,7 +3,7 @@
 namespace App\core;
 
 use \Exception;
-use \Reflection;
+use \ReflectionFunction;
 
 class Router
 {
@@ -20,7 +20,7 @@ class Router
   private $prefix = '';
 
   /**
-   * Índice de rotas
+   * Rotas
    * @var array
    */
   private $routes = [];
@@ -76,7 +76,7 @@ class Router
     // PADRÃO DE VALIDAÇÃO DA URL
     $patternRoute = '/^' . str_replace('/', '\/', $route) . '$/';
 
-    // ADICIONA A ROTA DENTRO DA CLASSE
+    // ADICIONA A ROTA COM OS SEUS DADOS DENTRO DA CLASSE
     $this->routes[$patternRoute][$method]['controller'] = $controller;
     $this->routes[$patternRoute][$method]['variables'] = $variables;
   }
@@ -154,21 +154,23 @@ class Router
     foreach ($this->routes as $patternRoute => $methods) {
       // VERIFICA SE A URI BATE COM O PADRÃO
       if (preg_match($patternRoute, $uri, $matches)) {
-
         // VERIFICA O MÉTODO
         if (isset($methods[$httpMethod])) {
           unset($matches[0]);
 
-          // VARIÁVEIS PROCESSADAS
-          $keys = $methods[$httpMethod]['variables'];
-          $methods[$httpMethod]['variables'] = array_combine($keys, $matches);
-          $methods[$httpMethod]['variables']['request'] = $this->request;
+          // ROTA ATUAL
+          $currentRoute = $methods[$httpMethod];
 
-          // RETORNO DOS DADOS DA ROTA
-          return $methods[$httpMethod];
+          // INSERIR VALORES DAS VARIÁVEIS DA ROTA ATUAL
+          $keys = $currentRoute['variables'];
+          $currentRoute['variables'] = array_combine($keys, $matches);
+          $currentRoute['variables']['request'] = $this->request;
+
+          // RETORNA ROTA ATUAL COM SEUS DADOS DEFINIDOS
+          return $currentRoute;
         }
         // MÉTODO NÃO PERMITIDO/DEFINIDO
-        throw new Exception("Método HTTP   não é permitido", 405);
+        throw new Exception("Método HTTP não é permitido", 405);
       }
     }
     // URL NÃO ENCONTRADA 
@@ -193,13 +195,13 @@ class Router
       // ARGUMENTOS DA FUNÇÃO DO CONTROLLER
       $args = [];
 
-      // // REFLECTION
-      // $reflection = new ReflectionFunction($route['controller']);
+      // "INSTÂNCIA" DA FUNÇÃO DO CONTROLLER
+      $controllerFunction = new ReflectionFunction($route['controller']);
 
-      // foreach ($reflection->getParameters() as $parameter) {
-      //   $name = $parameter->getName();
-      //   $args[$name] = $route['variables'][$name] ?? '';
-      // }
+      foreach ($controllerFunction->getParameters() as $parameter) {
+        $name = $parameter->getName();
+        $args[$name] = $route['variables'][$name] ?? '';
+      }
 
       // RETORNA A EXECUÇÃO DA FUNÇÃO DO CONTROLLER
       return call_user_func_array($route['controller'], $args);
