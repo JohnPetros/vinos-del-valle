@@ -3,6 +3,7 @@
 namespace App\controllers;
 
 use \App\core\View;
+use App\utils\Toast;
 
 class LoginController
 {
@@ -12,8 +13,11 @@ class LoginController
    */
   public static function getLoginPage()
   {
+
+    $toast = Toast::getError("Login feito com sucesso!");
+
     return View::render('pages/login', [
-      'name' => 'Márcio Suga'
+      'toast' => $toast
     ]);
   }
 }

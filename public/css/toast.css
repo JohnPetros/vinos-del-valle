@@ -1,0 +1,95 @@
+.toast {
+  position: absolute;
+  top: 2.4rem;
+  right: 3rem;
+  padding: 2rem 2.4rem;
+  border-radius: 0.8rem;
+  background: var(--base-1);
+  box-shadow: var(--shadow);
+  border-left: 6px solid;
+  transition: all 1s ease;
+  transform: translateX(150%);
+  overflow: hidden;
+}
+
+.toast.success {
+  border-left-color: var(--success);
+}
+
+.toast.error {
+  border-left-color: var(--error);
+}
+
+.toast.active {
+  transform: translateX(0%);
+}
+
+.toast .content {
+  display: flex;
+  align-items: center;
+}
+
+.toast .content i {
+  font-size: 3.2rem;
+}
+
+.toast.success i {
+  color: var(--success);
+}
+
+.toast.error i {
+  color: var(--error);
+}
+
+.content .message {
+  display: flex;
+  flex-direction: column;
+  margin-left: 1.2rem;
+
+  font-size: 1.6rem;
+  color: var(--base-4);
+}
+
+.toast button {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  background-color: transparent;
+  font-size: 2rem;
+}
+
+.toast .progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 0.4rem;
+  width: 100%;
+  background-color: var(--base-2);
+}
+
+.toast.active .progress::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.toast.success .progress::before {
+  background-color: var(--success);
+}
+
+.toast.error .progress::before {
+  background-color: var(--error);
+}
+
+.toast.active .progress::before {
+  animation: progress 3s linear forwards;
+}
+
+@keyframes progress {
+  100% {
+    right: 100%;
+  }
+}

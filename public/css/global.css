@@ -6,7 +6,10 @@
   --base-2: #f8f8f8;
   --base-1: #fff;
 
+  --success: #5dda6a;
   --error: #f1596a;
+
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
   font-size: 62.5%;
 }
