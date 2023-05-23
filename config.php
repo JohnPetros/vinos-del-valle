@@ -10,7 +10,7 @@ Environment::load(__DIR__);
 
 define('URL', getenv('URL'));
 
-// DEFINE O VALOR PADRÃO DAS VARIÁVEIS
+// DEFINE O VALOR DAS VARIÁVEIS COMUNS PARA TODAS AS VIEWS 
 View::init([
   'URL' => URL
 ]);

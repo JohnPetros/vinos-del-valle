@@ -93,3 +93,9 @@
     right: 100%;
   }
 }
+
+@media (max-width: 840px) {
+  .toast {
+    right: 20%;
+  }
+}
