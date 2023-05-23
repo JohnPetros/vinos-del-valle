@@ -36,6 +36,7 @@ form h1 {
   align-items: center;
 }
 
+.input-wrapper.active,
 .input-wrapper:focus-within {
   border-color: var(--primary);
 }

@@ -79,11 +79,14 @@ function handleSubmit(event) {
 }
 
 function handleInputChange({ currentTarget }) {
-  const icon = currentTarget.parentNode.querySelector("i");
+  const inputWrapper = currentTarget.parentNode;
+  const icon = inputWrapper.querySelector("i");
   if (icon && currentTarget.value) {
     icon.classList.add("active");
+    inputWrapper.classList.add("active");
   } else {
     icon.classList.remove("active");
+    inputWrapper.classList.remove("active");
   }
 }
 

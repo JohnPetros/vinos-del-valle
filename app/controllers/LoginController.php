@@ -13,15 +13,10 @@ class LoginController
    */
   public static function getLoginPage()
   {
-
-    $toast = Toast::getError("Login feito com sucesso!");
-
-    return View::render('pages/login', [
-      'toast' => $toast
-    ]);
+    return View::render('pages/login');
   }
 
-   /**
+  /**
    * Método responsável por definir o Login do usuário
    * @param Request $request
    * @return string
@@ -32,6 +27,12 @@ class LoginController
     $postVars = $request->getPostVars();
     $email = $postVars['email'] ?? '';
     $password = $postVars['password'] ?? '';
+
+    echo '<pre>';
+    print_r($email);
+    echo '</pre>';
+    exit;
+
 
     // // BUSCA O USUÁRIO PELO E-MAIL
     // $user = User::getUserByEmail($email);

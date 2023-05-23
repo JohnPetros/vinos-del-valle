@@ -67,26 +67,36 @@ class Database
     }
 
     /**
-     * Define a tabela a instacia e conexão
-     * @param string $table
+     * Método responsável por criar uma conexão com o banco de dados
      */
-    public function __construct($table = null)
+    private static function setConnection()
     {
-        $this->table = $table;
-        $this->setConnection();
+        try {
+            self::$connection = new PDO('mysql:host=' . self::$host . ';dbname=' . self::$name . ';port=' . self::$port, self::$user, self::$pass);
+            self::$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            die('ERROR: ' . $e->getMessage());
+        }
     }
 
     /**
-     * Método responsável por criar uma conexão com o banco de dados
+     * Método responsável por executar queries dentro do banco de dados
+     * @param  string $query
+     * @param  array  $params
+     * @return array $data
      */
-    private function setConnection()
+    public static function execute($query, $params = [])
     {
         try {
-            $this->connection = new PDO('mysql:host=' . self::$host . ';dbname=' . self::$name . ';port=' . self::$port, self::$user, self::$pass);
-            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $statement = self::$connection->prepare($query);
+            $statement->execute($params);
+
+            if (strpos('SELECT', $query) !== false) {
+                $data = $statement->fetchAll();
+                return $data;
+            }
         } catch (PDOException $e) {
             die('ERROR: ' . $e->getMessage());
         }
     }
 }
-?>
