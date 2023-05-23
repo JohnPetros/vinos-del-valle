@@ -66,6 +66,27 @@ class Database
         self::$port = $port;
     }
 
+    /**
+     * Define a tabela a instacia e conexão
+     * @param string $table
+     */
+    public function __construct($table = null)
+    {
+        $this->table = $table;
+        $this->setConnection();
+    }
 
+    /**
+     * Método responsável por criar uma conexão com o banco de dados
+     */
+    private function setConnection()
+    {
+        try {
+            $this->connection = new PDO('mysql:host=' . self::$host . ';dbname=' . self::$name . ';port=' . self::$port, self::$user, self::$pass);
+            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            die('ERROR: ' . $e->getMessage());
+        }
+    }
 }
 ?>
