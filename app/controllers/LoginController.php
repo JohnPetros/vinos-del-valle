@@ -3,17 +3,22 @@
 namespace App\controllers;
 
 use \App\core\View;
+use App\models\User;
 use App\utils\Toast;
 
 class LoginController
 {
   /**
    * Método responsável por retornar o conteúdo (View) da página de login
+   * @param string $errorMessage
    * @return string
    */
-  public static function getLoginPage()
+  public static function getLoginPage($errorMessage = null)
   {
-    return View::render('pages/login');
+    $status = !is_null($errorMessage) ? Toast::getError($errorMessage) : '';
+    return View::render('pages/login', [
+      'status' => $status,
+    ]);
   }
 
   /**
@@ -23,32 +28,18 @@ class LoginController
    */
   public static function handleLogin($request)
   {
-    // POST VARS
     $postVars = $request->getPostVars();
     $email = $postVars['email'] ?? '';
     $password = $postVars['password'] ?? '';
 
-    echo '<pre>';
-    print_r($email);
-    echo '</pre>';
-    exit;
+    $user = User::getUserByEmail($email);
 
+    if (!$user instanceof User || !password_verify($password, $user->password)) {
+      return self::getLoginPage('Usuário não encontrado');
+    }
 
-    // // BUSCA O USUÁRIO PELO E-MAIL
-    // $user = User::getUserByEmail($email);
-    // if (!$user instanceof User) {
-    //   return self::getLogin($request, 'E-mail ou senha inválidos');
-    // }
+    // Session::login($user);
 
-    // // VERIFICA A SENHA DO USUÁRIO
-    // if (!password_verify($password, $user->password)) {
-    //   return self::getLogin($request, 'E-mail ou senha inválidos');
-    // }
-
-    // // CRIA A SESSÃO DE LOGIN
-    // SessionAdminLogin::login($user);
-
-    // REDIRECIONA O USUÁRIO PARA /ADMIN
-    $request->getRouter()->redirect('/admin');
+    $request->getRouter()->redirect('/dashboard');
   }
 }

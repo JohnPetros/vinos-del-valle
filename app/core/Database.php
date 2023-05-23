@@ -83,16 +83,19 @@ class Database
      * Método responsável por executar queries dentro do banco de dados
      * @param  string $query
      * @param  array  $params
-     * @return array $data
+     * @return @return PDOStatement
      */
     public static function execute($query, $params = [])
     {
+        self::setConnection();
         try {
             $statement = self::$connection->prepare($query);
             $statement->execute($params);
+            return $statement;
+            $isSelect = strpos($query, "SELECT") !== false;
 
-            if (strpos('SELECT', $query) !== false) {
-                $data = $statement->fetchAll();
+            if ($isSelect) {
+                $data = $statement->fetchObject();
                 return $data;
             }
         } catch (PDOException $e) {

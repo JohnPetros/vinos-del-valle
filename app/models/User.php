@@ -31,6 +31,18 @@ class User
   public $password;
 
   /**
+   * Verifica se o usuário é um administrator
+   * @var boolean
+   */
+  public $is_admin;
+
+  /**
+   * ID de quem criou o usuário
+   * @var integer
+   */
+  public $creator_id;
+
+  /**
    * Método responsável por retornar um usuário com base em seu email
    * @param string $email
    * @return User
@@ -38,12 +50,8 @@ class User
   public static function getUserByEmail($email)
   {
     $query = "SELECT * FROM users WHERE email = ?";
-    $params = [$email];
+    $params = array($email);
 
-    $user = Database::execute($query, $params);
-    echo '<pre>';
-    print_r($user);
-    echo '</pre>';
-    exit;
+    return Database::execute($query, $params)->fetchObject(self::class);
   }
 }
