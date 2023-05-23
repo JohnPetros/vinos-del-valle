@@ -209,4 +209,16 @@ class Router
       return new Response($error->getCode(), $error->getMessage());
     }
   }
+
+  /**
+   * Método responsável por redirecionar a URL
+   * @param string $route
+   */
+  public function redirect($route)
+  {
+    // URL
+    $url = $this->url . $route;
+    header('location: ' . $url);
+    exit;
+  }
 }
