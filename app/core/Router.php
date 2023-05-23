@@ -216,7 +216,6 @@ class Router
    */
   public function redirect($route)
   {
-    // URL
     $url = $this->url . $route;
     header('location: ' . $url);
     exit;

@@ -3,6 +3,7 @@
 namespace App\controllers;
 
 use \App\core\View;
+use \App\core\Session;
 use App\models\User;
 use App\utils\Toast;
 
@@ -38,8 +39,10 @@ class LoginController
       return self::getLoginPage('Usuário não encontrado');
     }
 
-    // Session::login($user);
+    Session::setUserSession($user);
 
-    $request->getRouter()->redirect('/dashboard');
+    $page = $user->is_admin ? '/dashboard' : '/app';
+
+    $request->getRouter()->redirect($page);
   }
 }
