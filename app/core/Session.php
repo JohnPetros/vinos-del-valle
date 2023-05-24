@@ -11,6 +11,10 @@ class Session
   {
     if (session_status() != PHP_SESSION_ACTIVE) {
       session_start();
+
+      if (!isset($_SESSION['previous_route'])) {
+        $_SESSION['previous_route'] = '/';
+      }
     }
   }
 
@@ -30,14 +34,21 @@ class Session
     ];
   }
 
-  /**
-   * Método responsável por verificar se o usuário está logado
-   * @return boolean
-   */
-  public static function isUserLogged()
+  public static function setPreviousRoute($previousRoute)
   {
     self::init();
 
-    return isset($_SESSION['user']['id']);
+    $_SESSION['previous_route'] = $previousRoute;
+  }
+
+
+  public static function verifyLoggedUser($userType, $requirement, $request)
+  {
+    self::init();
+
+    if ($requirement == 'login' && !isset($_SESSION['user']['id'])) {
+      $request->getRoute()->redirect($_SESSION['previous_route']);
+    }
+    return;
   }
 }

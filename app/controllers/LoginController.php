@@ -9,13 +9,15 @@ use App\utils\Toast;
 
 class LoginController
 {
+
   /**
    * Método responsável por retornar o conteúdo (View) da página de login
    * @param string $errorMessage
    * @return string
    */
-  public static function getLoginPage($errorMessage = null)
+  public static function getLoginPage($request, $errorMessage = null)
   {
+
     $status = !is_null($errorMessage) ? Toast::getError($errorMessage) : '';
     return View::render('pages/login', [
       'status' => $status,
@@ -36,7 +38,7 @@ class LoginController
     $user = User::getUserByEmail($email);
 
     if (!$user instanceof User || !password_verify($password, $user->password)) {
-      return self::getLoginPage('Usuário não encontrado');
+      return self::getLoginPage($request, 'Usuário não encontrado');
     }
 
     Session::setUserSession($user);

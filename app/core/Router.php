@@ -4,6 +4,7 @@ namespace App\core;
 
 use \Exception;
 use \ReflectionFunction;
+use \App\core\Session;
 
 class Router
 {
@@ -218,6 +219,7 @@ class Router
   {
     $url = $this->url . $route;
     header('location: ' . $url);
+    Session::setPreviousRoute($route);
     exit;
   }
 }
