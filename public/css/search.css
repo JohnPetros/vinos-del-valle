@@ -13,6 +13,11 @@
   align-items: center;
   font-weight: 500;
   gap: 1.2rem;
+  background-color: transparent;
+}
+
+.selected:focus {
+  box-shadow: none;
 }
 
 .select .selected.year {

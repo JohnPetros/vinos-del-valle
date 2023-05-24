@@ -29,7 +29,8 @@ header nav ul li.nav-link {
   border-radius: 0.8rem;
 }
 
-header nav ul li.nav-link.active {
+header nav ul li.nav-link.active,
+.user-button {
   background-color: var(--base-2);
   font-weight: 700;
 }
@@ -41,6 +42,21 @@ header nav ul li.nav-link:hover {
 header .user {
   display: flex;
   gap: 0.8rem;
+}
+
+header .user .user-button {
+  border-radius: 1.2rem;
+  padding: 0.4rem 1.2rem;
+  font-size: 1.6rem;
+}
+
+header .user .user-button:hover {
+  outline: auto;
+  outline-color:var(--primary);
+}
+
+header .user .user-button:hover i {
+  color: var(--primary);
 }
 
 header .user .avatar {

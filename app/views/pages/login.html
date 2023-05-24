@@ -30,42 +30,44 @@
   <body>
     <main>
       <div class="app">
-        <form method="post" action="/login">
+        <div>
           <header>
             <img
-              src="../../../public/assets/icons/logo.svg"
-              width="32"
-              alt="Logo da Vinos Del Valle"
+            src="../../../public/assets/icons/logo.svg"
+            width="32"
+            alt="Logo da Vinos Del Valle"
             />
             <h2>Vinos Del Valle</h2>
           </header>
           <h1>Faça seu login</h1>
-          <div class="input-wrapper">
-            <i class="ph-fill ph-envelope"></i>
-            <input
-              class="input"
-              type="email"
-              name="email"
-              placeholder="E-mail"
-            />
-          </div>
-          <div class="input-wrapper">
-            <i class="ph-fill ph-lock"></i>
-            <input
-              class="input"
-              type="password"
-              name="password"
-              placeholder="Senha"
-            />
-            <button id="password-eye" type="button">
-              <i class="ph-fill ph-eye"></i>
-            </button>
-          </div>
-          <button>Login</button>
-          <p>
-            Não tem uma conta? <a href="#" target="_blank">Crie uma conta</a>
-          </p>
-        </form>
+          <form method="post" action="/login">
+            <div class="input-wrapper">
+              <i class="ph-fill ph-envelope"></i>
+              <input
+                class="input"
+                type="email"
+                name="email"
+                placeholder="E-mail"
+              />
+            </div>
+            <div class="input-wrapper">
+              <i class="ph-fill ph-lock"></i>
+              <input
+                class="input"
+                type="password"
+                name="password"
+                placeholder="Senha"
+              />
+              <button id="password-eye" type="button">
+                <i class="ph-fill ph-eye"></i>
+              </button>
+            </div>
+            <button>Login</button>
+            <p>
+              Não tem uma conta? <a href="#" target="_blank">Crie uma conta</a>
+            </p>
+          </form>
+        </div>
       </div>
 
       <div class="hero">
