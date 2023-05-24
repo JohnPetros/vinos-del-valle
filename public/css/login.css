@@ -58,6 +58,15 @@ i.active,
   margin-left: 0.8rem;
 }
 
+.input-wrapper button {
+  width: 2.4rem;
+  height: 2.4rem;
+  margin: 0;
+  display: grid;
+  place-content: center;
+  background-color: transparent;
+}
+
 form button {
   background-color: var(--primary);
   color: var(--base-1);

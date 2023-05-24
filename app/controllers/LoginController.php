@@ -48,4 +48,15 @@ class LoginController
 
     $request->getRouter()->redirect($route);
   }
+
+  /**
+   * Lida com a tentativa de Logout do usuário
+   * @param Request $request
+   * @return string
+   */
+  public static function handleLogout($request)
+  {
+    Session::logout();
+    $request->getRouter()->redirect('/');
+  }
 }

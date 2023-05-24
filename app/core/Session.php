@@ -60,7 +60,6 @@ class Session
     return isset($_SESSION['user']['is_admin']);
   }
 
-
   /**
    * Redireciona para rota anterior dependendo do caso se o usuário está logado ou não, bem como o tipo rota que está sendo acessada
    * @param 
@@ -79,5 +78,15 @@ class Session
     }
 
     self::setPreviousRoute($request->getUri());
+  }
+
+  /**
+   * Método responsável por executar o logout do usuário
+   * @return boolean
+   */
+  public static function logout()
+  {
+    self::init();
+    unset($_SESSION['user']);
   }
 }

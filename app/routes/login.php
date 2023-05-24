@@ -11,4 +11,6 @@ $router->post('/login', function ($request) {
   return new Response(200, LoginController::handleLogin($request));
 });
 
-// Session::verifyLoggedUser('admin', 'login', $request);
+$router->get('/logout', function ($request) {
+  return new Response(200, LoginController::handleLogout($request));
+});

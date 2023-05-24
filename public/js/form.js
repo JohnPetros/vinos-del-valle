@@ -78,14 +78,22 @@ function handleSubmit(event) {
   if (hasErrors()) event.preventDefault();
 }
 
+function activeIcons(icon) {
+  icon.classList.add("active");
+}
+
+function desactiveIcons(icon) {
+  icon.classList.remove("active");
+}
+
 function handleInputChange({ currentTarget }) {
   const inputWrapper = currentTarget.parentNode;
-  const icon = inputWrapper.querySelector("i");
-  if (icon && currentTarget.value) {
-    icon.classList.add("active");
+  const icons = inputWrapper.querySelectorAll("i");
+  if (icons && currentTarget.value) {
+    icons.forEach(activeIcons);
     inputWrapper.classList.add("active");
   } else {
-    icon.classList.remove("active");
+    icons.forEach(desactiveIcons);
     inputWrapper.classList.remove("active");
   }
 }
@@ -95,8 +103,24 @@ function handleInputWrapperClick({ currentTarget }) {
   input.focus();
 }
 
+function handlePasswordEyeClick({ currentTarget }) {
+  const iconEye = currentTarget.querySelector("i");
+  const isClosed = iconEye.classList[1] === "ph-eye-closed";
+  iconEye.className = `ph-fill ph-eye${isClosed ? "" : "-closed"}`;
+
+  const input = currentTarget.parentNode.querySelector("input");
+  input.type = isClosed ? "password" : "text";
+}
+
+function setInputsWrappers(wrapper) {
+  const passwordEye = wrapper.querySelector("#password-eye");
+  if (passwordEye) {
+    passwordEye.addEventListener("click", handlePasswordEyeClick);
+  }
+  
+  wrapper.addEventListener("click", handleInputWrapperClick);
+}
+
 form.addEventListener("submit", handleSubmit);
 inputs.forEach((input) => input.addEventListener("change", handleInputChange));
-inputsWrappers.forEach((wrapper) =>
-  wrapper.addEventListener("click", handleInputWrapperClick)
-);
+inputsWrappers.forEach(setInputsWrappers);
