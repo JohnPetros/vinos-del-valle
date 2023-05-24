@@ -19,7 +19,7 @@ class Session
   }
 
   /**
-   * Método responsável por criar o sessão do usuário
+   * Cria o sessão do usuário
    * @param User
    */
   public static function setUserSession($user)
@@ -41,14 +41,33 @@ class Session
     $_SESSION['previous_route'] = $previousRoute;
   }
 
+  public static function isUserLogged()
+  {
+    return isset($_SESSION['user']['id']);
+  }
 
-  public static function verifyLoggedUser($userType, $requirement, $request)
+  public static function isUserAdmin()
+  {
+    return isset($_SESSION['user']['is_admin']);
+  }
+
+
+  /**
+   * 
+   */
+  public static function verifyLoggedUser($requirement, $routerType, $request)
   {
     self::init();
 
-    if ($requirement == 'login' && !isset($_SESSION['user']['id'])) {
-      $request->getRoute()->redirect($_SESSION['previous_route']);
+    if (
+      ($requirement == 'login' && !self::isUserLogged()) ||
+      ($requirement == 'logout' && self::isUserLogged()) ||
+      ($routerType == 'admin' && !self::isUserAdmin()) ||
+      ($routerType == 'default' && self::isUserAdmin())
+    ) {
+      $request->getRouter()->redirect($_SESSION['previous_route']);
     }
-    return;
+
+    self::setPreviousRoute($request->getUri());
   }
 }

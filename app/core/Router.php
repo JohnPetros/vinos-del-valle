@@ -4,7 +4,6 @@ namespace App\core;
 
 use \Exception;
 use \ReflectionFunction;
-use \App\core\Session;
 
 class Router
 {
@@ -133,10 +132,10 @@ class Router
     $uri = $this->request->getUri();
 
     // FATIA A URI COM O PREFIXO
-    $uri = strlen($this->prefix) ? explode($this->prefix, $uri) : [$uri];
+    $xUri = strlen($this->prefix) ? explode($this->prefix, $uri) : [$uri];
 
     // RETORNA URI SEM PREFIXO
-    return end($uri);
+    return end($xUri);
   }
 
   /**
@@ -187,7 +186,7 @@ class Router
     try {
       // // OBTÉM A ROTA ATUAL
       $route = $this->getRoute();
-
+     
       // VERIFICA O CONTROLLER
       if (!isset($route['controller'])) {
         throw new Exception("A URL não pôde ser processada", 500);
@@ -218,8 +217,8 @@ class Router
   public function redirect($route)
   {
     $url = $this->url . $route;
+
     header('location: ' . $url);
-    Session::setPreviousRoute($route);
     exit;
   }
 }

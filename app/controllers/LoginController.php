@@ -17,6 +17,7 @@ class LoginController
    */
   public static function getLoginPage($request, $errorMessage = null)
   {
+    Session::verifyLoggedUser('logout', null, $request);
 
     $status = !is_null($errorMessage) ? Toast::getError($errorMessage) : '';
     return View::render('pages/login', [
@@ -43,8 +44,8 @@ class LoginController
 
     Session::setUserSession($user);
 
-    $page = $user->is_admin ? '/dashboard' : '/app';
+    $route = $user->is_admin ? '/dashboard' : '/app';
 
-    $request->getRouter()->redirect($page);
+    $request->getRouter()->redirect($route);
   }
 }

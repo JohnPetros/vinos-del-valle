@@ -60,7 +60,6 @@ class Request
   {
     // URI COMPLETA (COM GETS)
     $this->uri = $_SERVER['REQUEST_URI'] ?? '';
-
     $uri = explode('?', $this->uri);
     $this->uri = $uri[0];
   }
