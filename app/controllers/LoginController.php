@@ -19,9 +19,12 @@ class LoginController
   {
     Session::verifyLoggedUser('logout', null, $request);
 
+    $logo = View::render('partials/logo');
     $status = !is_null($errorMessage) ? Toast::getError($errorMessage) : '';
+
     return View::render('pages/login', [
       'status' => $status,
+      'logo' => $logo,
     ]);
   }
 

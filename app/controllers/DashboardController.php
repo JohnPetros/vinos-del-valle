@@ -16,6 +16,11 @@ class DashboardController
   public static function getDashboardPage($request)
   {
     Session::verifyLoggedUser('login', 'admin', $request);
-    return View::render('pages/dashboard');
+
+    $header =  View::render('partials/header');
+    
+    return View::render('pages/dashboard', [
+      'header' => $header,
+    ]);
   }
 }

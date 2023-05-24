@@ -3,13 +3,15 @@
   --secondary: #feebeb;
   --base-4: #2e2e2e;
   --base-3: #c7c7c7;
-  --base-2: #f8f8f8;
+  --base-2: #f3f2f2;
   --base-1: #fff;
 
   --success: #5dda6a;
   --error: #f1596a;
 
   --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  --desktop-screen: 1200px;
 
   font-size: 62.5%;
 }
@@ -53,12 +55,17 @@ button:focus {
 
 a {
   text-decoration: none;
-  transition: opacity 0.25s ease;
+  color: inherit;
+  transition: all 0.25s ease;
 }
 
 a:hover,
 button:hover {
   opacity: 0.85;
+}
+
+ul {
+  list-style: none;
 }
 
 .error {
