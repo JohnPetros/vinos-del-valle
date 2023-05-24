@@ -8,11 +8,47 @@
     <link rel="stylesheet" href="../../../public/css/header.css" />
     <link rel="stylesheet" href="../../../public/css/form.css" />
     <link rel="stylesheet" href="../../../public/css/filters.css" />
+    <link rel="stylesheet" href="../../../public/css/wine-card.css" />
+    <link rel="stylesheet" href="../../../public/css/dashboard.css" />
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <script defer src="../../../public/js/form.js"></script>
     <title>Dashboard</title>
   </head>
   <body>
-    <main class="container">{{header}} {{filters}}</main>
+    <main class="container">
+      {{header}} {{filters}}
+
+      <div class="grid">
+        <div class="wine-card">
+          <div class="image-wrapper">
+            <img
+              width="64"
+              src="../../../public/assets/images/moscato.png"
+              alt=""
+            />
+          </div>
+          <div class="info">
+            <strong class="name">Casa Castillo Monastrel</strong>
+            <small class="description">Pais: Espanha | 24/05/2023</small>
+            <span class="grape">Moscardo</span>
+          </div>
+        </div>
+
+        <div class="wine-card">
+          <div class="image-wrapper">
+            <img
+              width="64"
+              src="../../../public/assets/images/moscato.png"
+              alt=""
+            />
+          </div>
+          <div class="info">
+            <strong class="name">Casa Castillo Monastrel</strong>
+            <small class="description">Pais: Espanha | 24/05/2023</small>
+            <span class="grape">Moscardo</span>
+          </div>
+        </div>
+      </div>
+    </main>
   </body>
 </html>

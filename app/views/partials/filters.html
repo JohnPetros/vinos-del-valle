@@ -1,28 +1,69 @@
 <form>
-  <div class="select year">
-    <button class="selected year">
-      <strong>Todos os anos</strong><i class="ph-fill ph-caret-down"></i>
-    </button>
-    <div class="select-box">
-      <div class="option active">
-        <input type="radio" name="option" id="all-years" />
-        <label for="all-years">Todos os anos</label>
+  <div class="selects">
+    <div class="select year">
+      <button type="button" class="selected year">
+        <span class="selected-item-name">Todos os anos</span
+        ><i class="ph-fill ph-caret-down"></i>
+      </button>
+      <div class="select-box">
+          <div class="option active">
+            <input type="radio" name="option" id="all-years" />
+            <label for="all-years">Todos os anos</label>
+          </div>
+          <div class="option">
+            <input type="radio" name="option" id="2023" />
+            <label for="2023">2023</label>
+          </div>
+          <div class="option">
+            <input type="radio" name="option" id="2022" />
+            <label for="2022">2022</label>
+          </div>
+          <div class="option">
+            <input type="radio" name="option" id="2022" />
+            <label for="2022">2021</label>
+          </div>
+          <div class="option">
+            <input type="radio" name="option" id="2022" />
+            <label for="2022">2020</label>
+        </div>
       </div>
-      <div class="option">
-        <input type="radio" name="option" id="2023" />
-        <label for="2023">2023</label>
-      </div>
-      <div class="option">
-        <input type="radio" name="option" id="2022" />
-        <label for="2022">2022</label>
-      </div>
-      <div class="option">
-        <input type="radio" name="option" id="2022" />
-        <label for="2022">2021</label>
-      </div>
-      <div class="option">
-        <input type="radio" name="option" id="2022" />
-        <label for="2022">2020</label>
+    </div>
+
+    <span>Região:</span>
+    <div class="select region">
+      <button type="button" class="selected region">
+        <span class="selected-item-name"
+          ><img class="flag" src="https://flagsapi.com/BR/flat/24.png" />
+          Gaúcha
+        </span>
+        <i class="ph-fill ph-caret-down"></i>
+      </button>
+      <div class="select-box">
+        <div class="option active">
+          <input type="radio" name="option" id="1" />
+          <img class="flag" src="https://flagsapi.com/BR/flat/24.png" />
+          <label for="1"> Santa Gaúcha </label>
+        </div>
+        <div class="option">
+          <input type="radio" name="option" id="2023" />
+          <img class="flag" src="https://flagsapi.com/BR/flat/24.png" />
+          <label for="1"> Santa Gaúcha </label>
+        </div>
+        <div class="option">
+          <input type="radio" name="option" id="2022" />
+          <img class="flag" src="https://flagsapi.com/BR/flat/24.png" />
+          <label for="1"> Santa Gaúcha </label>
+        </div>
+        <div class="option">
+          <input type="radio" name="option" id="2022" />
+          <img class="flag" src="https://flagsapi.com/BR/flat/24.png" />
+          <label for="1"> Santa Gaúcha </label>
+        </div>
+        <div class="option">
+          <input type="radio" name="option" id="2022" />
+          <img class="flag" src="https://flagsapi.com/BR/flat/24.png" />
+          <label for="1"> Santa Gaúcha </label>
+        </div>
       </div>
     </div>
   </div>
@@ -39,8 +80,8 @@
   </div>
 </form>
 
-<div class="grapes">
-  <ul>
+<div class="footer">
+  <ul class="grapes">
     <li>
       <a class="grape active" href="#" style="background-color: #8bd297"
         >Chardonnay</a

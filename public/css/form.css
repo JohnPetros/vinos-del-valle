@@ -63,22 +63,37 @@ form a {
   font-weight: 700;
 }
 
-.select.year {
-  width: max-content;
+.select {
   overflow: hidden;
+}
+
+.select .options {
+  width: 100%;
 }
 
 .selected {
   cursor: pointer;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   font-weight: 500;
   gap: 1.2rem;
   background-color: transparent;
+  border-bottom: 2px solid var(--primary);
+
 }
 
 .selected:focus {
   box-shadow: none;
+}
+
+.selected-item-name {
+  display: flex;
+  align-items: center;
+}
+
+.selected-item-name .flag {
+  margin-right: 0.8rem;
 }
 
 .select .selected.year {
@@ -87,18 +102,30 @@ form a {
 }
 
 .select .select-box {
+  position: absolute;
   height: 0;
   z-index: 15;
   display: flex;
   flex-direction: column;
-  margin-top: 1.2rem;
+  width: max-content;
   gap: 0.8rem;
   background-color: var(--base-1);
-  width: 100%;
   box-shadow: var(--shadow);
-  border-radius: 1.2rem;
+  border-radius: 0.8rem 0 0 0.8rem;
   transition: height 0.2s ease-in-out;
-  border: 1px solid var(--primary);
+  overflow-y: scroll;
+  padding-inline: 1.2rem;
+}
+
+.select .select-box::-webkit-scrollbar {
+  width: 0.4rem;
+  border-radius: 0 0.8rem 0.8rem 0;
+  background-color: var(--base-3);
+  z-index: -15;
+}
+
+.select .select-box::-webkit-scrollbar-thumb {
+  background-color: var(--primary);
 }
 
 .select .select-box.active {
@@ -110,8 +137,16 @@ form a {
   cursor: pointer;
 }
 
+.select .select-box .option .flag {
+  margin-bottom: -0.6rem;
+}
+
 .select .select-box .option:first-child {
   margin-top: 1.2rem;
+}
+
+.select .select-box .option:last-child {
+  margin-bottom: 1.2rem;
 }
 
 .select .select-box .option:hover label,
@@ -122,7 +157,7 @@ form a {
 }
 
 .select .select-box .option input[type="radio"] {
-  visibility: hidden;
+  display: none;
 }
 
 .search-wrapper {

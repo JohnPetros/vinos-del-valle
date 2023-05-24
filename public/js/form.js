@@ -1,7 +1,7 @@
 const form = document.querySelector("form");
 const inputs = document.querySelectorAll(".input");
 const inputsWrappers = document.querySelectorAll(".input-wrapper");
-const selects = document.querySelectorAll(".select");
+const selects = document.querySelectorAll(".selected");
 const portugueseNames = {
   email: "e-mail",
   password: "senha",
@@ -115,6 +115,7 @@ function handlePasswordEyeClick({ currentTarget }) {
 
 function handleSelectClick({ currentTarget }) {
   const selectBox = currentTarget.parentNode.querySelector(".select-box");
+  console.log(selectBox);
   const isActive = selectBox.classList.contains("active");
   selectBox.classList[isActive ? "remove" : "add"]("active");
 }
@@ -134,3 +135,4 @@ inputsWrappers.forEach(setInputsWrappers);
 selects.forEach((select) =>
   select.addEventListener("click", handleSelectClick)
 );
+

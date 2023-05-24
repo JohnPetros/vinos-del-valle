@@ -1,0 +1,47 @@
+.wine-card {
+  border-radius: 2.4rem;
+  display: flex;
+  gap: 2.4rem;
+  align-items: center;
+  box-shadow: var(--shadow);
+  padding: 1.2rem;
+  transition: transform .2s ease;
+  cursor: pointer;
+}
+
+.wine-card:hover {
+  transform: scale(1.05);
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.image-wrapper {
+  width: 7.2rem;
+  height: 7.2rem;
+  border-radius: 2.4rem;
+  background-color: #8bd297;
+  display: grid;
+  place-content: center;
+}
+
+.image-wrapper img {
+  max-width: 100%;
+  margin-top: -3.2rem;
+}
+
+.name {
+  color: var(--base-4);
+}
+
+.description {
+  color: var(--base-3);
+}
+
+.grape {
+  color: #8bd297;
+  font-weight: 700;
+}

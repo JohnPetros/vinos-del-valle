@@ -2,14 +2,28 @@
   margin-top: 2.4rem;
 }
 
-.grapes ul {
+.selects {
   display: flex;
+  align-items: center;
+
   gap: 1.2rem;
+}
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   margin-top: 2.4rem;
 }
 
+.grapes {
+  display: flex;
+  gap: 1.2rem;
+}
+
 .grapes .grape {
-  padding: 1.2rem;
+  padding: .8rem;
+  font-size: 1.4rem;
   display: grid;
   place-content: center;
   background-color: var(--base-1);

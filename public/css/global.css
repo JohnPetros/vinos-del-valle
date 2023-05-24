@@ -35,7 +35,7 @@
 html,
 body {
   width: 100%;
-  max-height: 100vh;
+  height: 100vh;
 
   font-size: 1.6rem;
 
@@ -81,6 +81,7 @@ ul {
 .container {
   max-width: var(--desktop-screen);
   margin: 0 auto;
+  height: 100%;
 }
 
 .error {
