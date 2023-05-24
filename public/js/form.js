@@ -1,6 +1,7 @@
 const form = document.querySelector("form");
 const inputs = document.querySelectorAll(".input");
 const inputsWrappers = document.querySelectorAll(".input-wrapper");
+const selects = document.querySelectorAll(".select");
 const portugueseNames = {
   email: "e-mail",
   password: "senha",
@@ -112,15 +113,24 @@ function handlePasswordEyeClick({ currentTarget }) {
   input.type = isClosed ? "password" : "text";
 }
 
+function handleSelectClick({ currentTarget }) {
+  const selectBox = currentTarget.parentNode.querySelector(".select-box");
+  const isActive = selectBox.classList.contains("active");
+  selectBox.classList[isActive ? "remove" : "add"]("active");
+}
+
 function setInputsWrappers(wrapper) {
   const passwordEye = wrapper.querySelector("#password-eye");
   if (passwordEye) {
     passwordEye.addEventListener("click", handlePasswordEyeClick);
   }
-  
+
   wrapper.addEventListener("click", handleInputWrapperClick);
 }
 
 form.addEventListener("submit", handleSubmit);
 inputs.forEach((input) => input.addEventListener("change", handleInputChange));
 inputsWrappers.forEach(setInputsWrappers);
+selects.forEach((select) =>
+  select.addEventListener("click", handleSelectClick)
+);

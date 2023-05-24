@@ -2,7 +2,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: var(--desktop-screen);
+  width: 100%;
   margin: 2.4rem auto;
 }
 
@@ -49,7 +49,7 @@ header .user .avatar {
 }
 
 header .user .avatar img {
-  border-radius: 0.8rem;
+  border-radius: 1.2rem;
   max-width: 100%;
   object-fit: cover;
 }
@@ -66,5 +66,5 @@ header .user .info .name {
 
 header .user .info .email {
   color: var(--base-3);
-  font-weight: 500;
+  font-weight: 700;
 }

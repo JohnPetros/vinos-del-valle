@@ -3,8 +3,9 @@
   --secondary: #feebeb;
   --base-4: #2e2e2e;
   --base-3: #c7c7c7;
-  --base-2: #f3f2f2;
-  --base-1: #fff;
+  --base-2: #eeeded;
+  --base-1: #f7f7f7;
+  --base-0: #fff;
 
   --success: #5dda6a;
   --error: #f1596a;
@@ -38,6 +39,7 @@ body {
   font-size: 1.6rem;
 
   overflow-x: hidden;
+  background-color: var(--base-0);
 }
 
 button {
@@ -68,7 +70,17 @@ ul {
   list-style: none;
 }
 
+.container {
+  max-width: var(--desktop-screen);
+  margin: 0 auto;
+}
+
 .error {
   margin: 0;
   color: var(--error);
+}
+
+.success {
+  margin: 0;
+  color: var(--success);
 }
