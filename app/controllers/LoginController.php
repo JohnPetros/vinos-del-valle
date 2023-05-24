@@ -11,7 +11,7 @@ class LoginController
 {
 
   /**
-   * Método responsável por retornar o conteúdo (View) da página de login
+   * Retorna o conteúdo (View) da página de login
    * @param string $errorMessage
    * @return string
    */
@@ -26,7 +26,7 @@ class LoginController
   }
 
   /**
-   * Método responsável por definir o Login do usuário
+   * Lida com a tentativa de Login do usuário
    * @param Request $request
    * @return string
    */

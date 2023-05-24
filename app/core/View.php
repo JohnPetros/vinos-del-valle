@@ -12,7 +12,7 @@ class View
   public static $vars = [];
 
   /**
-   * Método responsável por definir os dados iniciais da classe
+   * Define os variáveis comuns entra todas Views
    * @return array $vars
    */
   public static function init($vars = [])
@@ -21,7 +21,7 @@ class View
   }
 
   /**
-   * Método responsável por retornar o conteúdo de uma view
+   * Retorna o conteúdo de uma View
    * @param  string $view
    * @return string 
    */
@@ -33,7 +33,7 @@ class View
   }
 
   /**
-   * Método responsável por retornar o conteúdo renderizado de uma View
+   * Retorna o conteúdo renderizado de uma View
    * @param  string $view
    * @param  array  $vars (string/numeric)
    * @return string

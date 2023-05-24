@@ -29,7 +29,7 @@ class Response
   private $content;
 
   /**
-   * Método responsável por iniciar a classe e definir os valores
+   * Inicia a classe e define os valores da resposta do servidor
    * @param integer $httpcode
    * @param mixed   $content
    * @param string  $contentType
@@ -42,7 +42,7 @@ class Response
   }
 
   /**
-   * Método responsável por alterar o content type do response
+   * Altera o tipo de conteúdo da resposta do servidor
    * @param string $contentType
    */
   public function setContentType($contentType)
@@ -52,7 +52,7 @@ class Response
   }
 
   /**
-   * Método responsável por adicionar um registro no cabeçalho nas resposta
+   * Adiciona um registro no cabeçalho na resposta
    * @param string $key
    * @param string $value
    */
@@ -62,7 +62,7 @@ class Response
   }
 
   /**
-   * Método responsável por enviar o cabeçalho para o navegador
+   * Envia o cabeçalho para o navegador
    */
   public function sendHeaders()
   {
@@ -74,7 +74,7 @@ class Response
   }
 
   /**
-   * Método responsável por enviar a resposta para o usuário
+   * Envia a resposta para o usuário
    */
   public function sendResponse()
   {

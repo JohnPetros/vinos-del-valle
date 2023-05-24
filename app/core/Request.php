@@ -54,7 +54,7 @@ class Request
   }
 
   /**
-   * Método responsável por definir a URI
+   * Refinir a URI
    */
   private function setUri()
   {
@@ -65,7 +65,7 @@ class Request
   }
 
   /**
-   * Método responsável por retornar a instância de Router
+   * Retorna a instância de Router
    * @return Router
    */
   public function getRouter()
@@ -74,7 +74,7 @@ class Request
   }
 
   /**
-   * Método responsável por retornar o método HTTP da requisição
+   * Retorna o método HTTP da requisição
    * @return string
    */
   public function getHttpMethod()
@@ -83,7 +83,7 @@ class Request
   }
 
   /**
-   * Método responsável por retornar a URI da requisição
+   * Retorna a URI da requisição
    * @return string
    */
   public function getUri()
@@ -92,7 +92,7 @@ class Request
   }
 
   /**
-   * Método responsável por retornar o cabeçalho da requisição
+   * Retorna o cabeçalho da requisição
    * @return array
    */
   public function getHeaders()
@@ -101,7 +101,7 @@ class Request
   }
 
   /**
-   * Método responsável por retornar os parâmetros da requisição
+   * Retorna os parâmetros da requisição
    * @return array
    */
   public function getQueryParams()
@@ -110,7 +110,7 @@ class Request
   }
 
   /**
-   * Método responsável por retornar as variáveis POST da requisição
+   * Retorna as variáveis de POST da requisição
    * @return array
    */
   public function getPostVars()

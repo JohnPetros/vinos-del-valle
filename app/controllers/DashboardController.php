@@ -9,7 +9,7 @@ class DashboardController
 {
 
   /**
-   * Método responsável por retornar o conteúdo (View) da página de Dashboard
+   * Retorna o conteúdo (View) da página de Dashboard
    * @param string $errorMessage
    * @return string
    */

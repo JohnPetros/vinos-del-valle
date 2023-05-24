@@ -44,7 +44,7 @@ class Router
   }
 
   /**
-   * Método responsável por definir o prefixo das rotas
+   * Define o prefixo das rotas
    */
   public function setPrefix()
   {
@@ -56,7 +56,7 @@ class Router
   }
 
   /**
-   * Método responsável por adicionar uma rota na classe
+   * Adiciona uma rota na classe
    * @param string $method
    * @param string $route
    * @param array  $params
@@ -113,7 +113,7 @@ class Router
   }
 
   /**
-   * Método responsável por definir uma rota de DELETE
+   * Define uma rota de DELETE
    * @param string $route
    * @param array  $controller
    */
@@ -123,7 +123,7 @@ class Router
   }
 
   /**
-   * Método responsável por retornar a URI desconsiderando o prefixo
+   * Retorna a URI desconsiderando o prefixo
    * @return string 
    */
   private function getUri()
@@ -178,7 +178,7 @@ class Router
   }
 
   /**
-   * Método responsável por executar a rota atual
+   * Processa a rota atual
    * @return Response
    */
   public function run()
@@ -211,7 +211,7 @@ class Router
   }
 
   /**
-   * Método responsável por redirecionar a URL
+   * Redireciona o usuário para uma URL
    * @param string $route
    */
   public function redirect($route)

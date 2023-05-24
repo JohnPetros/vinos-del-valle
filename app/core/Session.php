@@ -5,7 +5,7 @@ namespace App\core;
 class Session
 {
   /**
-   * Método responsável por iniciar a sessão
+   * Inicia a sessão
    */
   private static function init()
   {
@@ -34,18 +34,27 @@ class Session
     ];
   }
 
+  /**
+   * Define a rota anterior acessada pelo usuário
+   */
   public static function setPreviousRoute($previousRoute)
   {
-    self::init();
-
     $_SESSION['previous_route'] = $previousRoute;
   }
 
+  /**
+   * Verifica se o usuário está logado
+   * @return boolean
+   */
   public static function isUserLogged()
   {
     return isset($_SESSION['user']['id']);
   }
 
+  /**
+   * Verifica se o usuário é admin
+   * @return boolean
+   */
   public static function isUserAdmin()
   {
     return isset($_SESSION['user']['is_admin']);
@@ -53,7 +62,8 @@ class Session
 
 
   /**
-   * 
+   * Redireciona para rota anterior dependendo do caso se o usuário está logado ou não, bem como o tipo rota que está sendo acessada
+   * @param 
    */
   public static function verifyLoggedUser($requirement, $routerType, $request)
   {

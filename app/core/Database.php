@@ -37,20 +37,15 @@ class Database
      */
     private static $port;
 
-    /**
-     * Nome da tabela a ser manipulada
-     * @var string
-     */
-    private static $table;
 
     /**
-     * Instancia de conexão com o banco de dados
+     * Instância de conexão com o banco de dados
      * @var PDO
      */
     private static $connection;
 
     /**
-     * Método responsável por configurar a classe
+     * Configura a classe
      * @param string $host
      * @param string $name
      * @param string $user
@@ -67,7 +62,7 @@ class Database
     }
 
     /**
-     * Método responsável por criar uma conexão com o banco de dados
+     * Cria uma conexão com o banco de dados
      */
     private static function setConnection()
     {
@@ -80,7 +75,7 @@ class Database
     }
 
     /**
-     * Método responsável por executar queries dentro do banco de dados
+     * Executa as queries dentro do banco de dados
      * @param  string $query
      * @param  array  $params
      * @return @return PDOStatement
@@ -88,16 +83,11 @@ class Database
     public static function execute($query, $params = [])
     {
         self::setConnection();
+
         try {
             $statement = self::$connection->prepare($query);
             $statement->execute($params);
             return $statement;
-            $isSelect = strpos($query, "SELECT") !== false;
-
-            if ($isSelect) {
-                $data = $statement->fetchObject();
-                return $data;
-            }
         } catch (PDOException $e) {
             die('ERROR: ' . $e->getMessage());
         }
