@@ -11,6 +11,7 @@
   --error: #f1596a;
 
   --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --outline: 0 0 0 2px var(--primary), 0 0 0 0.6rem var(--secondary);
 
   --desktop-screen: 1200px;
 
@@ -56,15 +57,16 @@ button {
 a:focus,
 button:focus {
   outline: none;
-  box-shadow: 0 0 0 2px var(--primary), 0 0 0 0.6rem var(--secondary);
+  box-shadow: var(--outline);
   border-radius: 0.8rem;
 }
 
 a {
+  display: block;
   text-decoration: none;
   color: inherit;
   transition: all 0.25s ease;
-  padding: .4rem;
+  padding: 0.4rem;
 }
 
 a:hover,

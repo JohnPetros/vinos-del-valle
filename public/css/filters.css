@@ -1,4 +1,27 @@
-.search {
+.filters {
   margin-top: 2.4rem;
 }
 
+.grapes ul {
+  display: flex;
+  gap: 1.2rem;
+  margin-top: 2.4rem;
+}
+
+.grapes .grape {
+  padding: 1.2rem;
+  display: grid;
+  place-content: center;
+  background-color: var(--base-1);
+  color: var(--base-3);
+  font-weight: 700;
+  border-radius: 1.2rem;
+}
+
+.grapes .grape:hover {
+  color: var(--base-4);
+}
+
+.grapes .grape.active {
+  color: var(--base-1);
+}
