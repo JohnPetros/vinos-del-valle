@@ -1,0 +1,153 @@
+.input-wrapper {
+  margin-top: 2.4rem;
+  border: 1px solid var(--base-3);
+  padding: 0.8rem;
+  border-radius: 0.8rem;
+
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper.active,
+.input-wrapper:focus-within {
+  border-color: var(--primary);
+}
+
+.input-wrapper i {
+  color: var(--base-3);
+  font-size: 2.4rem;
+}
+
+i.active,
+.input-wrapper:focus-within i {
+  color: var(--primary);
+}
+
+.input-wrapper input {
+  border: none;
+  flex: 1;
+  outline: none;
+  margin-left: 0.8rem;
+}
+
+.input-wrapper button {
+  width: 2.4rem;
+  height: 2.4rem;
+  margin: 0;
+  display: grid;
+  place-content: center;
+  background-color: transparent;
+}
+
+form button[type="submit"] {
+  background-color: var(--primary);
+  color: var(--base-1);
+  padding: 1.2rem;
+  width: 100%;
+  border-radius: 0.8rem;
+  margin-top: 2.4rem;
+}
+
+form button:focus {
+  box-shadow: 0 0 2px var(--secondary);
+}
+
+form p {
+  text-align: center;
+  margin-top: 2.4rem;
+  font-size: 1.2rem;
+}
+
+form a {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.select.year {
+  width: max-content;
+  overflow: hidden;
+}
+
+.selected {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  gap: 1.2rem;
+  background-color: transparent;
+}
+
+.selected:focus {
+  box-shadow: none;
+}
+
+.select .selected.year {
+  font-size: 2.4rem;
+  color: var(--primary);
+}
+
+.select .select-box {
+  height: 0;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.2rem;
+  gap: 0.8rem;
+  background-color: var(--base-1);
+  width: 100%;
+  box-shadow: var(--shadow);
+  border-radius: 1.2rem;
+  transition: height 0.2s ease-in-out;
+  border: 1px solid var(--primary);
+}
+
+.select .select-box.active {
+  height: 15.2rem;
+}
+
+.select .select-box .option {
+  width: 100%;
+  cursor: pointer;
+}
+
+.select .select-box .option:first-child {
+  margin-top: 1.2rem;
+}
+
+.select .select-box .option:hover label,
+.option.active label {
+  cursor: pointer;
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.select .select-box .option input[type="radio"] {
+  visibility: hidden;
+}
+
+.search-wrapper {
+  display: flex;
+  padding: 1.2rem;
+  margin-top: 2.4rem;
+  background-color: var(--base-1);
+  border-radius: 0.8rem;
+  border: 1px solid transparent;
+}
+
+.search-wrapper:focus-within {
+  border-color: var(--primary);
+}
+
+.search-wrapper:focus-within i {
+  color: var(--primary);
+}
+
+.search-wrapper i {
+  color: var(--base-4);
+}
+
+.search-wrapper .search {
+  width: 100%;
+  margin-left: 1.2rem;
+  background-color: transparent;
+}

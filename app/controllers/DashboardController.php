@@ -18,11 +18,11 @@ class DashboardController
     Session::verifyLoggedUser('login', 'admin', $request);
 
     $header =  View::render('partials/header');
-    $search =  View::render('partials/search');
+    $filters =  View::render('partials/filters');
 
     return View::render('pages/dashboard', [
       'header' => $header,
-      'search' => $search,
+      'filters' => $filters,
     ]);
   }
 }

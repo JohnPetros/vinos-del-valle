@@ -42,6 +42,11 @@ body {
   background-color: var(--base-0);
 }
 
+input {
+  border: none;
+  outline: none;
+}
+
 button {
   cursor: pointer;
   border: none;
