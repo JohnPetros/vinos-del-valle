@@ -1,7 +1,7 @@
 const form = document.querySelector("form");
 const inputs = document.querySelectorAll(".input");
 const inputsWrappers = document.querySelectorAll(".input-wrapper");
-const selects = document.querySelectorAll(".selected");
+const selectsButtons = document.querySelectorAll(".selected");
 const portugueseNames = {
   email: "e-mail",
   password: "senha",
@@ -113,11 +113,31 @@ function handlePasswordEyeClick({ currentTarget }) {
   input.type = isClosed ? "password" : "text";
 }
 
-function handleSelectClick({ currentTarget }) {
-  const selectBox = currentTarget.parentNode.querySelector(".select-box");
-  console.log(selectBox);
+function openSelectBox(selectButton) {
+  const selectBox = selectButton.parentNode.querySelector(".select-box");
   const isActive = selectBox.classList.contains("active");
   selectBox.classList[isActive ? "remove" : "add"]("active");
+}
+
+function checkOption(option, selectButton) {
+  const radio = option.querySelector('input[type="radio"]');
+  const label = option.querySelector("label");
+  radio.click();
+
+  const selectedItemName = selectButton.querySelector(".selected-item-name");
+  selectedItemName.innerHTML = label.innerHTML;
+}
+
+function handleSelectClick({ currentTarget }) {
+  const selectButton = currentTarget;
+  openSelectBox(selectButton);
+
+  const options = currentTarget.parentNode.querySelectorAll(".option");
+  options.forEach((option) =>
+    option.addEventListener("click", ({ currentTarget }) =>
+      checkOption(currentTarget, selectButton)
+    )
+  );
 }
 
 function setInputsWrappers(wrapper) {
@@ -129,10 +149,31 @@ function setInputsWrappers(wrapper) {
   wrapper.addEventListener("click", handleInputWrapperClick);
 }
 
+function hideSelectBox(select) {
+  const selectBox = select.querySelector(".select-box");
+  selectBox.classList.remove("active");
+}
+
+function containElement(element, select) {
+  return select.contains(element);
+}
+
+function handleBodyClick({ target }) {
+  const selects = document.querySelectorAll(".select");
+  const canHideSelectBox = ![...selects].some((select) =>
+    containElement(target, select)
+  );
+
+  if (canHideSelectBox) {
+    selects.forEach(hideSelectBox);
+  }
+}
+
 form.addEventListener("submit", handleSubmit);
 inputs.forEach((input) => input.addEventListener("change", handleInputChange));
 inputsWrappers.forEach(setInputsWrappers);
-selects.forEach((select) =>
+selectsButtons.forEach((select) =>
   select.addEventListener("click", handleSelectClick)
 );
 
+document.addEventListener("click", handleBodyClick);

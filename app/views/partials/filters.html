@@ -6,25 +6,25 @@
         ><i class="ph-fill ph-caret-down"></i>
       </button>
       <div class="select-box">
-          <div class="option active">
-            <input type="radio" name="option" id="all-years" />
-            <label for="all-years">Todos os anos</label>
-          </div>
-          <div class="option">
-            <input type="radio" name="option" id="2023" />
-            <label for="2023">2023</label>
-          </div>
-          <div class="option">
-            <input type="radio" name="option" id="2022" />
-            <label for="2022">2022</label>
-          </div>
-          <div class="option">
-            <input type="radio" name="option" id="2022" />
-            <label for="2022">2021</label>
-          </div>
-          <div class="option">
-            <input type="radio" name="option" id="2022" />
-            <label for="2022">2020</label>
+        <div class="option active">
+          <input type="radio" name="year" id="all-years" />
+          <label for="all-years">Todos os anos</label>
+        </div>
+        <div class="option">
+          <input type="radio" name="year" id="2023" />
+          <label for="2023">2023</label>
+        </div>
+        <div class="option">
+          <input type="radio" name="year" id="2022" />
+          <label for="2022">2022</label>
+        </div>
+        <div class="option">
+          <input type="radio" name="year" id="2021" />
+          <label for="2021">2021</label>
+        </div>
+        <div class="option">
+          <input type="radio" name="year" id="2020" />
+          <label for="2020">2020</label>
         </div>
       </div>
     </div>
@@ -34,35 +34,31 @@
       <button type="button" class="selected region">
         <span class="selected-item-name"
           ><img class="flag" src="https://flagsapi.com/BR/flat/24.png" />
-          Gaúcha
+          Santa Gaúcha
         </span>
         <i class="ph-fill ph-caret-down"></i>
       </button>
       <div class="select-box">
         <div class="option active">
-          <input type="radio" name="option" id="1" />
-          <img class="flag" src="https://flagsapi.com/BR/flat/24.png" />
-          <label for="1"> Santa Gaúcha </label>
+          <input type="radio" name="region" id="5" />
+          <label for="5"
+            ><img class="flag" src="https://flagsapi.com/FR/flat/24.png" />
+            Santa Gaúcha</label
+          >
         </div>
         <div class="option">
-          <input type="radio" name="option" id="2023" />
-          <img class="flag" src="https://flagsapi.com/BR/flat/24.png" />
-          <label for="1"> Santa Gaúcha </label>
+          <input type="radio" name="region" id="1" />
+          <label for="1"
+            ><img class="flag" src="https://flagsapi.com/IT/flat/24.png" />
+            Lombardia</label
+          >
         </div>
         <div class="option">
-          <input type="radio" name="option" id="2022" />
-          <img class="flag" src="https://flagsapi.com/BR/flat/24.png" />
-          <label for="1"> Santa Gaúcha </label>
-        </div>
-        <div class="option">
-          <input type="radio" name="option" id="2022" />
-          <img class="flag" src="https://flagsapi.com/BR/flat/24.png" />
-          <label for="1"> Santa Gaúcha </label>
-        </div>
-        <div class="option">
-          <input type="radio" name="option" id="2022" />
-          <img class="flag" src="https://flagsapi.com/BR/flat/24.png" />
-          <label for="1"> Santa Gaúcha </label>
+          <input type="radio" name="region" id="1" />
+          <label for="1"
+            ><img class="flag" src="https://flagsapi.com/ES/flat/24.png" />
+            Rioja</label
+          >
         </div>
       </div>
     </div>
@@ -81,26 +77,36 @@
 </form>
 
 <div class="footer">
-  <ul class="grapes">
+  <ul class="categories">
     <li>
-      <a class="grape active" href="#" style="background-color: #8bd297"
-        >Chardonnay</a
-      >
+      <button class="category active" style="background-color: #8bd297">
+        Moscato
+      </button>
     </li>
     <li>
-      <a class="grape" href="#" style="background-color: var(--base-1)"
-        >Merlot</a
-      >
+      <button class="category" style="background-color: var(--base-1)">
+        Merlot
+      </button>
     </li>
     <li>
-      <a class="grape" href="#" style="background-color: var(--base-1)"
-        >Isabel</a
-      >
+      <button class="category" style="background-color: var(--base-1)">
+        Isabel
+      </button>
     </li>
     <li>
-      <a class="grape" href="#" style="background-color: var(--base-1)"
-        >Niágara</a
-      >
+      <button class="category" style="background-color: var(--base-1)">
+        Niágara
+      </button>
     </li>
   </ul>
+</div>
+<div class="action-buttons">
+  <button class="button filter">
+    <i class="ph-bold ph-funnel"></i>
+    Filtrar
+  </button>
+  <button class="button add">
+    <i class="ph-bold ph-plus"></i>
+    Adicionar vinho
+  </button>
 </div>

@@ -12,6 +12,7 @@ class LoginController
 
   /**
    * Retorna o conteúdo (View) da página de login
+   * @param Request $request
    * @param string $errorMessage
    * @return string
    */
@@ -47,7 +48,7 @@ class LoginController
 
     Session::setUserSession($user);
 
-    $route = $user->is_admin ? '/dashboard' : '/app';
+    $route = $user->is_admin ? '/dashboard/wine' : '/app';
 
     $request->getRouter()->redirect($route);
   }

@@ -62,7 +62,6 @@ button:focus {
 }
 
 a {
-  display: block;
   text-decoration: none;
   color: inherit;
   transition: all 0.25s ease;

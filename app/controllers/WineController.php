@@ -5,15 +5,15 @@ namespace App\controllers;
 use \App\core\View;
 use \App\core\Session;
 
-class DashboardController
+class WineController
 {
 
   /**
-   * Retorna o conteúdo (View) da página de Dashboard
-   * @param string $errorMessage
+   * Retorna o conteúdo (View) da página de vinhos da Dashboard
+   * @param Request $request
    * @return string
    */
-  public static function getDashboardPage($request)
+  public static function getDashboardWinePage($request)
   {
     Session::verifyLoggedUser('login', 'admin', $request);
 

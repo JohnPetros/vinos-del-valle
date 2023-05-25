@@ -5,3 +5,20 @@
   grid-template-columns: 1fr 1fr 1fr;
   gap: 2.4rem;
 }
+
+.button {
+  padding: 0.8rem 1.2rem;
+  border-radius: 1.2rem;
+  margin-top: 2.4rem;
+  font-weight: 700;
+}
+
+.button.filter {
+  background-color: var(--secondary);
+  color: var(--base-4);
+}
+
+.button.add {
+  background-color: var(--success);
+  color: var(--base-0);
+}

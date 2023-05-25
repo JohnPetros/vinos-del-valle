@@ -5,24 +5,22 @@
 .selects {
   display: flex;
   align-items: center;
-
-  gap: 1.2rem;
 }
 
-.footer {
+.selects > span {
+  margin-left: 2.4rem;
+  margin-right: .8rem;
+}
+
+.categories {
+  margin-top: 2.4rem;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  margin-top: 2.4rem;
-}
-
-.grapes {
-  display: flex;
   gap: 1.2rem;
 }
 
-.grapes .grape {
-  padding: .8rem;
+.categories .category {
+  padding: 0.8rem;
   font-size: 1.4rem;
   display: grid;
   place-content: center;
@@ -32,10 +30,10 @@
   border-radius: 1.2rem;
 }
 
-.grapes .grape:hover {
+.categories .category:hover {
   color: var(--base-4);
 }
 
-.grapes .grape.active {
+.categories .category.active {
   color: var(--base-1);
 }

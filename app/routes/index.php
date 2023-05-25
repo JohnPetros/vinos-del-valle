@@ -4,4 +4,4 @@
 include __DIR__ . '/login.php';
 
 // ROTAS DE DASHBOARD
-include __DIR__ . '/dashboard.php';
+include __DIR__ . '/dashboard/dashboard.php';

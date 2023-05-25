@@ -11,8 +11,10 @@ main .app {
   justify-content: center;
 }
 
-.app {
-  width: 40rem;
+.app > div {
+  width: 36rem;
+
+  margin: 0 auto;
 }
 
 .app header {
