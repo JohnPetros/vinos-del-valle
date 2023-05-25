@@ -28,6 +28,7 @@
   color: var(--base-3);
   font-weight: 700;
   border-radius: 1.2rem;
+  background-color: inherit;
 }
 
 .categories .category:hover {

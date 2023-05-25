@@ -1,6 +1,7 @@
 const form = document.querySelector("form");
 const inputs = document.querySelectorAll(".input");
 const inputsWrappers = document.querySelectorAll(".input-wrapper");
+const selects = document.querySelectorAll(".select");
 const selectsButtons = document.querySelectorAll(".selected");
 const portugueseNames = {
   email: "e-mail",
@@ -119,12 +120,12 @@ function openSelectBox(selectButton) {
   selectBox.classList[isActive ? "remove" : "add"]("active");
 }
 
-function checkOption(option, selectButton) {
+function checkOption(option, select) {
   const radio = option.querySelector('input[type="radio"]');
   const label = option.querySelector("label");
   radio.click();
 
-  const selectedItemName = selectButton.querySelector(".selected-item-name");
+  const selectedItemName = select.querySelector(".selected-item-name");
   selectedItemName.innerHTML = label.innerHTML;
 }
 
@@ -147,6 +148,11 @@ function setInputsWrappers(wrapper) {
   }
 
   wrapper.addEventListener("click", handleInputWrapperClick);
+}
+
+function checkFirstOption(select) {
+  const firstOption = select.querySelector(".option");
+  checkOption(firstOption, select);
 }
 
 function hideSelectBox(select) {
@@ -172,6 +178,7 @@ function handleBodyClick({ target }) {
 form.addEventListener("submit", handleSubmit);
 inputs.forEach((input) => input.addEventListener("change", handleInputChange));
 inputsWrappers.forEach(setInputsWrappers);
+selects.forEach(checkFirstOption);
 selectsButtons.forEach((select) =>
   select.addEventListener("click", handleSelectClick)
 );
