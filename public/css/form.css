@@ -80,16 +80,16 @@ form a {
   gap: 1.2rem;
   background-color: transparent;
   border-bottom: 2px solid var(--primary);
-
 }
 
 .selected:focus {
   box-shadow: none;
 }
 
-.selected-item-name {
+.selected-item {
   display: flex;
   align-items: center;
+  gap: 0.8rem;
 }
 
 .selected-item-name .flag {

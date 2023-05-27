@@ -9,7 +9,7 @@
 
 .selects > span {
   margin-left: 2.4rem;
-  margin-right: .8rem;
+  margin-right: 0.8rem;
 }
 
 .categories {
@@ -28,7 +28,6 @@
   color: var(--base-3);
   font-weight: 700;
   border-radius: 1.2rem;
-  background-color: inherit;
 }
 
 .categories .category:hover {

@@ -2,7 +2,7 @@
   <div class="selects">
     <div class="select year">
       <button type="button" class="selected year">
-        <span class="selected-item-name"></span
+        <span id="year" data-value="" class="selected-item"></span
         ><i class="ph-fill ph-caret-down"></i>
       </button>
       <div class="select-box">
@@ -32,7 +32,7 @@
     <span>Região:</span>
     <div class="select region">
       <button type="button" class="selected region">
-        <span class="selected-item-name"> </span>
+        <span id="region" data-value="" class="selected-item"> </span>
         <i class="ph-fill ph-caret-down"></i>
       </button>
       <div class="select-box">
@@ -76,26 +76,16 @@
 <div class="footer">
   <ul class="categories">
     <li>
-      <button class="category" data-color="#8bd297">Moscato</button>
+      <button id="1" class="category grape" data-color="#8bd297">Moscato</button>
     </li>
     <li>
-      <button class="category" data-color="#aaa">Merlot</button>
+      <button id="2" class="category grape" data-color="#aaa">Merlot</button>
     </li>
     <li>
-      <button class="category" data-color="#cad">Isabel</button>
+      <button id="3" class="category grape" data-color="#cad">Isabel</button>
     </li>
     <li>
-      <button class="category" data-color="#1ac">Niágara</button>
+      <button id="4" class="category grape" data-color="#1ac">Niágara</button>
     </li>
   </ul>
-</div>
-<div class="action-buttons">
-  <button class="button filter">
-    <i class="ph-bold ph-funnel"></i>
-    Filtrar
-  </button>
-  <button class="button add">
-    <i class="ph-bold ph-plus"></i>
-    Adicionar vinho
-  </button>
 </div>

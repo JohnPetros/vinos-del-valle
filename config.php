@@ -9,6 +9,7 @@ use App\core\Database;
 // CARREGA VARIÁVEIS DE AMBIENTE
 Environment::load(__DIR__);
 
+// CONFIGURA O BANCO DE DADOS
 Database::config(
   getenv('DB_HOST'),
   getenv('DB_NAME'),
@@ -17,9 +18,11 @@ Database::config(
   getenv('DB_PORT')
 );
 
+// CONFIGURA URL DA APLICAÇÃO
 define('URL', getenv('URL'));
 
-// DEFINE O VALOR DAS VARIÁVEIS COMUNS PARA TODAS AS VIEWS 
+// DEFINE O VALOR DAS VARIÁVEIS GLOBAIS
 View::init([
-  'URL' => URL
+  'URL' => URL,
+  'public_path' => '../../../public'
 ]);

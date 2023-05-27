@@ -120,13 +120,22 @@ function openSelectBox(selectButton) {
   selectBox.classList[isActive ? "remove" : "add"]("active");
 }
 
+function activeOption(option) {
+  const options = option.parentNode.querySelectorAll(".option");
+  options.forEach((option) => option.classList.remove("active"));
+  option.classList.add("active");
+}
+
 function checkOption(option, select) {
   const radio = option.querySelector('input[type="radio"]');
   const label = option.querySelector("label");
   radio.click();
 
-  const selectedItemName = select.querySelector(".selected-item-name");
-  selectedItemName.innerHTML = label.innerHTML;
+  const selectedItem = select.querySelector(".selected-item");
+  selectedItem.innerHTML = label.innerHTML;
+  selectedItem.dataset.value = radio.id;
+
+  activeOption(label.parentNode);
 }
 
 function handleSelectClick({ currentTarget }) {

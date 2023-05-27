@@ -70,6 +70,7 @@ class Router
     $patternVariable = '/{(.*?)}/';
     if (preg_match_all($patternVariable, $route, $matches)) {
       $route = preg_replace($patternVariable, '(.*?)', $route);
+
       $variables = $matches[1];
     }
 
@@ -149,7 +150,7 @@ class Router
 
     // MÉTODO HTTP
     $httpMethod = $this->request->getHttpMethod();
-
+    
     // VALIDA AS ROTAS
     foreach ($this->routes as $patternRoute => $methods) {
       // VERIFICA SE A URI BATE COM O PADRÃO
@@ -186,7 +187,7 @@ class Router
     try {
       // // OBTÉM A ROTA ATUAL
       $route = $this->getRoute();
-     
+
       // VERIFICA O CONTROLLER
       if (!isset($route['controller'])) {
         throw new Exception("A URL não pôde ser processada", 500);

@@ -6,18 +6,18 @@ class View
 {
 
   /**
-   * Variáveis padrões da View
+   * Variáveis globais da View
    * @var array
    */
-  public static $vars = [];
+  public static $globalVars = [];
 
   /**
-   * Define os variáveis comuns entra todas Views
+   * Define os variáveis globais entra todas Views
    * @return array $vars
    */
-  public static function init($vars = [])
+  public static function init($globalVars = [])
   {
-    self::$vars = $vars;
+    self::$globalVars = $globalVars;
   }
 
   /**
@@ -42,7 +42,7 @@ class View
   {
     $viewContent = self::getViewContent($viewName);
 
-    $vars = array_merge(self::$vars, $vars);
+    $vars = array_merge(self::$globalVars, $vars);
 
     $keys = array_keys($vars);
 
