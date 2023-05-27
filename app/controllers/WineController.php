@@ -6,10 +6,10 @@ use \App\core\View;
 use \App\core\Session;
 use \App\utils\Layout;
 use \App\models\Wine;
+use \App\models\Region;
 
 class WineController
 {
-
   /**
    * Retorna os cards de vinho
    * @param array $params
@@ -37,6 +37,41 @@ class WineController
   }
 
   /**
+   * Retorna as regiões que servirão como opções para o select
+   * @return string
+   */
+  public static function getRegionOptions()
+  {
+    $regions = Region::getRegions();
+    $options = View::render('partials/region-option', [
+      'id' => 'all',
+      'name' => 'Todas as regiões',
+      'country_code' => 'AQ',
+    ]);;
+
+    foreach ($regions as $region) {
+      $options .= View::render('partials/region-option', [
+        'id' => $region->id,
+        'name' => $region->name,
+        'country_code' => $region->country_code,
+      ]);
+    }
+
+    return $options;
+  }
+
+  /**
+   * Retorna os filtradores de vinhos
+   * @return string
+   */
+  public static function getFilters()
+  {
+    return View::render('partials/wine-filters', [
+      'region-options' => self::getRegionOptions(),
+    ]);
+  }
+
+  /**
    * Retorna o conteúdo (View) da página de vinhos da Dashboard
    * @param Request $request
    * @return string
@@ -45,12 +80,11 @@ class WineController
   {
     Session::verifyLoggedUser('login', 'admin', $request);
 
-    $filters =  View::render('partials/wine-filters');
     $params = $request->getQueryParams();
 
     return View::render('pages/dashboard/wine-dashboard', [
       'header' => Layout::getDashboardHeader(),
-      'filters' => $filters,
+      'filters' => self::getFilters(),
       'wine-cards' => self::getWineCards($params),
     ]);
   }
