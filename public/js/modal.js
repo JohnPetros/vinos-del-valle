@@ -17,4 +17,3 @@ confirmButtons.forEach((button) =>
 cancelButtons.forEach((button) =>
   button.addEventListener("click", handleCancelButton)
 );
-console.log(cancelButtons);

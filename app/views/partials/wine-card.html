@@ -1,0 +1,17 @@
+<a href="/dashboard/wine/{{id}}" class="wine-card">
+  <div class="image-wrapper">
+    <img width="64" src="{{public_path}}/uploads/wines/default.png" alt="" />
+  </div>
+  <div class="info">
+    <strong class="name">{{name}}</strong>
+    <small class="description"
+      >Pais: <span class="country" data-code="{{country_code}}"></span> |
+      <span class="date" data-date="{{bottling_date}}"></span
+    ></small>
+    <span class="grape">{{grape}}</span>
+  </div>
+</a>
+
+<span class="css" data-file="wine-card"></span>
+<span class="js" data-file="countries"></span>
+<span class="js" data-file="date"></span>

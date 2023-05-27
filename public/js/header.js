@@ -6,5 +6,4 @@ function handleLogoutButtonClick() {
 }
 
 logoutButton.addEventListener("click", handleLogoutButtonClick);
-console.log(logoutButton);
 
