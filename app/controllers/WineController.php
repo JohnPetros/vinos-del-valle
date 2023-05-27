@@ -7,6 +7,7 @@ use \App\core\Session;
 use \App\utils\Layout;
 use \App\models\Wine;
 use \App\models\Region;
+use App\models\Grape;
 
 class WineController
 {
@@ -37,7 +38,7 @@ class WineController
   }
 
   /**
-   * Retorna as regiões que servirão como opções para o select
+   * Retorna as regiões, que servirão como opções para o select de filtragem de vinhos
    * @return string
    */
   public static function getRegionOptions()
@@ -47,7 +48,7 @@ class WineController
       'id' => 'all',
       'name' => 'Todas as regiões',
       'country_code' => 'AQ',
-    ]);;
+    ]);
 
     foreach ($regions as $region) {
       $options .= View::render('partials/region-option', [
@@ -61,6 +62,26 @@ class WineController
   }
 
   /**
+   * Retorna as uvas, que servirão para filtrar vinhos por categoria
+   * @return string
+   */
+  public static function getGrapeCategories()
+  {
+    $grapes = Grape::getGrapes();
+    $categories = "";
+
+    foreach ($grapes as $grape) {
+      $categories .= View::render('partials/category', [
+        'id' => $grape->id,
+        'name' => $grape->name,
+        'color_hex' => $grape->color_hex,
+      ]);
+    }
+
+    return $categories;
+  }
+
+  /**
    * Retorna os filtradores de vinhos
    * @return string
    */
@@ -68,6 +89,7 @@ class WineController
   {
     return View::render('partials/wine-filters', [
       'region-options' => self::getRegionOptions(),
+      'grape-categories' => self::getGrapeCategories(),
     ]);
   }
 

@@ -94,6 +94,7 @@ class Wine
       $query .= join(' AND ', $filters);
     }
 
+    $query .= ' ORDER BY W.harvest_date';
 
     return Database::execute($query)->fetchAll(\PDO::FETCH_CLASS, self::class);
   }

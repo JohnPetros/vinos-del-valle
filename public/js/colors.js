@@ -1,10 +1,8 @@
 const colors = document.querySelectorAll("[data-color]");
 
-console.log({ colors });
-
-function applyColor(color) {
+function setColor(color) {
   const [prop, colorHex] = color.dataset.color.split(":");
   color.style[prop] = colorHex;
 }
 
-colors.forEach(applyColor);
+colors.forEach(setColor);

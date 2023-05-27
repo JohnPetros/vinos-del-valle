@@ -23,6 +23,7 @@
     <script defer src="{{public_path}}/js/global.js"></script>
     <script defer src="{{public_path}}/js/form.js"></script>
     <script defer src="{{public_path}}/js/filters.js"></script>
+    <script defer src="{{public_path}}/js/pagination.js"></script>
     <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
     <title>Dashboard - Vinhos</title>
   </head>
@@ -35,7 +36,8 @@
         Adicionar vinho
       </button>
 
-      <div class="grid">{{wine-cards}}</div>
+      <div id="cards-container">{{wine-cards}}</div>
+      <div class="pagination-buttons"></div>
     </main>
   </body>
 </html>

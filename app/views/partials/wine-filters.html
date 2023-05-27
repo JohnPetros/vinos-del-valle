@@ -8,7 +8,7 @@
       <div class="select-box">
         <div class="option active">
           <input type="radio" name="year" id="all-years" />
-          <label for="all-years">Todos os anos</label>
+          <label for="all">Todos os anos</label>
         </div>
         <div class="option">
           <input type="radio" name="year" id="2023" />
@@ -53,20 +53,7 @@
 
 <div class="footer">
   <ul class="categories">
-    <li>
-      <button id="1" class="category grape" data-color="#8bd297">
-        Moscato
-      </button>
-    </li>
-    <li>
-      <button id="2" class="category grape" data-color="#aaa">Merlot</button>
-    </li>
-    <li>
-      <button id="3" class="category grape" data-color="#cad">Isabel</button>
-    </li>
-    <li>
-      <button id="4" class="category grape" data-color="#1ac">Niágara</button>
-    </li>
+    {{grape-categories}}
   </ul>
 </div>
 

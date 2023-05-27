@@ -1,8 +1,16 @@
-.grid {
-  margin-top: 4rem;
+#cards-container {
+  margin-top: 3.2rem;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 2.4rem;
+  height: 34rem;
+  align-items: flex-start;
+}
+
+.pagination-buttons {
+  margin-top: 1.2rem;
+  display: flex;
+  gap: 1.2rem;
 }
 
 .button {
@@ -15,6 +23,11 @@
 .button.add {
   background-color: var(--secondary);
   color: var(--base-4);
+}
+
+.button.page.active {
+  background-color: var(--primary);
+  color: var(--base-1);
 }
 
 .empty-message {

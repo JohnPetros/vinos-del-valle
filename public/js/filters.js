@@ -8,6 +8,7 @@ function removeActive(category) {
 }
 
 function addActive(category) {
+  categories.forEach(removeActive);
   category.classList.add("active");
   category.style.backgroundColor = category.dataset.color;
 }
@@ -21,9 +22,7 @@ function filterData() {
 }
 
 function handleCategoryClick({ currentTarget }) {
-  categories.forEach(removeActive);
   addActive(currentTarget);
-
   filterData();
 }
 
@@ -46,9 +45,15 @@ function handleSelectOptionClick() {
   filterData();
 }
 
-categories.forEach((button) =>
-  button.addEventListener("click", handleCategoryClick)
-);
+categories.forEach((button) => {
+  button.addEventListener("click", handleCategoryClick);
+  button.addEventListener("mouseover", ({ currentTarget }) =>
+    addActive(currentTarget)
+  );
+  button.addEventListener("mouseout", ({ currentTarget }) =>
+    removeActive(currentTarget)
+  );
+});
 
 selectOptions.forEach((option) =>
   option.addEventListener("click", handleSelectOptionClick)
