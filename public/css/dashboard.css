@@ -1,7 +1,8 @@
 .grid {
   margin-top: 4rem;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2.4rem;
 }
 
 .button {
@@ -14,4 +15,11 @@
 .button.add {
   background-color: var(--secondary);
   color: var(--base-4);
+}
+
+.empty-message {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--base-4);
+  text-align: center;
 }

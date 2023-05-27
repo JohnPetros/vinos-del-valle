@@ -79,7 +79,7 @@ class Wine
    */
   public static function getWines($params)
   {
-    $query = "SELECT W.id, W.name, W.bottling_date, R.country_code, G.name AS grape
+    $query = "SELECT W.id, W.name, W.harvest_date, R.country_code, G.name AS grape, G.color_hex
               FROM wines AS W
               JOIN regions AS R ON R.id = W.region_id
               JOIN grapes AS G ON G.id = W.grape_id";

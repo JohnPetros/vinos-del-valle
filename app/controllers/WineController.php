@@ -20,13 +20,16 @@ class WineController
     $wines = Wine::getWines($params);
     $cards = '';
 
+    if (!count($wines)) return '<p class="empty-message">Nenhum vinho cadastrado.</p>';
+
     foreach ($wines as $wine) {
       $cards .= View::render('partials/wine-card', [
         'id' => $wine->id,
         'name' => $wine->name,
         'country_code' => $wine->country_code,
-        'bottling_date' => $wine->bottling_date,
+        'harvest_date' => $wine->harvest_date,
         'grape' => $wine->grape,
+        'color_hex' => $wine->color_hex,
       ]);
     }
 

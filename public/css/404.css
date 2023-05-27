@@ -1,0 +1,30 @@
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 {
+  color: var(--primary);
+  font-size: 4rem;
+  margin-top: 2.4rem;
+  text-transform: uppercase;
+}
+
+h1 span {
+  color: var(--base-3);
+}
+
+p {
+  color: var(--base-4);
+  margin-top: 2.4rem;
+}
+
+button {
+  background-color: var(--secondary);
+  padding: 1.2rem;
+  border-radius: 1.2rem;
+  font-size: 1.8rem;
+  font-weight: 500;
+}

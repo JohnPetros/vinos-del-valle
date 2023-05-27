@@ -19,6 +19,7 @@ function addCSSFile(css) {
   link.setAttribute("href", `${PUBLIC_PATH}/css/${css.dataset.file}.css`);
 
   appendTag(link);
+  css.remove();
 }
 
 function hasScript(script) {
@@ -33,6 +34,7 @@ function addJSFile(js) {
   script.setAttribute("src", `${PUBLIC_PATH}/js/${js.dataset.file}.js`);
 
   if (!hasScript(script)) appendTag(script);
+  js.remove();
 }
 
 css.forEach((css) => addCSSFile(css));

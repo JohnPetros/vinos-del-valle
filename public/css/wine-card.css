@@ -5,7 +5,7 @@
   align-items: center;
   box-shadow: var(--shadow);
   padding: 1.2rem;
-  transition: transform .2s ease;
+  transition: transform 0.2s ease;
   cursor: pointer;
 }
 
@@ -30,7 +30,7 @@
 
 .image-wrapper img {
   max-width: 100%;
-  margin-top: -3.2rem;
+  margin-top: -4rem;
 }
 
 .name {

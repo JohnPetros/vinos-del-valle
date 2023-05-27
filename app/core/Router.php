@@ -4,6 +4,7 @@ namespace App\core;
 
 use \Exception;
 use \ReflectionFunction;
+use \App\core\View;
 
 class Router
 {
@@ -150,7 +151,7 @@ class Router
 
     // MÉTODO HTTP
     $httpMethod = $this->request->getHttpMethod();
-    
+
     // VALIDA AS ROTAS
     foreach ($this->routes as $patternRoute => $methods) {
       // VERIFICA SE A URI BATE COM O PADRÃO
@@ -176,6 +177,23 @@ class Router
     }
     // URL NÃO ENCONTRADA 
     throw new Exception("URL não encontrada", 404);
+  }
+
+  /**
+   * Lida com erros de rota
+   * @param Exeception $error;
+   * @return $string;
+   */
+  private function handleError($error)
+  {
+    $code = $error->getCode();
+
+    switch ($code) {
+      case 404:
+        return new Response($code, View::render('pages/404.html'));
+      default:
+        return new Response($code, $error->getMessage());
+    }
   }
 
   /**
@@ -207,7 +225,7 @@ class Router
       // RETORNA A EXECUÇÃO DA FUNÇÃO DO CONTROLLER
       return call_user_func_array($route['controller'], $args);
     } catch (Exception $error) {
-      return new Response($error->getCode(), $error->getMessage());
+      return new Response($error->getCode(), View::render('pages/404'));
     }
   }
 
