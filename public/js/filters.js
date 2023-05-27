@@ -36,6 +36,8 @@ function getCategoryParam() {
   const activeCategory = [...categories].find((category) =>
     category.classList.contains("active")
   );
+  if (!activeCategory) return;
+
   const param = activeCategory.classList[1];
   return `${param}=${activeCategory.id.trim()}`;
 }

@@ -4,6 +4,7 @@ namespace App\controllers;
 
 use \App\core\View;
 use \App\core\Session;
+use \App\utils\Layout;
 
 class WineController
 {
@@ -17,11 +18,10 @@ class WineController
   {
     Session::verifyLoggedUser('login', 'admin', $request);
 
-    $header =  View::render('partials/header');
-    $filters =  View::render('partials/filters');
+    $filters =  View::render('partials/wine-filters');
 
-    return View::render('pages/dashboard', [
-      'header' => $header,
+    return View::render('pages/dashboard/wine-dashboard', [
+      'header' => Layout::getDashboardHeader(),
       'filters' => $filters,
     ]);
   }

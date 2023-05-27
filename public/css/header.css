@@ -4,6 +4,7 @@ header {
   align-items: center;
   width: 100%;
   margin: 2.4rem auto;
+  margin-bottom: 4rem;
 }
 
 header .logo {
@@ -15,6 +16,10 @@ header .logo h2 {
   color: var(--base-4);
 }
 
+header nav {
+  margin: auto;
+}
+
 header nav ul {
   display: flex;
   gap: 2.4rem;
@@ -23,9 +28,8 @@ header nav ul {
 header nav ul li.nav-link {
   color: var(--base-4);
   font-weight: 500;
-  font-size: 1.6rem;
   display: block;
-  padding: 1.2rem;
+  padding: 0.8rem;
   border-radius: 0.8rem;
 }
 
@@ -48,11 +52,13 @@ header .user .user-button {
   border-radius: 1.2rem;
   padding: 0.4rem 1.2rem;
   font-size: 1.6rem;
+  display: grid;
+  place-content: center;
 }
 
 header .user .user-button:hover {
   outline: auto;
-  outline-color:var(--primary);
+  outline-color: var(--primary);
 }
 
 header .user .user-button:hover i {
