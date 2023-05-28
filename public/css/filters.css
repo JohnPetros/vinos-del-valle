@@ -1,10 +1,16 @@
 .selects {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 2.4rem;
 }
 
-.selects > span {
-  margin-left: 2.4rem;
+.select-container {
+  display: flex;
+  align-items: center;
+}
+
+.select-container > span {
   margin-right: 0.8rem;
 }
 

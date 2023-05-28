@@ -15,13 +15,34 @@ header .logo h2 {
   color: var(--base-4);
 }
 
+header .menu {
+  flex: 1;
+  display: flex;
+}
+
+header .menu-hamburguer {
+  display: none;
+  margin: 0;
+}
+
+header .menu-hamburguer span {
+  display: block;
+  width: 2rem;
+  height: .4rem;
+  border-radius: 1.2rem;
+  background-color: var(--base-4);
+}
+
+header .menu .menu-close {
+  display: none;
+}
+
 header nav {
   margin: auto;
 }
 
 header nav ul {
   display: flex;
-  gap: 2.4rem;
 }
 
 header nav ul li.nav-link {
@@ -88,4 +109,46 @@ header .user .info .name {
 header .user .info .email {
   color: var(--base-3);
   font-weight: 700;
+}
+
+@media (max-width: 800px) {
+  header .menu-hamburguer {
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+  }
+
+  header .menu,
+  nav ul {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+  }
+
+  header .menu {
+    position: absolute;
+    right: -32rem;
+    top: 0;
+    z-index: 20;
+
+    flex: none;
+    gap: 4rem;
+    box-shadow: var(--shadow);
+    background-color: var(--base-1);
+    padding: 2.4rem 0;
+    border-radius: 2.4rem 0 0 2.4rem;
+    width: 32rem;
+    transition: all .35s ease-in-out;
+  }
+
+  header .menu.active {
+    right: 0;
+  }
+
+  header .menu .menu-close {
+    position: absolute;
+    top: 0;
+    left: 2.4rem;
+    display: block;
+  }
 }

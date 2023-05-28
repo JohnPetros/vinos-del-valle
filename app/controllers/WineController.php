@@ -11,6 +11,17 @@ use App\models\Grape;
 
 class WineController
 {
+
+  /**
+   * Filtra os vinhos pelo nome
+   * @param array $wines
+   * @return array
+   */
+  private static function filterWines($wine, $search)
+  {
+    return stripos(strtolower(trim($wine->name)), strtolower(trim($search))) !== false;
+  }
+
   /**
    * Retorna os cards de vinho
    * @param array $params
@@ -20,6 +31,13 @@ class WineController
   {
     $wines = Wine::getWines($params);
     $cards = '';
+
+    if (isset($params['search']) && $params['search'] !== '') {
+      $wines = array_filter(
+        $wines,
+        fn ($wine) => self::filterWines($wine, $params['search'])
+      );
+    }
 
     if (!count($wines)) return '<p class="empty-message">Nenhum vinho cadastrado.</p>';
 
@@ -90,6 +108,7 @@ class WineController
     return View::render('partials/wine-filters', [
       'selected-year' => $params['year'] ?? 'all-years',
       'selected-region-id' => $params['region'] ?? 'all-regions',
+      'search' => $params['search'] ?? '',
       'region-options' => self::getRegionOptions(),
       'grape-categories' => self::getGrapeCategories(),
     ]);
@@ -105,6 +124,8 @@ class WineController
     Session::verifyLoggedUser('login', 'admin', $request);
 
     $params = $request->getQueryParams();
+
+
 
     return View::render('pages/dashboard/wine-dashboard', [
       'header' => Layout::getDashboardHeader(),

@@ -3,14 +3,14 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 2.4rem;
-  height: 34rem;
+  min-height: 34rem;
   align-items: flex-start;
 }
 
 .pagination-buttons {
-  margin-top: 1.2rem;
   display: flex;
   gap: 1.2rem;
+  padding-bottom: 1.2rem;
 }
 
 .button {
@@ -35,4 +35,16 @@
   font-weight: 700;
   color: var(--base-4);
   text-align: center;
+}
+
+@media (max-width: 1080px) {
+  #cards-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 660px) {
+  #cards-container {
+    grid-template-columns: 1fr;
+  }
 }

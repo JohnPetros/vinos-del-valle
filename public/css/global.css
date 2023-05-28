@@ -41,6 +41,7 @@ body {
 
   overflow-x: hidden;
   background-color: var(--base-0);
+  overflow-x: hidden;
 }
 
 input {
@@ -52,8 +53,6 @@ button {
   cursor: pointer;
   border: none;
   transition: all 0.2s ease;
-
- 
 }
 
 a:focus,
@@ -93,4 +92,10 @@ ul {
 .success {
   margin: 0;
   color: var(--success);
+}
+
+@media (max-width: 1180px) {
+  .container {
+    padding: 0 2.4rem;
+  }
 }

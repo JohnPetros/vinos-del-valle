@@ -14,7 +14,7 @@ function addActive(category) {
 
 function getSelectParam(select) {
   const param = select.id;
-  const checkedOption = select.querySelector('input[type="radio"]:checked')
+  const checkedOption = select.querySelector('input[type="radio"]:checked');
   return `${param}=${checkedOption.value.trim()}`;
 }
 
@@ -41,7 +41,7 @@ function handleCategoryClick({ currentTarget }) {
   filterData();
 }
 
-function handleSelectOptionClick({ currentTarget }) {
+function handleSelectOptionClick() {
   filterData();
 }
 
@@ -50,7 +50,12 @@ function setSelectedCategory() {
   const targetCategory = [...categories].find(
     (category) => category.id === categoryId
   );
-  addActive(targetCategory);
+
+  if (targetCategory) {
+    addActive(targetCategory);
+  } else {
+    addActive(categories[0]);
+  }
 }
 
 categories.forEach((category) => {

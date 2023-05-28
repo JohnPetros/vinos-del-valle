@@ -33,18 +33,20 @@
       </div>
     </div>
 
-    <span>Região:</span>
-    <div id="region" class="select region">
-      <button type="button" class="selected region">
-        <span
-          data-selected="{{selected-region-id}}"
-          data-value=""
-          class="selected-item"
-        >
-        </span>
-        <i class="ph-fill ph-caret-down"></i>
-      </button>
-      <div class="select-box">{{region-options}}</div>
+    <div class="select-container">
+      <span>Região:</span>
+      <div id="region" class="select region">
+        <button type="button" class="selected region">
+          <span
+            data-selected="{{selected-region-id}}"
+            data-value=""
+            class="selected-item"
+          >
+          </span>
+          <i class="ph-fill ph-caret-down"></i>
+        </button>
+        <div class="select-box">{{region-options}}</div>
+      </div>
     </div>
   </div>
 
@@ -55,18 +57,15 @@
       class="search"
       name="search"
       id="search"
-      placeholder="Pesquise por um nome"
+      placeholder="Pesquisar vinho por nome"
+      value="{{search}}"
     />
   </div>
 </form>
 
 <div class="footer">
   <ul class="categories">
-    <button
-      id="all-categories"
-      data-color="#B04759"
-      class="category"
-    >
+    <button id="all-categories" data-color="#B04759" class="category">
       Todas as categorias
     </button>
     {{grape-categories}}
