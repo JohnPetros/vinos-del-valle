@@ -58,4 +58,4 @@ function setPagination() {
   }
 }
 
-setTimeout(setPagination, 100) // bug fix
+setTimeout(setPagination, 250) // bug fix

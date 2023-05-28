@@ -45,7 +45,7 @@ class WineController
   {
     $regions = Region::getRegions();
     $options = View::render('partials/region-option', [
-      'id' => 'all',
+      'id' => 'all-regions',
       'name' => 'Todas as regiões',
       'country_code' => 'AQ',
     ]);
@@ -85,9 +85,11 @@ class WineController
    * Retorna os filtradores de vinhos
    * @return string
    */
-  public static function getFilters()
+  public static function getFilters($params)
   {
     return View::render('partials/wine-filters', [
+      'selected-year' => $params['year'] ?? 'all-years',
+      'selected-region-id' => $params['region'] ?? 'all-regions',
       'region-options' => self::getRegionOptions(),
       'grape-categories' => self::getGrapeCategories(),
     ]);
@@ -106,7 +108,7 @@ class WineController
 
     return View::render('pages/dashboard/wine-dashboard', [
       'header' => Layout::getDashboardHeader(),
-      'filters' => self::getFilters(),
+      'filters' => self::getFilters($params),
       'wine-cards' => self::getWineCards($params),
     ]);
   }

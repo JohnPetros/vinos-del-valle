@@ -132,8 +132,8 @@ function checkOption(option, select) {
   radio.click();
 
   const selectedItem = select.querySelector(".selected-item");
+  // selectedItem.dataset.value = radio.value;
   selectedItem.innerHTML = label.innerHTML;
-  selectedItem.dataset.value = radio.id;
 
   activeOption(label.parentNode);
 }
@@ -184,12 +184,26 @@ function handleBodyClick({ target }) {
   }
 }
 
+function setSelectedItem(select) {
+  const selectItem = select.querySelector(".selected-item").dataset.selected;
+  const targetOption = select.querySelector(
+    `#${select.id}-${selectItem}`
+  )?.parentNode;
+
+  if (targetOption) {
+    checkOption(targetOption, select);
+  } else {
+    checkFirstOption(select);
+  }
+}
+
 form.addEventListener("submit", handleSubmit);
 inputs.forEach((input) => input.addEventListener("change", handleInputChange));
 inputsWrappers.forEach(setInputsWrappers);
 selects.forEach(checkFirstOption);
-selectsButtons.forEach((select) =>
-  select.addEventListener("click", handleSelectClick)
-);
+selectsButtons.forEach((select) => {
+  select.addEventListener("click", handleSelectClick);
+  setSelectedItem(select.parentNode);
+});
 
 document.addEventListener("click", handleBodyClick);

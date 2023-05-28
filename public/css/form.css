@@ -96,7 +96,7 @@ form a {
   margin-right: 0.8rem;
 }
 
-.select .selected.year {
+.select .selected.big {
   font-size: 2.4rem;
   color: var(--primary);
 }
@@ -114,11 +114,11 @@ form a {
   border-radius: 0.8rem 0 0 0.8rem;
   transition: height 0.2s ease-in-out;
   overflow-y: scroll;
-  padding-inline: 1.2rem;
+  padding-inline: 1.8rem;
 }
 
 .select .select-box::-webkit-scrollbar {
-  width: 0.4rem;
+  width: 0.48rem;
   border-radius: 0 0.8rem 0.8rem 0;
   background-color: var(--base-3);
   z-index: -15;

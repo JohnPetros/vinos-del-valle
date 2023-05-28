@@ -1,38 +1,47 @@
 <form>
   <div class="selects">
-    <div class="select year">
-      <button type="button" class="selected year">
-        <span id="year" data-value="" class="selected-item"></span
+    <div id="year" class="select big">
+      <button type="button" class="selected big">
+        <span
+          data-selected="{{selected-year}}"
+          data-value=""
+          class="selected-item"
+        ></span
         ><i class="ph-fill ph-caret-down"></i>
       </button>
       <div class="select-box">
         <div class="option active">
-          <input type="radio" name="year" id="all-years" />
-          <label for="all">Todos os anos</label>
+          <input type="radio" name="year" id="all-years" value="all-years" />
+          <label for="all-years">Todos os anos</label>
         </div>
         <div class="option">
-          <input type="radio" name="year" id="2023" />
-          <label for="2023">2023</label>
+          <input type="radio" name="year" id="year-2023" value="2023" />
+          <label for="year-2023">2023</label>
         </div>
         <div class="option">
-          <input type="radio" name="year" id="2022" />
-          <label for="2022">2022</label>
+          <input type="radio" name="year" id="year-2022" value="2022" />
+          <label for="year-2022">2022</label>
         </div>
         <div class="option">
-          <input type="radio" name="year" id="2021" />
-          <label for="2021">2021</label>
+          <input type="radio" name="year" id="year-2021" value="2021" />
+          <label for="year-2021">2021</label>
         </div>
         <div class="option">
-          <input type="radio" name="year" id="2020" />
-          <label for="2020">2020</label>
+          <input type="radio" name="year" id="year-2020" value="2020" />
+          <label for="year-2020">2020</label>
         </div>
       </div>
     </div>
 
     <span>Região:</span>
-    <div class="select region">
+    <div id="region" class="select region">
       <button type="button" class="selected region">
-        <span id="region" data-value="" class="selected-item"> </span>
+        <span
+          data-selected="{{selected-region-id}}"
+          data-value=""
+          class="selected-item"
+        >
+        </span>
         <i class="ph-fill ph-caret-down"></i>
       </button>
       <div class="select-box">{{region-options}}</div>
@@ -53,8 +62,18 @@
 
 <div class="footer">
   <ul class="categories">
+    <button
+      id="all-categories"
+      data-color="#B04759"
+      class="category"
+    >
+      Todas as categorias
+    </button>
     {{grape-categories}}
   </ul>
 </div>
 
+<span class="css" data-file="form"></span>
+<span class="css" data-file="filters"></span>
+<span class="js" data-file="form"></span>
 <span class="js" data-file="filters"></span>

@@ -62,13 +62,18 @@ class Wine
    */
   private static function getFilters($param, $value)
   {
+
+    if (!is_numeric($value)) return;
+
     switch ($param) {
       case 'year':
         return "YEAR(W.harvest_date) = $value";
       case 'region':
         return "W.region_id = $value";
-      case 'grape':
+      case 'category':
         return "W.grape_id = $value";
+      default:
+        return;
     }
   }
 
@@ -85,15 +90,20 @@ class Wine
               JOIN grapes AS G ON G.id = W.grape_id";
 
     if (count($params)) {
-      $query .= ' WHERE ';
       $filters = array_map(
         'self::getFilters',
         array_keys($params),
         array_values($params)
       );
-      $query .= join(' AND ', $filters);
-    }
+      $filters = array_filter($filters);
 
+
+      if (count($filters)) {
+        $query .= ' WHERE ';
+        $query .= join(' AND ', $filters);
+      };
+    }
+   
     $query .= ' ORDER BY W.harvest_date';
 
     return Database::execute($query)->fetchAll(\PDO::FETCH_CLASS, self::class);
