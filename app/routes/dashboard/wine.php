@@ -16,3 +16,11 @@ $router->get(
     return new Response(200, WineController::getWineFormPage($request, $id));
   }
 );
+
+$router->post(
+  '/dashboard/wine/{id}/edit',
+  function ($request, $id) {
+    return new Response(200, WineController::editWine($request, $id));
+  }
+);
+

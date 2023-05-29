@@ -50,8 +50,7 @@ class User
   public static function getUserByEmail($email)
   {
     $query = "SELECT * FROM users WHERE email = ?";
-    $params = array($email);
 
-    return Database::execute($query, $params)->fetchObject(self::class);
+    return Database::execute($query, [$email])->fetchObject(self::class);
   }
 }

@@ -40,7 +40,7 @@ class Wine
    * ID da uva do vinho
    * @var integer
    */
-  public $region_grape;
+  public $grape_id;
 
   /**
    * Nome da uva do vinho
@@ -66,7 +66,34 @@ class Wine
    */
   public $registration_date;
 
+  /**
+   * Atualiza o registro de vinho no banco de dados com os dados da instância atual 
+   */
+  public function update()
+  {
+    $query = "UPDATE wines 
+              SET name = ?,
+                  winery = ?,
+                  grape_id = ?,
+                  region_id = ?,
+                  harvest_date = ?, 
+                  bottling_date = ?,
+                  registration_date = ?
+              WHERE id = ?";
 
+    $params = [
+      $this->name,
+      $this->winery,
+      $this->grape_id,
+      $this->region_id,
+      $this->harvest_date,
+      $this->bottling_date,
+      $this->registration_date,
+      $this->id,
+    ];
+
+    Database::execute($query, $params);
+  }
 
   /**
    * Retorna os filtradores da query de vinhos
@@ -135,8 +162,8 @@ class Wine
               FROM wines AS W
               JOIN regions AS R ON R.id = W.region_id
               JOIN grapes AS G ON G.id = W.grape_id
-              WHERE W.id = $id";
+              WHERE W.id = ?";
 
-    return Database::execute($query)->fetchObject();
+    return Database::execute($query, [$id])->fetchObject(self::class);
   }
 }

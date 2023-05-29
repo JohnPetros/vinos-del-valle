@@ -69,8 +69,8 @@ class Database
         try {
             self::$connection = new PDO('mysql:host=' . self::$host . ';dbname=' . self::$name . ';port=' . self::$port, self::$user, self::$pass);
             self::$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            die('ERROR: ' . $e->getMessage());
+        } catch (PDOException $error) {
+            die('ERROR: ' . $error->getMessage());
         }
     }
 
@@ -88,8 +88,8 @@ class Database
             $statement = self::$connection->prepare($query);
             $statement->execute($params);
             return $statement;
-        } catch (PDOException $e) {
-            die('ERROR: ' . $e->getMessage());
+        } catch (PDOException $error) {
+            die('ERROR: ' . $error->getMessage());
         }
     }
 }

@@ -171,7 +171,7 @@ class WineController
   /**
    * Retorna o conteúdo (View) da página de formulário de edição de vinho
    * @param Request $request
-   * @param Request $id
+   * @param integer $id
    * @return string
    */
   public static function getWineFormPage($request, $id)
@@ -198,12 +198,44 @@ class WineController
       'region-options' => self::getRegionOptions(),
       'grape-options' => self::getGrapeOptions(),
       'selected-region-id' => $wine->region_id ?? 'all-regions',
-      'selected-grape-id' => $wine->region_id ?? 'all-grapes',
+      'selected-grape-id' => $wine->grape_id ?? 'all-grapes',
       'harvest_date' => $wine->harvest_date ?? '',
       'bottling_date' => $wine->bottling_date ?? '',
       'registration_date' => $isEditForm
         ? self::getInputRegistrationDate($wine->registration_date)
         : '',
     ]);
+  }
+
+  /**
+   * Atualiza um vinho com base em seu ID
+   * @param Request $request
+   * @param integer $id
+   */
+  public static function editWine($request, $id)
+  {
+    $wine = Wine::getWineById($id);
+
+    if (!$wine instanceof Wine) {
+      $request->getRouter()->redirect("/dashboard/wine/$id/edit");
+    }
+
+    $postVars = $request->getPostVars();
+
+    foreach ($postVars as $var => $value) {
+      $wine->{$var} = $value ?? $wine->{$var};
+    }
+
+    // $wine->name = $postVars['name'] ?? $wine->name;
+    // $wine->winery = $postVars['winery'] ?? $wine->winery;
+    // $wine->region_id = $postVars['region'] ?? $wine->region_id;
+    // $wine->grape_id = $postVars['grape'] ?? $wine->grape_id;
+    // $wine->harvest_date = $postVars['harvest_date'] ?? $wine->harvest_date;
+    // $wine->bottling_date = $postVars['bottling_date'] ?? $wine->bottling_date;
+    // $wine->registration_date = $postVars['registration_date'] ?? $wine->registration_date;
+
+    $wine->update();
+
+    $request->getRouter()->redirect("/dashboard/wine/$id/edit");
   }
 }

@@ -207,7 +207,6 @@ function handleDeleteButtonClick() {
   openModal('delete');
 }
 
-
 form.addEventListener("submit", handleSubmit);
 inputs.forEach((input) => input.addEventListener("change", handleInputChange));
 inputsWrappers.forEach(setInputsWrappers);
