@@ -56,23 +56,43 @@ class WineController
   }
 
   /**
-   * Retorna as regiões, que servirão como opções para o select de filtragem de vinhos
+   * Retorna as regiões, que servirão como opções para o select de regiões
    * @return string
    */
-  public static function getRegionOptions()
+  public static function getRegionOptions($canIncludeAll = false)
   {
     $regions = Region::getRegions();
-    $options = View::render('partials/region-option', [
+    $options = $canIncludeAll ? View::render('partials/region-option', [
       'id' => 'all-regions',
       'name' => 'Todas as regiões',
       'country_code' => 'AQ',
-    ]);
+    ]) : '';
 
     foreach ($regions as $region) {
       $options .= View::render('partials/region-option', [
         'id' => $region->id,
         'name' => $region->name,
         'country_code' => $region->country_code,
+      ]);
+    }
+
+    return $options;
+  }
+
+  /**
+   * Retorna as uvas, que servirão opções para o select de uvas
+   * @return string
+   */
+  public static function getGrapeOptions()
+  {
+    $grapes = Grape::getGrapes();
+    $options = '';
+
+    foreach ($grapes as $grape) {
+      $options .= View::render('partials/grape-option', [
+        'id' => $grape->id,
+        'name' => $grape->name,
+        'color_hex' => $grape->color_hex,
       ]);
     }
 
@@ -109,7 +129,7 @@ class WineController
       'selected-year' => $params['year'] ?? 'all-years',
       'selected-region-id' => $params['region'] ?? 'all-regions',
       'search' => $params['search'] ?? '',
-      'region-options' => self::getRegionOptions(),
+      'region-options' => self::getRegionOptions(true),
       'grape-categories' => self::getGrapeCategories(),
     ]);
   }
@@ -125,12 +145,40 @@ class WineController
 
     $params = $request->getQueryParams();
 
-
-
     return View::render('pages/dashboard/wine-dashboard', [
       'header' => Layout::getDashboardHeader(),
       'filters' => self::getFilters($params),
       'wine-cards' => self::getWineCards($params),
+    ]);
+  }
+
+  /**
+   * Retorna o conteúdo (View) da página de formulário de edição de vinho
+   * @param Request $request
+   * @param Request $id
+   * @return string
+   */
+  public static function getWineFormPage($request, $id)
+  {
+    Session::verifyLoggedUser('login', 'admin', $request);
+
+    $isEditForm = strpos($request->getUri(), '/edit') !== false;
+
+    $wine = $isEditForm ? Wine::getWineById($id) : null;
+
+    return View::render('pages/dashboard/wine-form', [
+      'header' => Layout::getDashboardHeader(),
+      'name' => $wine->name ?? '',
+      'winery' => $wine->winery ?? '',
+      'grape' => $wine->grape ?? '',
+      'region' => $wine->region ?? '',
+      'region-options' => self::getRegionOptions(),
+      'grape-options' => self::getGrapeOptions(),
+      'selected-region-id' => $wine->region_id ?? 'all-regions',
+      'selected-grape-id' => $wine->region_id ?? 'all-grapes',
+      'registration_date' => $wine->registration_date ?? '',
+      'harvest_date' => $wine->harvest_date ?? '',
+      'bottling_date' => $wine->bottling_date ?? '',
     ]);
   }
 }

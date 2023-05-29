@@ -21,8 +21,11 @@
 }
 
 .button.add {
+  display: block;
   background-color: var(--secondary);
   color: var(--base-4);
+  margin-top: 1.6rem;
+  width: max-content;
 }
 
 .button.page.active {

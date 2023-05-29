@@ -186,9 +186,10 @@ function handleBodyClick({ target }) {
 
 function setSelectedItem(select) {
   const selectItem = select.querySelector(".selected-item").dataset.selected;
-  const targetOption = select.querySelector(
-    `#${select.id}-${selectItem}`
-  )?.parentNode;
+  console.log({ selectItem });
+  const targetOption = selectItem.includes("}")
+    ? null
+    : select.querySelector(`#${select.id}-${selectItem}`)?.parentNode;
 
   if (targetOption) {
     checkOption(targetOption, select);

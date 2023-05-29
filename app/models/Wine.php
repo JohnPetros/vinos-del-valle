@@ -25,6 +25,12 @@ class Wine
   public $winery;
 
   /**
+   * Nome da região do vinho
+   * @var integer
+   */
+  public $region;
+
+  /**
    * ID da região do vinho
    * @var integer
    */
@@ -34,7 +40,13 @@ class Wine
    * ID da uva do vinho
    * @var integer
    */
-  public $grape_id;
+  public $region_grape;
+
+  /**
+   * Nome da uva do vinho
+   * @var string
+   */
+  public $grape;
 
   /**
    * Data de colheita do vinho
@@ -52,7 +64,9 @@ class Wine
    * Data de cadastro do vinho
    * @var string
    */
-  public $acquisition_date;
+  public $registration_date;
+
+
 
   /**
    * Retorna os filtradores da query de vinhos
@@ -103,9 +117,26 @@ class Wine
         $query .= join(' AND ', $filters);
       };
     }
-   
+
     $query .= ' ORDER BY W.harvest_date';
 
     return Database::execute($query)->fetchAll(\PDO::FETCH_CLASS, self::class);
+  }
+
+  /**
+   * Retorna um vinho com base em seu ID
+   * @return Wine
+   */
+  public static function getWineById($id)
+  {
+    $query = "SELECT W.id, W.name, W.winery, W.registration_date, W.harvest_date, W.bottling_date,
+                     W.region_id, W.grape_id,
+                     R.name AS region, R.country_code, G.name AS grape, G.color_hex
+              FROM wines AS W
+              JOIN regions AS R ON R.id = W.region_id
+              JOIN grapes AS G ON G.id = W.grape_id
+              WHERE W.id = $id";
+
+    return Database::execute($query)->fetchObject();
   }
 }

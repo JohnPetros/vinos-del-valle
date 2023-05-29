@@ -1,3 +1,51 @@
+.form-container {
+  max-width: 50rem;
+  margin: 0 auto;
+  box-shadow: var(--shadow);
+  border-radius: 1.2rem;
+  padding: 1.2rem 2.4rem;
+}
+
+.form-container header {
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid var(--base-3);
+  padding-bottom: 1.2rem;
+  margin-bottom: 3.2rem;
+}
+
+.form-container header i {
+  margin-right: 1.2rem;
+  font-size: 2.4rem;
+}
+
+.form-container header h2 {
+  margin-right: auto;
+}
+
+.input-control {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 2.4rem;
+}
+
+.input-control input {
+  border-bottom: 2px solid var(--base-3);
+  font-size: 1.6rem;
+}
+
+.input-control label {
+  color: var(--primary);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.input-control label i {
+  font-size: 2rem;
+}
+
 .input-wrapper {
   margin-top: 2.4rem;
   border: 1px solid var(--base-3);
@@ -67,10 +115,6 @@ form a {
   overflow: hidden;
 }
 
-.select .options {
-  width: 100%;
-}
-
 .selected {
   cursor: pointer;
   display: flex;
@@ -79,7 +123,11 @@ form a {
   font-weight: 500;
   gap: 1.2rem;
   background-color: transparent;
-  border-bottom: 2px solid var(--primary);
+  border-bottom: 2px solid var(--base-3);
+}
+
+.selected.big {
+  border-color: var(--primary);
 }
 
 .selected:focus {
@@ -92,8 +140,10 @@ form a {
   gap: 0.8rem;
 }
 
-.selected-item-name .flag {
-  margin-right: 0.8rem;
+.select .selected {
+  font-size: 1.6rem;
+  font-weight: 400;
+  width: 100%;
 }
 
 .select .selected.big {
@@ -135,10 +185,18 @@ form a {
 .select .select-box .option {
   width: 100%;
   cursor: pointer;
+  font-weight: 500;
 }
 
-.select .select-box .option .flag {
+.select .select-box .flag {
   margin-bottom: -0.6rem;
+}
+
+.select .color {
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
 }
 
 .select .select-box .option:first-child {
@@ -153,7 +211,6 @@ form a {
 .option.active label {
   cursor: pointer;
   color: var(--primary);
-  font-weight: 500;
 }
 
 .select .select-box .option input[type="radio"] {
