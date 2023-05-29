@@ -19,7 +19,7 @@ class Layout
         'Fazer logout',
         'Tem certeza que deseja sair da sua conta?',
         '/logout',
-        'header'
+        'logout',
       )
     ]);
   }

@@ -3,10 +3,15 @@ const inputs = document.querySelectorAll(".input");
 const inputsWrappers = document.querySelectorAll(".input-wrapper");
 const selects = document.querySelectorAll(".select");
 const selectsButtons = document.querySelectorAll(".selected");
+const editButton = document.querySelector(".button.edit");
+const deleteButton = document.querySelector(".button.delete");
 const portugueseNames = {
   email: "e-mail",
   password: "senha",
   name: "nome",
+  winery: "vinícula",
+  harvest_date: "data de colheita",
+  bottling_date: "data de envase",
 };
 
 function getErrorMessage(text) {
@@ -198,6 +203,11 @@ function setSelectedItem(select) {
   }
 }
 
+function handleDeleteButtonClick() {
+  openModal('delete');
+}
+
+
 form.addEventListener("submit", handleSubmit);
 inputs.forEach((input) => input.addEventListener("change", handleInputChange));
 inputsWrappers.forEach(setInputsWrappers);
@@ -206,5 +216,5 @@ selectsButtons.forEach((select) => {
   select.addEventListener("click", handleSelectClick);
   setSelectedItem(select.parentNode);
 });
-
+deleteButton.addEventListener('click', handleDeleteButtonClick);
 document.addEventListener("click", handleBodyClick);

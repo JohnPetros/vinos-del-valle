@@ -8,6 +8,7 @@ use \App\utils\Layout;
 use \App\models\Wine;
 use \App\models\Region;
 use App\models\Grape;
+use App\utils\Modal;
 use DateTime;
 
 class WineController
@@ -178,11 +179,18 @@ class WineController
     Session::verifyLoggedUser('login', 'admin', $request);
 
     $isEditForm = strpos($request->getUri(), '/edit') !== false;
-
     $wine = $isEditForm ? Wine::getWineById($id) : null;
+    $modal = $isEditForm ? Modal::getModal(
+      'trash',
+      'Deletar vinho ' . $wine->name,
+      'Tem certeza que deseja deletar esse vinho',
+      '/dashboard/wine/' . $wine->id . '/delete',
+      'delete'
+    ) : '';
 
     return View::render('pages/dashboard/wine-form', [
       'header' => Layout::getDashboardHeader(),
+      'modal' => $modal,
       'name' => $wine->name ?? '',
       'winery' => $wine->winery ?? '',
       'grape' => $wine->grape ?? '',

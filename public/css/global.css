@@ -89,6 +89,7 @@ ul {
 .error {
   margin: 0;
   color: var(--danger);
+  text-align: right;
 }
 
 .success {

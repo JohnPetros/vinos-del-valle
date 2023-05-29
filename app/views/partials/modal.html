@@ -1,10 +1,12 @@
-<dialog class="modal" id="modal-{{id}}">
+<dialog class="modal" id="{{id}}">
   <i class="ph-bold ph-sign-out icon"></i>
   <h3 class="title">{{title}}</h3>
   <p class="description">{{description}}</p>
   <div class="buttons">
-    <button class="button cancel">Cancelar</button>
-    <button data-action="{{action}}" class="button confirm">Confirmar</button>
+    <button type="button" class="button cancel">Cancelar</button>
+    <button type="button" data-action="{{action}}" class="button confirm">
+      Confirmar
+    </button>
   </div>
   <div class="fade"></div>
 </dialog>

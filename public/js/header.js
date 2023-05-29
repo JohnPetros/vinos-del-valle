@@ -1,11 +1,11 @@
 const logoutButton = document.querySelector("button#logout");
-const modal = document.querySelector("#modal-header");
+const modals = document.querySelector(".modal");
 const menu = document.querySelector(".menu");
 const menuHamburguerButton = document.querySelector(".menu-hamburguer");
 const menuCloseButton = document.querySelector(".menu-close");
 
 function handleLogoutButtonClick() {
-  modal.showModal();
+  openModal('logout');
 }
 
 function handleMenuHamburguerButtonClick() {
