@@ -25,9 +25,9 @@
   </head>
   <body>
     <main class="container">
-      {{header}}
+      {{header}} {{toast}}
 
-      <h1>Editar Vinho {{name}}</h1>
+      <h1>{{title}}</h1>
 
       <div class="form-container">
         <header>
@@ -117,6 +117,8 @@
               id="harvest_date"
               name="harvest_date"
               value="{{harvest_date}}"
+              min="2020-01-01"
+              max="2023-12-31"
             />
           </div>
 
@@ -131,21 +133,14 @@
               id="bottling_date"
               name="bottling_date"
               value="{{bottling_date}}"
+              min="2020-01-01"
+              max="2023-12-31"
             />
           </div>
 
           {{registration_date}}
 
-          <div class="action-buttons">
-            <button
-              class="button edit"
-              type="button"
-              value="/dashboard/wine/{{id}}/edit"
-            >
-              Editar
-            </button>
-            <button class="button delete" type="button">Excluir</button>
-          </div>
+          <div class="action-buttons">{{buttons}}</div>
 
           {{modal}}
         </form>

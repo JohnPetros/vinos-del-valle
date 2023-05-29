@@ -3,9 +3,7 @@ const inputs = document.querySelectorAll(".input");
 const inputsWrappers = document.querySelectorAll(".input-wrapper");
 const selects = document.querySelectorAll(".select");
 const selectsButtons = document.querySelectorAll(".select-button");
-const addButton = document.querySelector("form .button.edit");
-const editButton = document.querySelector(" form .button.edit");
-const deleteButton = document.querySelector("form .button.delete");
+const buttons = document.querySelectorAll("form .button");
 const portugueseNames = {
   email: "e-mail",
   password: "senha",
@@ -83,7 +81,12 @@ function handleSubmit(event) {
 
   inputs.forEach(validateInput);
 
-  if (hasErrors()) event.preventDefault();
+  if (hasErrors()) {
+    event.preventDefault();
+    return;
+  }
+
+  if (!(event instanceof Event)) event.submit();
 }
 
 function activeIcons(icon) {
@@ -138,9 +141,7 @@ function checkOption(option, select) {
   radio.click();
 
   const selectedItem = select.querySelector(".selected-item");
-  const selectButton = select.querySelector(".select-button");
-  // openSelectBox(selectButton);
-  // selectedItem.dataset.value = radio.value;
+  selectedItem.dataset.value = radio.value;
   selectedItem.innerHTML = label.innerHTML;
 
   activeOption(label.parentNode);
@@ -206,13 +207,15 @@ function setSelectedItem(select) {
   }
 }
 
-function handleEditButtonClick({ currentTarget }) {
-  form.action = currentTarget.value;
-  form.submit();
-}
+function handleButtonClick({ currentTarget }) {
+  const type = currentTarget.id;
 
-function handleDeleteButtonClick() {
-  openModal("delete");
+  if (type === "add" || type === "edit") {
+    form.action = currentTarget.value;
+    handleSubmit(form);
+  } else if (type === "delete") {
+    openModal("delete");
+  }
 }
 
 form.addEventListener("submit", handleSubmit);
@@ -223,6 +226,7 @@ selectsButtons.forEach((select) => {
   select.addEventListener("click", handleSelectClick);
   setSelectedItem(select.parentNode);
 });
-editButton.addEventListener("click", handleEditButtonClick);
-deleteButton.addEventListener("click", handleDeleteButtonClick);
+buttons.forEach((button) =>
+  button.addEventListener("click", handleButtonClick)
+);
 document.addEventListener("click", handleBodyClick);

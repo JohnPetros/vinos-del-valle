@@ -45,6 +45,10 @@ body {
   overflow-x: hidden;
 }
 
+h1 {
+  color: var(--base-4);
+}
+
 input {
   border: none;
   outline: none;

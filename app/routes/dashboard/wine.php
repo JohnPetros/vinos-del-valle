@@ -18,9 +18,9 @@ $router->get(
 );
 
 $router->post(
-  '/dashboard/wine/{id}/add',
+  '/dashboard/wine/add',
   function ($request, $id) {
-    // return new Response(200, WineController::editWine($request, $id));
+    return new Response(200, WineController::addWine($request, $id));
   }
 );
 

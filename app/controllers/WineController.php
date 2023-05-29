@@ -193,11 +193,44 @@ class WineController
 
   /**
    * Verifica se o usuário está requisitando um formulário de edição
+   * @param Request $request
+   * @return boolean
    */
   private static function isEditForm($request)
   {
     $uriPartials =  explode('/', $request->getUri());
-    return print_r(is_numeric($uriPartials[3]));
+    return is_numeric($uriPartials[3]);
+  }
+
+  /**
+   * Retorna os botões paro formulário com base se é um formulário de edição ou não
+   * @param boolean $isEditForm
+   * @return string
+   */
+  private static function getFormButtons($isEditForm, $wine)
+  {
+    $buttons = '';
+
+    if ($isEditForm) {
+      $buttons .= View::render('partials/button', [
+        'type' => 'edit',
+        'title' => 'Editar',
+        'value' => '/dashboard/wine/' . $wine->id . '/edit',
+      ]);
+      $buttons .= View::render('partials/button', [
+        'type' => 'delete',
+        'title' => 'Deletar',
+        'value' => '/dashboard/wine/' . $wine->id . '/delete',
+      ]);
+    } else {
+      $buttons .= View::render('partials/button', [
+        'type' => 'add',
+        'title' => 'Adicionar',
+        'value' => '/dashboard/wine/add',
+      ]);
+    }
+
+    return $buttons;
   }
 
   /**
@@ -224,23 +257,40 @@ class WineController
 
     return View::render('pages/dashboard/wine-form', [
       'header' => Layout::getDashboardHeader(),
+      'title' => $isEditForm ? 'Editar vinho ' . $wine->name : 'Adicionar vinho',
       'modal' => $modal,
-      'id' => $wine->id ?? '',
-      'name' => $wine->name ?? '',
-      'winery' => $wine->winery ?? '',
-      'grape' => $wine->grape ?? '',
-      'region' => $wine->region ?? '',
+      'id' => isset($wine->id) ? $wine->id : '',
+      'name' => isset($wine->name) ? $wine->name : '',
+      'winery' => isset($wine->winery) ? $wine->winery : '',
+      'grape' => isset($wine->grape) ? $wine->grape : '',
+      'region' => isset($wine->region) ? $wine->region : '',
       'region-options' => self::getRegionOptions(),
       'grape-options' => self::getGrapeOptions(),
-      'selected-region-id' => $wine->region_id ?? 'all-regions',
-      'selected-grape-id' => $wine->grape_id ?? 'all-grapes',
-      'harvest_date' => $wine->harvest_date ?? '',
-      'bottling_date' => $wine->bottling_date ?? '',
+      'selected-region-id' => isset($wine->region_id) ? $wine->region_id : 'all-regions',
+      'selected-grape-id' => isset($wine->grape_id) ? $wine->grape_id : 'all-grapes',
+      'harvest_date' => isset($wine->harvest_date) ? $wine->harvest_date : '',
+      'bottling_date' => isset($wine->bottling_date) ? $wine->bottling_date : '',
       'registration_date' => $isEditForm
         ? self::getInputRegistrationDate($wine->registration_date)
         : '',
+      'buttons' => self::getFormButtons($isEditForm, $wine),
       'toast' => isset($params['status']) ? self::getToast($params['status']) : '',
     ]);
+  }
+
+  /**
+   * Adiciona um vinho
+   * @param Request $request
+   * @param integer $id
+   */
+  public static function addWine($request)
+  {
+    $postVars = $request->getPostVars();
+
+    echo '<pre>';
+    print_r($postVars);
+    echo '</pre>';
+    exit;
   }
 
   /**
@@ -251,7 +301,7 @@ class WineController
   public static function editWine($request, $id)
   {
     $wine = Wine::getWineById($id);
-    
+
     if (!$wine instanceof Wine) {
       $request->getRouter()->redirect("/dashboard/wine/$id/form");
     }

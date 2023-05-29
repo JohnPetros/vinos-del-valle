@@ -96,11 +96,12 @@ i.active,
   gap: 1.2rem;
 }
 
-.form-container .action-buttons .button.edit {
+.form-container .action-buttons .button#edit,
+.button#add {
   background-color: var(--secondary);
 }
 
-.form-container .action-buttons .button.delete {
+.form-container .action-buttons .button#delete {
   background-color: var(--danger);
   color: var(--base-2);
   font-weight: 500;
