@@ -2,12 +2,12 @@
   position: absolute;
   top: 2.4rem;
   right: 3rem;
-  padding: 2rem 1.6rem;
+  padding: 2rem;
   border-radius: 0.8rem;
   background: var(--base-1);
   box-shadow: var(--shadow);
   border-left: 6px solid;
-  transition: all 1s ease;
+  transition: transform 1s ease;
   transform: translateX(150%);
   overflow: hidden;
 }

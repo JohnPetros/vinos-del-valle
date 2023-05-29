@@ -9,10 +9,28 @@ use \App\models\Wine;
 use \App\models\Region;
 use App\models\Grape;
 use App\utils\Modal;
+use App\utils\Toast;
 use DateTime;
 
 class WineController
 {
+
+  /**
+   * Retorna o toast junto com a mensagem criada com base no status
+   * @param string $status
+   * @return string
+   */
+  private static function getToast($status)
+  {
+    switch ($status) {
+      case 'welcome':
+        return Toast::getSuccess('Seja bem-vindo ' . (Session::getUserSession()['name']));
+      case 'deleted':
+        return Toast::getSuccess('Vinho deletado com sucesso');
+      default:
+        return Toast::getError('Escreva uma mensagem no toast');
+    }
+  }
 
   /**
    * Filtra os vinhos pelo nome
@@ -147,10 +165,12 @@ class WineController
 
     $params = $request->getQueryParams();
 
+
     return View::render('pages/dashboard/wine-dashboard', [
       'header' => Layout::getDashboardHeader(),
       'filters' => self::getFilters($params),
       'wine-cards' => self::getWineCards($params),
+      'toast' => isset($params['status']) ? self::getToast($params['status']) : '',
     ]);
   }
 
@@ -183,7 +203,7 @@ class WineController
     $modal = $isEditForm ? Modal::getModal(
       'trash',
       'Deletar vinho ' . $wine->name,
-      'Tem certeza que deseja deletar esse vinho',
+      'Tem certeza que deseja deletar esse vinho?',
       '/dashboard/wine/' . $wine->id . '/delete',
       'delete'
     ) : '';
@@ -237,5 +257,23 @@ class WineController
     $wine->update();
 
     $request->getRouter()->redirect("/dashboard/wine/$id/edit");
+  }
+
+  /**
+   * Deleta um vinho com base em seu ID
+   * @param Request $request
+   * @param integer $id
+   */
+  public static function deleteWine($request, $id)
+  {
+    $wine = Wine::getWineById($id);
+
+    if (!$wine instanceof Wine) {
+      $request->getRouter()->redirect("/dashboard/wine/$id/edit");
+    }
+
+    $wine->delete();
+
+    $request->getRouter()->redirect("/dashboard/wine?status=deleted");
   }
 }

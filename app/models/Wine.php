@@ -96,6 +96,16 @@ class Wine
   }
 
   /**
+   * Deleta um registro de vinho no banco de dados com base no ID da instância atual
+   */
+  public function delete()
+  {
+    $query = "DELETE FROM wines WHERE id = ?";
+
+    Database::execute($query, [$this->id]);
+  }
+
+  /**
    * Retorna os filtradores da query de vinhos
    * @param string $param
    * @param string $value

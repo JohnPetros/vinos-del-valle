@@ -2,6 +2,7 @@
 
 namespace App\utils;
 
+use App\core\Session;
 use \App\core\View;
 use \App\utils\Modal;
 
@@ -13,14 +14,19 @@ class Layout
    */
   public static function getDashboardHeader()
   {
+
+    $modal = Modal::getModal(
+      'sign-out',
+      'Fazer logout',
+      'Tem certeza que deseja sair da sua conta?',
+      '/logout',
+      'logout',
+    );
+
     return View::render('partials/header', [
-      'modal' => Modal::getModal(
-        'sign-out',
-        'Fazer logout',
-        'Tem certeza que deseja sair da sua conta?',
-        '/logout',
-        'logout',
-      )
+      'name' => Session::getUserSession()['name'],
+      'email' => Session::getUserSession()['email'],
+      'modal' => $modal,
     ]);
   }
 }

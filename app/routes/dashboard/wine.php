@@ -24,3 +24,11 @@ $router->post(
   }
 );
 
+$router->get(
+  '/dashboard/wine/{id}/delete',
+  function ($request, $id) {
+    return new Response(200, WineController::deleteWine($request, $id));
+  }
+);
+
+

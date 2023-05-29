@@ -34,6 +34,12 @@ class Session
     ];
   }
 
+  public static function getUserSession()
+  {
+    self::init();
+    return $_SESSION['user'];
+  }
+
   /**
    * Define a rota anterior acessada pelo usuário
    */
