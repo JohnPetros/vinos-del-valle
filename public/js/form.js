@@ -2,9 +2,10 @@ const form = document.querySelector("form");
 const inputs = document.querySelectorAll(".input");
 const inputsWrappers = document.querySelectorAll(".input-wrapper");
 const selects = document.querySelectorAll(".select");
-const selectsButtons = document.querySelectorAll(".selected");
-const editButton = document.querySelector(".button.edit");
-const deleteButton = document.querySelector(".button.delete");
+const selectsButtons = document.querySelectorAll(".select-button");
+const addButton = document.querySelector("form .button.edit");
+const editButton = document.querySelector(" form .button.edit");
+const deleteButton = document.querySelector("form .button.delete");
 const portugueseNames = {
   email: "e-mail",
   password: "senha",
@@ -137,6 +138,8 @@ function checkOption(option, select) {
   radio.click();
 
   const selectedItem = select.querySelector(".selected-item");
+  const selectButton = select.querySelector(".select-button");
+  // openSelectBox(selectButton);
   // selectedItem.dataset.value = radio.value;
   selectedItem.innerHTML = label.innerHTML;
 
@@ -203,8 +206,13 @@ function setSelectedItem(select) {
   }
 }
 
+function handleEditButtonClick({ currentTarget }) {
+  form.action = currentTarget.value;
+  form.submit();
+}
+
 function handleDeleteButtonClick() {
-  openModal('delete');
+  openModal("delete");
 }
 
 form.addEventListener("submit", handleSubmit);
@@ -215,5 +223,6 @@ selectsButtons.forEach((select) => {
   select.addEventListener("click", handleSelectClick);
   setSelectedItem(select.parentNode);
 });
-deleteButton.addEventListener('click', handleDeleteButtonClick);
+editButton.addEventListener("click", handleEditButtonClick);
+deleteButton.addEventListener("click", handleDeleteButtonClick);
 document.addEventListener("click", handleBodyClick);

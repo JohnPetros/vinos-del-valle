@@ -25,8 +25,12 @@ class WineController
     switch ($status) {
       case 'welcome':
         return Toast::getSuccess('Seja bem-vindo ' . (Session::getUserSession()['name']));
+      case 'added':
+        return Toast::getSuccess('Vinho adicionado com sucesso!');
+      case 'edited':
+        return Toast::getSuccess('Vinho editado com sucesso!');
       case 'deleted':
-        return Toast::getSuccess('Vinho deletado com sucesso');
+        return Toast::getSuccess('Vinho deletado com sucesso!');
       default:
         return Toast::getError('Escreva uma mensagem no toast');
     }
@@ -165,7 +169,6 @@ class WineController
 
     $params = $request->getQueryParams();
 
-
     return View::render('pages/dashboard/wine-dashboard', [
       'header' => Layout::getDashboardHeader(),
       'filters' => self::getFilters($params),
@@ -189,6 +192,15 @@ class WineController
   }
 
   /**
+   * Verifica se o usuário está requisitando um formulário de edição
+   */
+  private static function isEditForm($request)
+  {
+    $uriPartials =  explode('/', $request->getUri());
+    return print_r(is_numeric($uriPartials[3]));
+  }
+
+  /**
    * Retorna o conteúdo (View) da página de formulário de edição de vinho
    * @param Request $request
    * @param integer $id
@@ -198,7 +210,9 @@ class WineController
   {
     Session::verifyLoggedUser('login', 'admin', $request);
 
-    $isEditForm = strpos($request->getUri(), '/edit') !== false;
+    $params = $request->getQueryParams();
+
+    $isEditForm = self::isEditForm($request);
     $wine = $isEditForm ? Wine::getWineById($id) : null;
     $modal = $isEditForm ? Modal::getModal(
       'trash',
@@ -211,6 +225,7 @@ class WineController
     return View::render('pages/dashboard/wine-form', [
       'header' => Layout::getDashboardHeader(),
       'modal' => $modal,
+      'id' => $wine->id ?? '',
       'name' => $wine->name ?? '',
       'winery' => $wine->winery ?? '',
       'grape' => $wine->grape ?? '',
@@ -224,6 +239,7 @@ class WineController
       'registration_date' => $isEditForm
         ? self::getInputRegistrationDate($wine->registration_date)
         : '',
+      'toast' => isset($params['status']) ? self::getToast($params['status']) : '',
     ]);
   }
 
@@ -235,9 +251,9 @@ class WineController
   public static function editWine($request, $id)
   {
     $wine = Wine::getWineById($id);
-
+    
     if (!$wine instanceof Wine) {
-      $request->getRouter()->redirect("/dashboard/wine/$id/edit");
+      $request->getRouter()->redirect("/dashboard/wine/$id/form");
     }
 
     $postVars = $request->getPostVars();
@@ -246,11 +262,17 @@ class WineController
       $wine->{$var} = $value ?? $wine->{$var};
     }
 
-   
+    // $wine->name = $postVars['name'] ?? $wine->name;
+    // $wine->winery = $postVars['winery'] ?? $wine->winery;
+    // $wine->region_id = $postVars['region'] ?? $wine->region_id;
+    // $wine->grape_id = $postVars['grape'] ?? $wine->grape_id;
+    // $wine->harvest_date = $postVars['harvest_date'] ?? $wine->harvest_date;
+    // $wine->bottling_date = $postVars['bottling_date'] ?? $wine->bottling_date;
+    // $wine->registration_date = $postVars['registration_date'] ?? $wine->registration_date;
 
     $wine->update();
 
-    $request->getRouter()->redirect("/dashboard/wine/$id/edit");
+    $request->getRouter()->redirect("/dashboard/wine/$id/form?status=edited");
   }
 
   /**

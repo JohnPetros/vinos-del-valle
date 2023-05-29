@@ -134,7 +134,7 @@ form a {
   overflow: hidden;
 }
 
-.selected {
+.select-button {
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -145,11 +145,11 @@ form a {
   border-bottom: 2px solid var(--base-3);
 }
 
-.selected.big {
+.select-button.big {
   border-color: var(--primary);
 }
 
-.selected:focus {
+.select-button:focus {
   box-shadow: none;
 }
 
@@ -159,13 +159,13 @@ form a {
   gap: 0.8rem;
 }
 
-.select .selected {
+.select .select-button {
   font-size: 1.6rem;
   font-weight: 400;
   width: 100%;
 }
 
-.select .selected.big {
+.select .select-button.big {
   font-size: 2.4rem;
   color: var(--primary);
 }

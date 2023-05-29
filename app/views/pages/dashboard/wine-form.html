@@ -41,13 +41,13 @@
               <i class="ph-bold ph-tag"></i>
               Nome:
             </label>
-              <input
-                class="input"
-                type="text"
-                id="name"
-                name="name"
-                value="{{name}}"
-              />
+            <input
+              class="input"
+              type="text"
+              id="name"
+              name="name"
+              value="{{name}}"
+            />
           </div>
 
           <div class="input-control">
@@ -71,7 +71,7 @@
             </label>
             <div class="select-container">
               <div id="region" class="select region">
-                <button type="button" class="selected region">
+                <button type="button" class="select-button region">
                   <span
                     data-selected="{{selected-region-id}}"
                     data-value=""
@@ -92,7 +92,7 @@
             </label>
             <div class="select-container">
               <div id="grape" class="select grape">
-                <button type="button" class="selected grape">
+                <button type="button" class="select-button grape">
                   <span
                     data-selected="{{selected-grape-id}}"
                     data-value=""
@@ -137,7 +137,13 @@
           {{registration_date}}
 
           <div class="action-buttons">
-            <button class="button edit">Editar</button>
+            <button
+              class="button edit"
+              type="button"
+              value="/dashboard/wine/{{id}}/edit"
+            >
+              Editar
+            </button>
             <button class="button delete" type="button">Excluir</button>
           </div>
 
