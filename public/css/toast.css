@@ -17,7 +17,7 @@
 }
 
 .toast.error {
-  border-left-color: var(--error);
+  border-left-color: var(--danger);
 }
 
 .toast.active {
@@ -38,7 +38,7 @@
 }
 
 .toast.error i {
-  color: var(--error);
+  color: var(--danger);
 }
 
 .content .message {
@@ -81,7 +81,7 @@
 }
 
 .toast.error .progress::before {
-  background-color: var(--error);
+  background-color: var(--danger);
 }
 
 .toast.active .progress::before {

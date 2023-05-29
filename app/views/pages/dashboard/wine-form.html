@@ -53,7 +53,7 @@
           </div>
 
           <div class="input-control">
-            <label for="winery">
+            <label for="region">
               <i class="ph-bold ph-globe-hemisphere-west"></i>
               Região:
             </label>
@@ -74,7 +74,7 @@
           </div>
 
           <div class="input-control">
-            <label for="winery">
+            <label for="grape">
               <i class="ph-bold ph-graph"></i>
               Uva:
             </label>
@@ -92,6 +92,29 @@
                 <div class="select-box">{{grape-options}}</div>
               </div>
             </div>
+          </div>
+
+          <div class="input-control">
+            <label for="winery" id="harvest_date">
+              <i class="ph-bold ph-grains"></i>
+              Data de colheita:
+            </label>
+            <input type="date" id="harvest_date" value="{{harvest_date}}" />
+          </div>
+
+          <div class="input-control">
+            <label for="bottling_date">
+              <i class="ph-bold ph-beer-bottle"></i>
+              Data de envase:
+            </label>
+            <input type="date" id="bottling_date" value="{{bottling_date}}" />
+          </div>
+
+          {{registration_date}}
+
+          <div class="action-buttons">
+            <button class="button edit">Editar</button>
+            <button class="button delete">Excluir</button>
           </div>
         </form>
       </div>

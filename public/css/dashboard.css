@@ -14,10 +14,7 @@
 }
 
 .button {
-  padding: 0.8rem 1.2rem;
-  border-radius: 1.2rem;
   margin-top: 2.4rem;
-  font-weight: 700;
 }
 
 .button.add {

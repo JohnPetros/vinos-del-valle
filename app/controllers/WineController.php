@@ -8,6 +8,7 @@ use \App\utils\Layout;
 use \App\models\Wine;
 use \App\models\Region;
 use App\models\Grape;
+use DateTime;
 
 class WineController
 {
@@ -59,7 +60,7 @@ class WineController
    * Retorna as regiões, que servirão como opções para o select de regiões
    * @return string
    */
-  public static function getRegionOptions($canIncludeAll = false)
+  private static function getRegionOptions($canIncludeAll = false)
   {
     $regions = Region::getRegions();
     $options = $canIncludeAll ? View::render('partials/region-option', [
@@ -83,7 +84,7 @@ class WineController
    * Retorna as uvas, que servirão opções para o select de uvas
    * @return string
    */
-  public static function getGrapeOptions()
+  private static function getGrapeOptions()
   {
     $grapes = Grape::getGrapes();
     $options = '';
@@ -103,7 +104,7 @@ class WineController
    * Retorna as uvas, que servirão para filtrar vinhos por categoria
    * @return string
    */
-  public static function getGrapeCategories()
+  private static function getGrapeCategories()
   {
     $grapes = Grape::getGrapes();
     $categories = "";
@@ -123,7 +124,7 @@ class WineController
    * Retorna os filtradores de vinhos
    * @return string
    */
-  public static function getFilters($params)
+  private static function getFilters($params)
   {
     return View::render('partials/wine-filters', [
       'selected-year' => $params['year'] ?? 'all-years',
@@ -153,6 +154,20 @@ class WineController
   }
 
   /**
+   * Retorna o input de data de cadastro
+   * @return string
+   */
+  private static function getInputRegistrationDate($date)
+  {
+    $formatedDate = (new DateTime($date))->format('Y-m-d');
+
+    return View::render('partials/input-registration-date', [
+      'label' => 'Data de cadastro',
+      'date' => $formatedDate,
+    ]);
+  }
+
+  /**
    * Retorna o conteúdo (View) da página de formulário de edição de vinho
    * @param Request $request
    * @param Request $id
@@ -176,9 +191,11 @@ class WineController
       'grape-options' => self::getGrapeOptions(),
       'selected-region-id' => $wine->region_id ?? 'all-regions',
       'selected-grape-id' => $wine->region_id ?? 'all-grapes',
-      'registration_date' => $wine->registration_date ?? '',
       'harvest_date' => $wine->harvest_date ?? '',
       'bottling_date' => $wine->bottling_date ?? '',
+      'registration_date' => $isEditForm
+        ? self::getInputRegistrationDate($wine->registration_date)
+        : '',
     ]);
   }
 }
