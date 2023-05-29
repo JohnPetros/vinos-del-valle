@@ -246,13 +246,7 @@ class WineController
       $wine->{$var} = $value ?? $wine->{$var};
     }
 
-    // $wine->name = $postVars['name'] ?? $wine->name;
-    // $wine->winery = $postVars['winery'] ?? $wine->winery;
-    // $wine->region_id = $postVars['region'] ?? $wine->region_id;
-    // $wine->grape_id = $postVars['grape'] ?? $wine->grape_id;
-    // $wine->harvest_date = $postVars['harvest_date'] ?? $wine->harvest_date;
-    // $wine->bottling_date = $postVars['bottling_date'] ?? $wine->bottling_date;
-    // $wine->registration_date = $postVars['registration_date'] ?? $wine->registration_date;
+   
 
     $wine->update();
 
