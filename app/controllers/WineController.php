@@ -25,12 +25,18 @@ class WineController
     switch ($status) {
       case 'welcome':
         return Toast::getSuccess('Seja bem-vindo ' . (Session::getUserSession()['name']));
-      case 'added':
+      case 'add-success':
         return Toast::getSuccess('Vinho adicionado com sucesso!');
-      case 'edited':
-        return Toast::getSuccess('Vinho editado com sucesso!');
-      case 'deleted':
-        return Toast::getSuccess('Vinho deletado com sucesso!');
+      case 'add-fail':
+        return Toast::getSuccess('Erro ao tentar adicionar com sucesso!');
+      case 'edit-success':
+        return Toast::getSuccess('Vinho editado com sucesso');
+      case 'edit-fail':
+        return Toast::getError('Erro ao tentar editar o vinho');
+      case 'delete-success':
+        return Toast::getSuccess('Vinho deletado com sucesso');
+      case 'delete-fail':
+        return Toast::getError('Erro ao tentar deletar o vinho');
       default:
         return Toast::getError('Escreva uma mensagem no toast');
     }
@@ -278,6 +284,25 @@ class WineController
     ]);
   }
 
+  private static function IsValidateInput($data)
+  {
+    $data = array_map('trim', $data);
+
+    $data = filter_input_array(INPUT_POST, $data);
+
+    foreach ($data as $key => $value) {
+      if ($value == '') {
+        return false;
+      }
+
+      if (($key == 'region_id' || $key == 'grape_id') && !is_numeric($value)) {
+        return false;
+      }
+    }
+
+    return $data;
+  }
+
   /**
    * Adiciona um vinho
    * @param Request $request
@@ -287,10 +312,18 @@ class WineController
   {
     $postVars = $request->getPostVars();
 
-    echo '<pre>';
-    print_r($postVars);
-    echo '</pre>';
-    exit;
+    if (!self::IsValidateInput($postVars)) {
+      $request->getRouter()->redirect("/dashboard/wine/add/form?status=add-fail");
+    }
+
+    $wine = new Wine;
+    foreach ($postVars as $var => $value) {
+      $wine->{$var} = $value;
+    }
+
+    $wine->add();
+
+    $request->getRouter()->redirect("/dashboard/wine/add/form?status=edit-success");
   }
 
   /**
@@ -300,29 +333,25 @@ class WineController
    */
   public static function editWine($request, $id)
   {
+    $postVars = $request->getPostVars();
+
+    if (!is_numeric($id) || !self::IsValidateInput($postVars)) {
+      $request->getRouter()->redirect("/dashboard/wine/$id/form?status=edit-fail");
+    }
+
     $wine = Wine::getWineById($id);
 
     if (!$wine instanceof Wine) {
-      $request->getRouter()->redirect("/dashboard/wine/$id/form");
+      $request->getRouter()->redirect("/dashboard/wine/$id/form?status=edit-fail");
     }
-
-    $postVars = $request->getPostVars();
 
     foreach ($postVars as $var => $value) {
       $wine->{$var} = $value ?? $wine->{$var};
     }
 
-    // $wine->name = $postVars['name'] ?? $wine->name;
-    // $wine->winery = $postVars['winery'] ?? $wine->winery;
-    // $wine->region_id = $postVars['region'] ?? $wine->region_id;
-    // $wine->grape_id = $postVars['grape'] ?? $wine->grape_id;
-    // $wine->harvest_date = $postVars['harvest_date'] ?? $wine->harvest_date;
-    // $wine->bottling_date = $postVars['bottling_date'] ?? $wine->bottling_date;
-    // $wine->registration_date = $postVars['registration_date'] ?? $wine->registration_date;
-
     $wine->update();
 
-    $request->getRouter()->redirect("/dashboard/wine/$id/form?status=edited");
+    $request->getRouter()->redirect("/dashboard/wine/$id/form?status=edit-success");
   }
 
   /**
@@ -332,6 +361,10 @@ class WineController
    */
   public static function deleteWine($request, $id)
   {
+    if (!is_numeric($id)) {
+      $request->getRouter()->redirect("/dashboard/wine/$id/form?status=delete-fail");
+    }
+
     $wine = Wine::getWineById($id);
 
     if (!$wine instanceof Wine) {

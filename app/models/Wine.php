@@ -67,6 +67,35 @@ class Wine
   public $registration_date;
 
   /**
+   * Adiciona um registro de vinho no banco de dados com os dados da instância atual 
+   */
+  public function add()
+  {
+    $query = "INSERT INTO wines (
+                          name,
+                          winery,
+                          grape_id,
+                          region_id,
+                          harvest_date, 
+                          bottling_date,
+                          registration_date
+              ) VALUES
+              (?, ?, ?, ?, ?, ?, ?)";
+
+    $params = [
+      $this->name,
+      $this->winery,
+      $this->grape_id,
+      $this->region_id,
+      $this->harvest_date,
+      $this->bottling_date,
+      $this->registration_date
+    ];
+    
+    Database::execute($query, $params);
+  }
+
+  /**
    * Atualiza o registro de vinho no banco de dados com os dados da instância atual 
    */
   public function update()
