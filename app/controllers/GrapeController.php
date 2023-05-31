@@ -53,9 +53,9 @@ class GrapeController
    * @param array $wines
    * @return array
    */
-  private static function filterGrapes($region, $search)
+  private static function filterGrapes($grape, $search)
   {
-    return stripos(strtolower(trim($region->name)), strtolower(trim($search))) !== false;
+    return stripos(strtolower(trim($grape->name)), strtolower(trim($search))) !== false;
   }
 
   /**
@@ -69,7 +69,7 @@ class GrapeController
     $cards = '';
 
     if (isset($params['search']) && $params['search'] !== '') {
-      $grape = array_filter(
+      $grapes = array_filter(
         $grapes,
         fn ($grape) => self::filterGrapes($grape, $params['search'])
       );
