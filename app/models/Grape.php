@@ -25,6 +25,24 @@ class Grape
   public $color_hex;
 
   /**
+   * Adiciona um registro de uva no banco de dados com os dados da instância atual 
+   */
+  public function add()
+  {
+    $query = "INSERT INTO grapes (
+                name,
+                color_hex
+              ) VALUES (?, ?)";
+
+    $params = [
+      $this->name,
+      $this->color_hex,
+    ];
+
+    Database::execute($query, $params);
+  }
+
+  /**
    * Atualiza um registro de uva no banco de dados com os dados da instância atual 
    */
   public function update()

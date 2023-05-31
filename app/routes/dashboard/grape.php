@@ -17,12 +17,12 @@ $router->get(
   }
 );
 
-// $router->post(
-//   '/dashboard/grape/add',
-//   function ($request) {
-//     return new Response(200, GrapeController::addRegion($request));
-//   }
-// );
+$router->post(
+  '/dashboard/grape/add',
+  function ($request) {
+    return new Response(200, GrapeController::addGrape($request));
+  }
+);
 
 $router->post(
   '/dashboard/grape/{id}/edit',

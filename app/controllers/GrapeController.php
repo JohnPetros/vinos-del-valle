@@ -26,11 +26,11 @@ class GrapeController
       case 'edit-success':
         return Toast::getSuccess('Uva editada com sucesso!');
       case 'edit-fail':
-        return Toast::getError('Erro ao tentar editar a região');
+        return Toast::getError('Erro ao tentar editar a uva');
       case 'delete-success':
         return Toast::getSuccess('Uva deletada com sucesso');
       case 'delete-fail':
-        return Toast::getError('Erro ao tentar deletar a região');
+        return Toast::getError('Erro ao tentar deletar a uva');
       default:
         return Toast::getError('Escreva uma mensagem no toast');
     }
@@ -187,7 +187,7 @@ class GrapeController
    * @return boolean
    */
   private static function isValidateInput($data)
-  {    
+  {
     $data = array_map('trim', $data);
 
     $data = filter_input_array(INPUT_POST, $data);
@@ -201,8 +201,34 @@ class GrapeController
     return !!$data;
   }
 
-   /**
-   * Atualiza uma região com base em seu ID
+  /**
+   * Adiciona uma uva
+   * @param Request $request
+   * @param integer $id
+   */
+  public static function addGrape($request)
+  {
+    Session::verifyLoggedUser('login', 'admin', $request);
+
+    $router = $request->getRouter();
+    $postVars = $request->getPostVars();
+
+    if (!self::isValidateInput($postVars)) {
+      $router->redirect("/dashboard/grape/add/form?status=add-fail");
+    }
+
+    $grape = new Grape;
+    foreach ($postVars as $var => $value) {
+      $grape->{$var} = $value;
+    }
+
+    $grape->add();
+
+    $router->redirect("/dashboard/grape?status=add-success");
+  }
+
+  /**
+   * Atualiza uma uva com base em seu ID
    * @param Request $request
    * @param integer $id
    */
