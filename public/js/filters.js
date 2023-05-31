@@ -66,4 +66,6 @@ selectOptions.forEach((option) =>
   option.addEventListener("click", handleSelectOptionClick)
 );
 
-setSelectedCategory();
+if (categories.length) {
+  setSelectedCategory();
+}

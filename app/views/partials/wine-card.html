@@ -1,18 +1,23 @@
 <a href="/dashboard/wine/{{id}}/form" class="wine-card">
   <div class="image-wrapper" data-color="backgroundColor:{{color_hex}}">
-    <img width="64" src="{{public_path}}/uploads/wines/default.png" alt="Garrafa de vinho" />
+    <img
+      width="64"
+      style="margin-top: -4rem;"
+      src="{{public_path}}/assets/images/wine-default.png"
+      alt="Garrafa de vinho"
+    />
   </div>
   <div class="info">
     <strong class="name">{{name}}</strong>
     <small class="description"
       >Pais: <span class="country" data-code="{{country_code}}"></span> |
-      <span class="date" data-date="{{harvest_date}}"></span
-    ></small>
+      <span class="date" data-date="{{harvest_date}}"></span>
+    </small>
     <span class="grape" data-color="color:{{color_hex}}">{{grape}}</span>
   </div>
 </a>
 
-<span class="css" data-file="wine-card"></span>
+<span class="css" data-file="card"></span>
 <span class="css" data-file="pagination"></span>
 <span class="js" data-file="countries"></span>
 <span class="js" data-file="colors"></span>

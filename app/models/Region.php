@@ -37,11 +37,11 @@ class Region
   public $country_code;
 
   /**
-   * Retorna as regiões que servirão como opções para um select
+   * Retorna as regiões do banco de dados
    */
   public static function getRegions()
   {
-    $query = "SELECT id, name, country_code FROM regions";
+    $query = "SELECT id, name, city, state, country_code FROM regions";
 
     return Database::execute($query)->fetchAll(\PDO::FETCH_CLASS, self::class);
   }
