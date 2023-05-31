@@ -53,11 +53,40 @@ class GrapeController
    * @param array $wines
    * @return array
    */
-  private static function filterRegions($region, $search)
+  private static function filterGrapes($region, $search)
   {
     return stripos(strtolower(trim($region->name)), strtolower(trim($search))) !== false;
   }
 
+  /**
+   * Retorna os cards de uva
+   * @param array $params
+   * @return string
+   */
+  private static function getGrapeCards($params)
+  {
+    $grapes = Grape::getGrapes();
+    $cards = '';
+
+    if (isset($params['search']) && $params['search'] !== '') {
+      $grape = array_filter(
+        $grapes,
+        fn ($grape) => self::filterGrapes($grape, $params['search'])
+      );
+    }
+
+    if (!count($grapes)) return '<p class="empty-message">Nenhuma uva cadastrada.</p>';
+
+    foreach ($grapes as $grape) {
+      $cards .= View::render('partials/grape-card', [
+        'id' => $grape->id,
+        'name' => $grape->name,
+        'color_hex' => $grape->color_hex,
+      ]);
+    }
+
+    return $cards;
+  }
 
   /**
    * Retorna o conteúdo (View) da página de uvas da Dashboard
@@ -71,9 +100,9 @@ class GrapeController
     $params = $request->getQueryParams();
 
     return View::render('pages/dashboard/grape-dashboard', [
-      'header' => Layout::getDashboardHeader('region'),
+      'header' => Layout::getDashboardHeader('grape'),
       'filters' => self::getFilters($params),
-      // 'grape-cards' => self::getRegionCards($params),
+      'grape-cards' => self::getGrapeCards($params),
       'toast' => isset($params['status']) ? self::getToast($params['status']) : '',
     ]);
   }

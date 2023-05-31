@@ -25,7 +25,7 @@ class Grape
   public $color_hex;
 
   /**
-   * Retorna dados das uvas
+   * Retorna todos os registros de uvas do banco de dados
    * @return array
    */
   public static function getGrapes()
