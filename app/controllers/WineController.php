@@ -289,7 +289,7 @@ class WineController
    * @param array $data 
    * @return boolean
    */
-  private static function IsValidateInput($data)
+  private static function isValidateInput($data)
   {
     $data = array_map('trim', $data);
 
@@ -315,10 +315,11 @@ class WineController
    */
   public static function addWine($request)
   {
+    $router = $request->getRouter();
     $postVars = $request->getPostVars();
 
-    if (!self::IsValidateInput($postVars)) {
-      $request->getRouter()->redirect("/dashboard/wine/add/form?status=add-fail");
+    if (!self::isValidateInput($postVars)) {
+      $router->redirect("/dashboard/wine/add/form?status=add-fail");
     }
 
     $wine = new Wine;
@@ -328,7 +329,7 @@ class WineController
 
     $wine->add();
 
-    $request->getRouter()->redirect("/dashboard/wine?status=add-success");
+    $router->redirect("/dashboard/wine?status=add-success");
   }
 
   /**
@@ -338,16 +339,17 @@ class WineController
    */
   public static function editWine($request, $id)
   {
+    $router = $request->getRouter();
     $postVars = $request->getPostVars();
 
-    if (!is_numeric($id) || !self::IsValidateInput($postVars)) {
-      $request->getRouter()->redirect("/dashboard/wine/$id/form?status=edit-fail");
+    if (!is_numeric($id) || !self::isValidateInput($postVars)) {
+      $router->redirect("/dashboard/wine/$id/form?status=edit-fail");
     }
 
     $wine = Wine::getWineById($id);
 
     if (!$wine instanceof Wine) {
-      $request->getRouter()->redirect("/dashboard/wine/$id/form?status=edit-fail");
+      $router->redirect("/dashboard/wine/$id/form?status=edit-fail");
     }
 
     foreach ($postVars as $var => $value) {
@@ -356,7 +358,7 @@ class WineController
 
     $wine->update();
 
-    $request->getRouter()->redirect("/dashboard/wine/$id/form?status=edit-success");
+    $router->redirect("/dashboard/wine/$id/form?status=edit-success");
   }
 
   /**
@@ -366,18 +368,20 @@ class WineController
    */
   public static function deleteWine($request, $id)
   {
+    $router = $request->getRouter();
+
     if (!is_numeric($id)) {
-      $request->getRouter()->redirect("/dashboard/wine/$id/form?status=delete-fail");
+      $router->redirect("/dashboard/wine/$id/form?status=delete-fail");
     }
 
     $wine = Wine::getWineById($id);
 
     if (!$wine instanceof Wine) {
-      $request->getRouter()->redirect("/dashboard/wine/$id/edit");
+      $router->redirect("/dashboard/wine/$id/edit");
     }
 
     $wine->delete();
 
-    $request->getRouter()->redirect("/dashboard/wine?status=deleted");
+    $router->redirect("/dashboard/wine?status=deleted");
   }
 }

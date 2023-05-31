@@ -4,7 +4,7 @@ function getCountryOptions() {
     const country = countriesData[i];
     options += `
     <div class="option">
-      <input type="radio" name="region_code" id='country-${country.code}' value='${country.code}' />
+      <input type="radio" name="country_code" id='country-${country.code}' value='${country.code}' />
       <label for='country-${country.code}'>
         <img class="flag" src="https://flagsapi.com/${country.code}/flat/24.png" />
         ${country.name}
@@ -24,7 +24,7 @@ function getOptions(type) {
 
 function insertOptions(select) {
   if (!select.dataset.insertoptions) return;
-  
+
   const options = getOptions(select.id);
   const selectBox = select.querySelector(".select-box");
   selectBox.innerHTML += options;

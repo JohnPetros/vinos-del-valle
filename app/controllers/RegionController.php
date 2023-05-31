@@ -76,7 +76,7 @@ class RegionController
     if (isset($params['search']) && $params['search'] !== '') {
       $regions = array_filter(
         $regions,
-        fn ($wine) => self::filterRegions($wine, $params['search'])
+        fn ($region) => self::filterRegions($region, $params['search'])
       );
     }
 
@@ -172,8 +172,8 @@ class RegionController
     $region = $isEditForm ? Region::getRegionById($id) : null;
     $modal = $isEditForm ? Modal::getModal(
       'trash',
-      'Deletar vinho ' . $region->name,
-      'Tem certeza que deseja deletar esse vinho?',
+      'Deletar região ' . $region->name,
+      'Tem certeza que deseja deletar essa região?',
       '/dashboard/region/' . $region->id . '/delete',
       'delete'
     ) : '';
@@ -189,5 +189,102 @@ class RegionController
       'toast' => isset($params['status']) ? self::getToast($params['status']) : '',
       'buttons' => self::getFormButtons($isEditForm, $region),
     ]);
+  }
+
+  /**
+   * Verifica se a entrada de dados do usuário é válido
+   * @param array $data 
+   * @return boolean
+   */
+  private static function isValidateInput($data)
+  {
+    $data = array_map('trim', $data);
+
+    $data = filter_input_array(INPUT_POST, $data);
+
+    foreach ($data as $value) {
+      if ($value == '') {
+        return false;
+      }
+    }
+
+    return !!$data;
+  }
+
+  /**
+   * Adiciona uma região
+   * @param Request $request
+   * @param integer $id
+   */
+  public static function addRegion($request)
+  {
+    $router = $request->getRouter();
+    $postVars = $request->getPostVars();
+
+    if (!self::isValidateInput($postVars)) {
+      $router->redirect("/dashboard/region/add/form?status=add-fail");
+    }
+
+    $region = new Region;
+    foreach ($postVars as $var => $value) {
+      $region->{$var} = $value;
+    }
+
+    $region->add();
+
+    $router->redirect("/dashboard/region?status=add-success");
+  }
+
+  /**
+   * Atualiza uma região com base em seu ID
+   * @param Request $request
+   * @param integer $id
+   */
+  public static function editRegion($request, $id)
+  {
+    $router = $request->getRouter();
+    $postVars = $request->getPostVars();
+
+    if (!is_numeric($id) || !self::isValidateInput($postVars)) {
+      $router->redirect("/dashboard/region/$id/form?status=edit-fail");
+    }
+
+    $region = Region::getRegionById($id);
+
+    if (!$region instanceof Region) {
+      $router->redirect("/dashboard/region/$id/form?status=edit-fail");
+    }
+
+    foreach ($postVars as $var => $value) {
+      $region->{$var} = $value ?? $region->{$var};
+    }
+
+    $region->update();
+
+    $router->redirect("/dashboard/region/$id/form?status=edit-success");
+  }
+
+  /**
+   * Deleta uma região com base em seu ID
+   * @param Request $request
+   * @param integer $id
+   */
+  public static function deleteWine($request, $id)
+  {
+    $router = $request->getRouter();
+
+    if (!is_numeric($id)) {
+      $router->redirect("/dashboard/region/$id/form?status=delete-fail");
+    }
+
+    $region = Region::getRegionById($id);
+
+    if (!$region instanceof Region) {
+      $router->redirect("/dashboard/region/$id/edit");
+    }
+
+    $region->delete();
+
+    $router->redirect("/dashboard/region?status=deleted");
   }
 }

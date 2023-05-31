@@ -72,13 +72,13 @@ class Wine
   public function add()
   {
     $query = "INSERT INTO wines (
-                        name,
-                        winery,
-                        grape_id,
-                        region_id,
-                        harvest_date, 
-                        bottling_date,
-                        registration_date
+                name,
+                winery,
+                grape_id,
+                region_id,
+                harvest_date, 
+                bottling_date,
+                registration_date
               ) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     $params = [
@@ -157,7 +157,7 @@ class Wine
   }
 
   /**
-   * Retorna os dados de vinhos
+   * Retorna os registros de vinhos do banco de dados
    * @param array $params
    * @return array
    */
@@ -189,7 +189,7 @@ class Wine
   }
 
   /**
-   * Retorna um vinho do banco de dados com base em seu ID
+   * Retorna um registro de vinho do banco de dados com base em seu ID
    * @return Wine
    */
   public static function getWineById($id)

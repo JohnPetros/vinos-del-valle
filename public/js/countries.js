@@ -3,6 +3,7 @@ const countriesData = [
   { name: "Espanha", code: "ES", color_hex: "#C60B1E" },
   { name: "França", code: "FR", color_hex: "#0055A4" },
   { name: "Itália", code: "IT", color_hex: "#009246" },
+  { name: "Portugal", code: "PT", color_hex: "#00693F" },
   { name: "Estados Unidos", code: "US", color_hex: "#14149F" },
   { name: "Alemanha", code: "DE", color_hex: "#000000" },
   { name: "Japão", code: "JP", color_hex: "#E6E6E6" },

@@ -37,6 +37,52 @@ class Region
   public $country_code;
 
   /**
+   * Adiciona um registro de região no banco de dados com os dados da instância atual 
+   */
+  public function add()
+  {
+    $query = "INSERT INTO regions (
+                name,
+                city,
+                state,
+                country_code
+              ) VALUES (?, ?, ?, ?)";
+
+    $params = [
+      $this->name,
+      $this->city,
+      $this->state,
+      $this->country_code,
+    ];
+
+   
+    Database::execute($query, $params);
+  }
+
+  /**
+   * Atualiza o registro de região no banco de dados com os dados da instância atual 
+   */
+  public function update()
+  {
+    $query = "UPDATE regions 
+              SET name = ?,
+                  city = ?,
+                  state = ?,
+                  country_code = ?
+              WHERE id = ?";
+
+    $params = [
+      $this->name,
+      $this->city,
+      $this->state,
+      $this->country_code,
+      $this->id,
+    ];
+
+    Database::execute($query, $params);
+  }
+
+  /**
    * Retorna as regiões do banco de dados
    * @param string $countryCode
    */
