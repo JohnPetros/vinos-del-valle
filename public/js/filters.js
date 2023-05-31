@@ -1,3 +1,4 @@
+const controller = document.querySelector('main').id;
 const categories = document.querySelectorAll("button.category");
 const selectOptions = document.querySelectorAll(".option");
 
@@ -33,7 +34,7 @@ function filterData() {
   const categoryParam = getCategoryParam();
   const queryParams = selectParams.concat(categoryParam).join("&");
 
-  location.href = `/dashboard/wine?${queryParams}`;
+  location.href = `/dashboard/${controller}?${queryParams}`;
 }
 
 function handleCategoryClick({ currentTarget }) {
@@ -50,7 +51,7 @@ function setSelectedCategory() {
   const targetCategory = [...categories].find(
     (category) => category.id === categoryId
   );
-
+console.log(categories);
   if (targetCategory) {
     addActive(targetCategory);
   } else {

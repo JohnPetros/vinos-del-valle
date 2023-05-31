@@ -58,7 +58,7 @@ class RegionController
   }
 
   /**
-   * Retorna os cards de vinho
+   * Retorna os cards de região
    * @param array $params
    * @return string
    */

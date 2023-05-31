@@ -22,13 +22,15 @@
     <link rel="stylesheet" href="{{public_path}}/css/filters.css" />
     <script defer src="{{public_path}}/js/global.js"></script>
     <script defer src="{{public_path}}/js/form.js"></script>
+    <script defer src="{{public_path}}/js/countries.js"></script>
+    <script defer src="{{public_path}}/js/categories.js"></script>
     <script defer src="{{public_path}}/js/filters.js"></script>
     <script defer src="{{public_path}}/js/pagination.js"></script>
     <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
     <title>Dashboard - Regiões | Vinos Del Valle</title>
   </head>
   <body>
-    <main class="container">
+    <main class="container" id="region">
       {{header}} {{filters}}
 
       <a href="{{URL}}/dashboard/wine/add/form" class="button add">
