@@ -1,4 +1,4 @@
-const categories = document.querySelectorAll(".category");
+const categories = document.querySelectorAll("button.category");
 const selectOptions = document.querySelectorAll(".option");
 
 function removeActive(category) {

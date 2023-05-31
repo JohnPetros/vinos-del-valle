@@ -1,25 +1,21 @@
 <a href="{{URL}}/dashboard/wine/{{id}}/form" class="wine-card">
-  <div class="image-wrapper" data-color="backgroundColor:{{color_hex}}">
+  <div class="image-wrapper" data-color="backgroundColor:var(--secondary)">
     <img
       width="72"
-      style="margin-top: 0;"
+      style="margin-top: 0"
       src="{{public_path}}/assets/images/region-default.jpg"
       alt="Região"
     />
   </div>
   <div class="info">
     <strong class="name">{{name}}</strong>
-    <small class="description">{{state}} | {{city}}</small>
-    <span
-      class="country"
-      data-code="{{country_code}}"
-      data-countryColor="color"
-    ></span>
+    <small class="description">{{city}} | {{state}}</small>
+    <img class="flag" src="https://flagsapi.com/{{country_code}}/flat/24.png" />
   </div>
 </a>
 
 <span class="css" data-file="card"></span>
 <span class="css" data-file="pagination"></span>
-<span class="js" data-file="colors"></span>
 <span class="js" data-file="countries"></span>
+<span class="js" data-file="colors"></span>
 <span class="js" data-file="date"></span>

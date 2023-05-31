@@ -18,17 +18,21 @@ function getCoutryName(code) {
   return countriesData.find((country) => country.code === code).name;
 }
 
-function getCountryColor(color) {
-  return countriesData.find((country) => country.color === color).color;
+function getCountryColor(code) {
+  return countriesData.find((country) => country.code === code).color_hex;
 }
 
 function handleCountries(country) {
-  country.textContent = getCoutryName(country.dataset.code);
+  const { code } = country.dataset;
+  country.textContent = getCoutryName(code);
 
-  if (country.hasAttribute("data-country-color")) {
-    country.setAtribute(country.dataset.countryColor, getCountryColor());
-    console.log(country);
+  if (country.hasAttribute("data-countrycolor")) {
+    country.setAttribute(
+      "data-color",
+      `${country.dataset.countrycolor}:${getCountryColor(code)}`
+    );
     setColor(country);
+    console.log(country.dataset);
   }
 }
 

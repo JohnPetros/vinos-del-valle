@@ -42,7 +42,11 @@
   color: var(--base-3);
 }
 
-.grape {
-  color: #8bd297;
+.category {
+  color: var(--primary);
   font-weight: 700;
+}
+
+.info img {
+  width: 2.8rem;
 }
