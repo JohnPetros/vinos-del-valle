@@ -72,15 +72,14 @@ class Wine
   public function add()
   {
     $query = "INSERT INTO wines (
-                          name,
-                          winery,
-                          grape_id,
-                          region_id,
-                          harvest_date, 
-                          bottling_date,
-                          registration_date
-              ) VALUES
-              (?, ?, ?, ?, ?, ?, ?)";
+                        name,
+                        winery,
+                        grape_id,
+                        region_id,
+                        harvest_date, 
+                        bottling_date,
+                        registration_date
+              ) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     $params = [
       $this->name,

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="{{public_path}}/assets/icons/favicon.png"
+      type="image/x-icon"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{public_path}}/css/global.css" />
+    <link rel="stylesheet" href="{{public_path}}/css/dashboard.css" />
+    <link rel="stylesheet" href="{{public_path}}/css/header.css" />
+    <link rel="stylesheet" href="{{public_path}}/css/form.css" />
+    <link rel="stylesheet" href="{{public_path}}/css/filters.css" />
+    <script defer src="{{public_path}}/js/global.js"></script>
+    <script defer src="{{public_path}}/js/form.js"></script>
+    <script defer src="{{public_path}}/js/filters.js"></script>
+    <script defer src="{{public_path}}/js/pagination.js"></script>
+    <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+    <title>Dashboard - Vinhos</title>
+  </head>
+  <body>
+    <main class="container">
+      {{header}} {{filters}}
+
+      <a href="/dashboard/wine/add/form" class="button add">
+        <i class="ph-bold ph-plus"></i>
+        Adicionar região
+      </a>
+
+      <div id="cards-container">{{region-cards}}</div>
+      <div class="pagination-buttons"></div>
+
+      {{toast}}
+    </main>
+  </body>
+</html>

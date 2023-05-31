@@ -28,7 +28,7 @@ class WineController
       case 'add-success':
         return Toast::getSuccess('Vinho adicionado com sucesso!');
       case 'add-fail':
-        return Toast::getSuccess('Erro ao tentar adicionar com sucesso!');
+        return Toast::getSuccess('Erro ao tentar adicionar um vinho');
       case 'edit-success':
         return Toast::getSuccess('Vinho editado com sucesso');
       case 'edit-fail':
@@ -169,7 +169,7 @@ class WineController
    * @param Request $request
    * @return string
    */
-  public static function getDashboardWinePage($request)
+  public static function getWineDashboardPage($request)
   {
     Session::verifyLoggedUser('login', 'admin', $request);
 
@@ -284,6 +284,11 @@ class WineController
     ]);
   }
 
+  /**
+   * Verifica se a entrada de dados do usuário é válido
+   * @param array $data 
+   * @return boolean
+   */
   private static function IsValidateInput($data)
   {
     $data = array_map('trim', $data);
@@ -323,7 +328,7 @@ class WineController
 
     $wine->add();
 
-    $request->getRouter()->redirect("/dashboard/wine/add/form?status=edit-success");
+    $request->getRouter()->redirect("/dashboard/wine?status=add-success");
   }
 
   /**
