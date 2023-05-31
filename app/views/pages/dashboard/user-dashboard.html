@@ -22,21 +22,23 @@
     <link rel="stylesheet" href="{{public_path}}/css/filters.css" />
     <script defer src="{{public_path}}/js/global.js"></script>
     <script defer src="{{public_path}}/js/form.js"></script>
+    <script defer src="{{public_path}}/js/countries.js"></script>
+    <script defer src="{{public_path}}/js/categories.js"></script>
     <script defer src="{{public_path}}/js/filters.js"></script>
     <script defer src="{{public_path}}/js/pagination.js"></script>
     <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
-    <title>Dashboard - Uvas | Vinos Del Valle</title>
+    <title>Dashboard - Regiões | Vinos Del Valle</title>
   </head>
   <body>
-    <main class="container" id="grape">
+    <main class="container" id="user">
       {{header}} {{filters}}
 
-      <a href="{{URL}}/dashboard/grape/add/form" class="button add">
+      <a href="{{URL}}/dashboard/user/add/form" class="button add">
         <i class="ph-bold ph-plus"></i>
-        Adicionar uva
+        Adicionar usuário
       </a>
 
-      <div id="cards-container">{{grape-cards}}</div>
+      <div id="cards-container">{{user-cards}}</div>
       <div class="pagination-buttons"></div>
 
       {{toast}}

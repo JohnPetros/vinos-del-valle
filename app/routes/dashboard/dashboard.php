@@ -8,3 +8,6 @@ include __DIR__ . '/region.php';
 
 // ROTAS DE UVA
 include __DIR__ . '/grape.php';
+
+// ROTAS DE USUÁRIO
+include __DIR__ . '/user.php';

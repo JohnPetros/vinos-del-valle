@@ -42,8 +42,19 @@ class User
    */
   public $creator_id;
 
+   /**
+   * Retorna todos os registros de usuários do banco de dados
+   * @return array
+   */
+  public static function getUsers()
+  {
+    $query = "SELECT * FROM users";
+
+    return Database::execute($query)->fetchAll(\PDO::FETCH_CLASS, self::class);
+  }
+
   /**
-   * Método responsável por retornar um usuário com base em seu email
+   * Retorna um registro de usuário do banco de dados com base em seu email
    * @param string $email
    * @return User
    */
