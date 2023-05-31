@@ -55,7 +55,7 @@ class Region
       $this->country_code,
     ];
 
-   
+
     Database::execute($query, $params);
   }
 
@@ -83,8 +83,19 @@ class Region
   }
 
   /**
+   * Deleta um registro de região no banco de dados com base no ID da instância atual
+   */
+  public function delete()
+  {
+    $query = "DELETE FROM regions WHERE id = ?";
+
+    Database::execute($query, [$this->id]);
+  }
+
+  /**
    * Retorna as regiões do banco de dados
    * @param string $countryCode
+   * @return array
    */
   public static function getRegions($countryCode = null)
   {
@@ -99,7 +110,7 @@ class Region
 
   /**
    * Retorna uma região do banco de dados com base em seu ID
-   * @return Wine
+   * @return Region
    */
   public static function getRegionById($id)
   {

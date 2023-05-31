@@ -32,7 +32,7 @@ $router->post(
 );
 
 $router->get(
-  '/dashboard/wine/{id}/delete',
+  '/dashboard/region/{id}/delete',
   function ($request, $id) {
     return new Response(200, RegionController::deleteRegion($request, $id));
   }

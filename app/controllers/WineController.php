@@ -382,6 +382,6 @@ class WineController
 
     $wine->delete();
 
-    $router->redirect("/dashboard/wine?status=deleted");
+    $router->redirect("/dashboard/wine?status=delete-success");
   }
 }

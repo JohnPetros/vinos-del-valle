@@ -269,7 +269,7 @@ class RegionController
    * @param Request $request
    * @param integer $id
    */
-  public static function deleteWine($request, $id)
+  public static function deleteRegion($request, $id)
   {
     $router = $request->getRouter();
 
@@ -285,6 +285,6 @@ class RegionController
 
     $region->delete();
 
-    $router->redirect("/dashboard/region?status=deleted");
+    $router->redirect("/dashboard/region?status=delete-success");
   }
 }
