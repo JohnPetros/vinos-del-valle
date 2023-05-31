@@ -31,10 +31,9 @@ $router->post(
   }
 );
 
-// $router->get(
-//   '/dashboard/grape/{id}/delete',
-//   function ($request, $id) {
-//     return new Response(200, GrapeController::deleteRegion($request, $id));
-//   }
-// );
-
+$router->get(
+  '/dashboard/grape/{id}/delete',
+  function ($request, $id) {
+    return new Response(200, GrapeController::deleteGrape($request, $id));
+  }
+);

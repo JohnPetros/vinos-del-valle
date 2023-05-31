@@ -44,6 +44,16 @@ class Grape
   }
 
   /**
+   * Deleta um registro de uva no banco de dados com base no ID da instância atual
+   */
+  public function delete()
+  {
+    $query = "DELETE FROM grapes WHERE id = ?";
+
+    Database::execute($query, [$this->id]);
+  }
+
+  /**
    * Retorna todos os registros de uvas do banco de dados
    * @return array
    */

@@ -164,7 +164,7 @@ class GrapeController
     $grape = $isEditForm ? Grape::getGrapeById($id) : null;
     $modal = $isEditForm ? Modal::getModal(
       'trash',
-      'Deletar região ' . $grape->name,
+      'Deletar uva ' . $grape->name,
       'Tem certeza que deseja deletar essa uva?',
       '/dashboard/grape/' . $grape->id . '/delete',
       'delete'
@@ -230,5 +230,31 @@ class GrapeController
     $grape->update();
 
     $router->redirect("/dashboard/grape/$id/form?status=edit-success");
+  }
+
+  /**
+   * Deleta uma uva com base em seu ID
+   * @param Request $request
+   * @param integer $id
+   */
+  public static function deleteGrape($request, $id)
+  {
+    Session::verifyLoggedUser('login', 'admin', $request);
+
+    $router = $request->getRouter();
+
+    if (!is_numeric($id)) {
+      $router->redirect("/dashboard/grape/$id/form?status=delete-fail");
+    }
+
+    $grape = Grape::getGrapeById($id);
+
+    if (!$grape instanceof Grape) {
+      $router->redirect("/dashboard/grape/$id/edit");
+    }
+
+    $grape->delete();
+
+    $router->redirect("/dashboard/grape?status=delete-success");
   }
 }
