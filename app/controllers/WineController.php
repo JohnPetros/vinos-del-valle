@@ -8,6 +8,7 @@ use \App\utils\Layout;
 use \App\models\Wine;
 use \App\models\Region;
 use App\models\Grape;
+use App\utils\Form;
 use App\utils\Modal;
 use App\utils\Toast;
 use DateTime;
@@ -198,48 +199,6 @@ class WineController
   }
 
   /**
-   * Verifica se o usuário está requisitando um formulário de edição
-   * @param Request $request
-   * @return boolean
-   */
-  private static function isEditForm($request)
-  {
-    $uriPartials =  explode('/', $request->getUri());
-    return is_numeric($uriPartials[3]);
-  }
-
-  /**
-   * Retorna os botões paro formulário com base se é um formulário de edição ou não
-   * @param boolean $isEditForm
-   * @return string
-   */
-  private static function getFormButtons($isEditForm, $wine)
-  {
-    $buttons = '';
-
-    if ($isEditForm) {
-      $buttons .= View::render('partials/button', [
-        'type' => 'edit',
-        'title' => 'Editar',
-        'value' => '/dashboard/wine/' . $wine->id . '/edit',
-      ]);
-      $buttons .= View::render('partials/button', [
-        'type' => 'delete',
-        'title' => 'Deletar',
-        'value' => '/dashboard/wine/' . $wine->id . '/delete',
-      ]);
-    } else {
-      $buttons .= View::render('partials/button', [
-        'type' => 'add',
-        'title' => 'Adicionar',
-        'value' => '/dashboard/wine/add',
-      ]);
-    }
-
-    return $buttons;
-  }
-
-  /**
    * Retorna o conteúdo (View) da página de formulário de edição de vinho
    * @param Request $request
    * @param integer $id
@@ -251,7 +210,7 @@ class WineController
 
     $params = $request->getQueryParams();
 
-    $isEditForm = self::isEditForm($request);
+    $isEditForm = Form::isEditForm($request);
     $wine = $isEditForm ? Wine::getWineById($id) : null;
     $modal = $isEditForm ? Modal::getModal(
       'trash',
@@ -279,7 +238,7 @@ class WineController
       'registration_date' => $isEditForm
         ? self::getInputRegistrationDate($wine->registration_date)
         : '',
-      'buttons' => self::getFormButtons($isEditForm, $wine),
+      'buttons' => Form::getFormButtons($isEditForm, $wine),
       'toast' => isset($params['status']) ? self::getToast($params['status']) : '',
     ]);
   }

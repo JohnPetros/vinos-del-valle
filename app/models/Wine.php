@@ -189,12 +189,12 @@ class Wine
   }
 
   /**
-   * Retorna um vinho com base em seu ID
+   * Retorna um vinho do banco de dados com base em seu ID
    * @return Wine
    */
   public static function getWineById($id)
   {
-    $query = "SELECT W.id, W.name, W.winery, W.registration_date, W.harvest_date, W.bottling_date,
+    $query = "SELECT W.*,
                      W.region_id, W.grape_id,
                      R.name AS region, R.country_code, G.name AS grape, G.color_hex
               FROM wines AS W

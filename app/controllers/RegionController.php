@@ -6,6 +6,7 @@ use App\core\Session;
 use App\core\View;
 use App\models\Region;
 use App\utils\Layout;
+use App\utils\Modal;
 use App\utils\Toast;
 
 class RegionController
@@ -64,7 +65,11 @@ class RegionController
    */
   private static function getRegionCards($params)
   {
-    $regions = Region::getRegions();
+    $category = isset($params['category']) && $params['category'] !== 'all-categories'
+      ? $params['category']
+      : null;
+
+    $regions = Region::getRegions($category);
     $cards = '';
 
     if (isset($params['search']) && $params['search'] !== '') {
@@ -104,6 +109,48 @@ class RegionController
       'header' => Layout::getDashboardHeader(),
       'filters' => self::getFilters($params),
       'region-cards' => self::getRegionCards($params),
+      'toast' => isset($params['status']) ? self::getToast($params['status']) : '',
+    ]);
+  }
+
+   /**
+   * Verifica se o usuário está requisitando um formulário de edição
+   * @param Request $request
+   * @return boolean
+   */
+  private static function isEditForm($request)
+  {
+    $uriPartials =  explode('/', $request->getUri());
+    return is_numeric($uriPartials[3]);
+  }
+
+  /**
+   * Retorna o conteúdo (View) da página de formulário de edição de vinho
+   * @param Request $request
+   * @param integer $id
+   * @return string
+   */
+  public static function getRegionFormPage($request, $id)
+  {
+    Session::verifyLoggedUser('login', 'admin', $request);
+
+    $params = $request->getQueryParams();
+
+    $isEditForm = self::isEditForm($request);
+    $region = $isEditForm ? Region::getRegionById($id) : null;
+    $modal = $isEditForm ? Modal::getModal(
+      'trash',
+      'Deletar vinho ' . $region->name,
+      'Tem certeza que deseja deletar esse vinho?',
+      '/dashboard/region/' . $region->id . '/delete',
+      'delete'
+    ) : '';
+
+    return View::render('pages/dashboard/wine-form', [
+      'header' => Layout::getDashboardHeader(),
+      'title' => $isEditForm ? 'Editar região ' . $region->name : 'Adicionar vinho',
+      'modal' => $modal,
+      
       'toast' => isset($params['status']) ? self::getToast($params['status']) : '',
     ]);
   }

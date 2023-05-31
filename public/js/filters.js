@@ -1,5 +1,6 @@
-const controller = document.querySelector('main').id;
+const controller = document.querySelector("main").id;
 const categories = document.querySelectorAll("button.category");
+const searchForm = document.querySelectorAll("form");
 const selectOptions = document.querySelectorAll(".option");
 
 function removeActive(category) {
@@ -46,12 +47,16 @@ function handleSelectOptionClick() {
   filterData();
 }
 
+function handleSearchFormSubmit({ currentTarget }) {
+  currentTarget.preventDefault();
+}
+
 function setSelectedCategory() {
   const categoryId = new URLSearchParams(location.search).get("category");
   const targetCategory = [...categories].find(
     (category) => category.id === categoryId
   );
-console.log(categories);
+
   if (targetCategory) {
     addActive(targetCategory);
   } else {
@@ -66,6 +71,9 @@ categories.forEach((category) => {
 selectOptions.forEach((option) =>
   option.addEventListener("click", handleSelectOptionClick)
 );
+
+
+// searchForm.addEventListener("submit", handleSearchFormSubmit);
 
 if (categories.length) {
   setSelectedCategory();
