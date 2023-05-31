@@ -25,6 +25,25 @@ class Grape
   public $color_hex;
 
   /**
+   * Atualiza um registro de uva no banco de dados com os dados da instância atual 
+   */
+  public function update()
+  {
+    $query = "UPDATE grapes 
+              SET name = ?,
+                  color_hex = ?
+              WHERE id = ?";
+
+    $params = [
+      $this->name,
+      $this->color_hex,
+      $this->id,
+    ];
+
+    Database::execute($query, $params);
+  }
+
+  /**
    * Retorna todos os registros de uvas do banco de dados
    * @return array
    */

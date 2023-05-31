@@ -25,7 +25,7 @@ class RegionController
       case 'add-fail':
         return Toast::getSuccess('Erro ao tentar adicionar com sucesso!');
       case 'edit-success':
-        return Toast::getSuccess('Região editado com sucesso!');
+        return Toast::getSuccess('Região editada com sucesso!');
       case 'edit-fail':
         return Toast::getError('Erro ao tentar editar a região');
       case 'delete-success':

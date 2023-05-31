@@ -24,7 +24,7 @@ class GrapeController
       case 'add-fail':
         return Toast::getSuccess('Erro ao tentar adicionar com sucesso!');
       case 'edit-success':
-        return Toast::getSuccess('Uva editado com sucesso!');
+        return Toast::getSuccess('Uva editada com sucesso!');
       case 'edit-fail':
         return Toast::getError('Erro ao tentar editar a região');
       case 'delete-success':
@@ -179,5 +179,56 @@ class GrapeController
       'toast' => isset($params['status']) ? self::getToast($params['status']) : '',
       'buttons' => self::getFormButtons($isEditForm, $grape),
     ]);
+  }
+
+  /**
+   * Verifica se a entrada de dados do usuário é válido
+   * @param array $data 
+   * @return boolean
+   */
+  private static function isValidateInput($data)
+  {    
+    $data = array_map('trim', $data);
+
+    $data = filter_input_array(INPUT_POST, $data);
+
+    foreach ($data as $value) {
+      if ($value == '') {
+        return false;
+      }
+    }
+
+    return !!$data;
+  }
+
+   /**
+   * Atualiza uma região com base em seu ID
+   * @param Request $request
+   * @param integer $id
+   */
+  public static function editgrape($request, $id)
+  {
+    Session::verifyLoggedUser('login', 'admin', $request);
+
+    $router = $request->getRouter();
+    $postVars = $request->getPostVars();
+
+    if (!is_numeric($id) || !self::isValidateInput($postVars)) {
+      $router->redirect("/dashboard/grape/$id/form?status=edit-fail");
+    }
+
+    $grape = Grape::getGrapeById($id);
+
+    if (!$grape instanceof Grape) {
+      $router->redirect("/dashboard/grape/$id/form?status=edit-fail");
+    }
+
+    foreach ($postVars as $var => $value) {
+      $grape->{$var} = $value ?? $grape->{$var};
+    }
+
+    $grape->update();
+
+    $router->redirect("/dashboard/grape/$id/form?status=edit-success");
   }
 }
