@@ -107,7 +107,7 @@ class RegionController
     $params = $request->getQueryParams();
 
     return View::render('pages/dashboard/region-dashboard', [
-      'header' => Layout::getDashboardHeader(),
+      'header' => Layout::getDashboardHeader('region'),
       'filters' => self::getFilters($params),
       'region-cards' => self::getRegionCards($params),
       'toast' => isset($params['status']) ? self::getToast($params['status']) : '',
@@ -179,7 +179,7 @@ class RegionController
     ) : '';
 
     return View::render('pages/dashboard/region-form', [
-      'header' => Layout::getDashboardHeader(),
+      'header' => Layout::getDashboardHeader('region'),
       'title' => $isEditForm ? 'Editar região ' . $region->name : 'Adicionar região',
       'modal' => $modal,
       'name' => $region ? $region->name : '',

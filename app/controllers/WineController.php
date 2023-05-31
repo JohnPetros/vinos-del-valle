@@ -176,7 +176,7 @@ class WineController
     $params = $request->getQueryParams();
 
     return View::render('pages/dashboard/wine-dashboard', [
-      'header' => Layout::getDashboardHeader(),
+      'header' => Layout::getDashboardHeader('wine'),
       'filters' => self::getFilters($params),
       'wine-cards' => self::getWineCards($params),
       'toast' => isset($params['status']) ? self::getToast($params['status']) : '',
@@ -262,7 +262,7 @@ class WineController
     ) : '';
 
     return View::render('pages/dashboard/wine-form', [
-      'header' => Layout::getDashboardHeader(),
+      'header' => Layout::getDashboardHeader('wine'),
       'title' => $isEditForm ? 'Editar vinho ' . $wine->name : 'Adicionar vinho',
       'modal' => $modal,
       'id' => $wine ? $wine->id : '',

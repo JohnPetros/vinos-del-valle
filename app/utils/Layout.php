@@ -12,7 +12,7 @@ class Layout
    * Retorna o cabeçalho de Dashboard
    * @return string
    */
-  public static function getDashboardHeader()
+  public static function getDashboardHeader($page)
   {
 
     $modal = Modal::getModal(
@@ -27,6 +27,7 @@ class Layout
       'name' => Session::getUserSession()['name'],
       'email' => Session::getUserSession()['email'],
       'modal' => $modal,
+      $page => 'active',
     ]);
   }
 }
