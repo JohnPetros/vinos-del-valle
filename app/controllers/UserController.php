@@ -64,22 +64,25 @@ class UserController
    */
   private static function getUserCards($params)
   {
-    $grapes = User::getUsers();
+    $users = User::getUsers(Session::getUserSession()['id']);
     $cards = '';
 
     if (isset($params['search']) && $params['search'] !== '') {
-      $grapes = array_filter(
-        $grapes,
-        fn ($grape) => self::filterGrapes($grape, $params['search'])
+      $users = array_filter(
+        $users,
+        fn ($user) => self::filterGrapes($user, $params['search'])
       );
     }
 
-    if (!count($grapes)) return '<p class="empty-message">Nenhuma uva cadastrada.</p>';
+    if (!count($users)) return '<p class="empty-message">Nenhum usuário cadastrado.</p>';
 
-    foreach ($grapes as $grape) {
-      $cards .= View::render('partials/grape-card', [
-        'id' => $grape->id,
-        'name' => $grape->name,
+    foreach ($users as $user) {
+      $cards .= View::render('partials/user-card', [
+        'id' => $user->id,
+        'name' => $user->name,
+        'type' => $user->is_admin ? 'administrador' : 'padrão',
+        'color' => $user->is_admin ? 'var(--base-4)' : 'var(--primary)',
+        'creator_name' => $user->creator_name,
       ]);
     }
 
@@ -100,7 +103,7 @@ class UserController
     return View::render('pages/dashboard/user-dashboard', [
       'header' => Layout::getDashboardHeader('user'),
       'filters' => self::getFilters($params),
-      'grape-cards' => self::getUserCards($params),
+      'user-cards' => self::getUserCards($params),
       'toast' => isset($params['status']) ? self::getToast($params['status']) : '',
     ]);
   }

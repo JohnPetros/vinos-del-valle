@@ -42,15 +42,27 @@ class User
    */
   public $creator_id;
 
-   /**
+  /**
+   * Nome do criador do usuário
+   * @var integer
+   */
+  public $creator_name;
+
+  /**
    * Retorna todos os registros de usuários do banco de dados
+   * @param integer $loggedUserId
    * @return array
    */
-  public static function getUsers()
+  public static function getUsers($loggedUserId)
   {
-    $query = "SELECT * FROM users";
+    $query = "SELECT U.*, UC.name AS creator_name
+              FROM users AS U
+              JOIN users AS UC ON UC.id = U.creator_id 
+              WHERE U.id != ?";
+            
+    $params = [$loggedUserId];
 
-    return Database::execute($query)->fetchAll(\PDO::FETCH_CLASS, self::class);
+    return Database::execute($query, $params)->fetchAll(\PDO::FETCH_CLASS, self::class);
   }
 
   /**
