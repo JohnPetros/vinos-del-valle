@@ -170,7 +170,7 @@ function setInputsWrappers(wrapper) {
 
 function checkFirstOption(select) {
   const firstOption = select.querySelector(".option");
-  checkOption(firstOption, select);
+  if (firstOption) checkOption(firstOption, select);
 }
 
 function hideSelectBox(select) {
@@ -195,7 +195,6 @@ function handleBodyClick({ target }) {
 
 function setSelectedItem(select) {
   const selectItem = select.querySelector(".selected-item").dataset.selected;
-  console.log({ selectItem });
   const targetOption = selectItem.includes("}")
     ? null
     : select.querySelector(`#${select.id}-${selectItem}`)?.parentNode;

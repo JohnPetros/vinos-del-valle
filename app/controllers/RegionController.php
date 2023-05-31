@@ -5,6 +5,7 @@ namespace App\controllers;
 use App\core\Session;
 use App\core\View;
 use App\models\Region;
+use App\utils\Form;
 use App\utils\Layout;
 use App\utils\Modal;
 use App\utils\Toast;
@@ -113,7 +114,38 @@ class RegionController
     ]);
   }
 
-   /**
+  /**
+   * Retorna os botões paro formulário com base se é um formulário de edição ou não
+   * @param boolean $isEditForm
+   * @return string
+   */
+  private static function getFormButtons($isEditForm, $region)
+  {
+    $buttons = '';
+
+    if ($isEditForm) {
+      $buttons .= View::render('partials/button', [
+        'type' => 'edit',
+        'title' => 'Editar',
+        'value' => '/dashboard/region/' . $region->id . '/edit',
+      ]);
+      $buttons .= View::render('partials/button', [
+        'type' => 'delete',
+        'title' => 'Deletar',
+        'value' => '/dashboard/region/' . $region->id . '/delete',
+      ]);
+    } else {
+      $buttons .= View::render('partials/button', [
+        'type' => 'add',
+        'title' => 'Adicionar',
+        'value' => '/dashboard/region/add',
+      ]);
+    }
+
+    return $buttons;
+  }
+
+  /**
    * Verifica se o usuário está requisitando um formulário de edição
    * @param Request $request
    * @return boolean
@@ -146,12 +178,16 @@ class RegionController
       'delete'
     ) : '';
 
-    return View::render('pages/dashboard/wine-form', [
+    return View::render('pages/dashboard/region-form', [
       'header' => Layout::getDashboardHeader(),
-      'title' => $isEditForm ? 'Editar região ' . $region->name : 'Adicionar vinho',
+      'title' => $isEditForm ? 'Editar região ' . $region->name : 'Adicionar região',
       'modal' => $modal,
-      
+      'name' => $region ? $region->name : '',
+      'city' => $region ? $region->city : '',
+      'state' => $region ? $region->state : '',
+      'selected-country-code' => $region ? $region->country_code : '',
       'toast' => isset($params['status']) ? self::getToast($params['status']) : '',
+      'buttons' => self::getFormButtons($isEditForm, $region),
     ]);
   }
 }

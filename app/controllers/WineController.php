@@ -8,7 +8,6 @@ use \App\utils\Layout;
 use \App\models\Wine;
 use \App\models\Region;
 use App\models\Grape;
-use App\utils\Form;
 use App\utils\Modal;
 use App\utils\Toast;
 use DateTime;
@@ -199,6 +198,48 @@ class WineController
   }
 
   /**
+   * Verifica se o usuário está requisitando um formulário de edição
+   * @param Request $request
+   * @return boolean
+   */
+  private static function isEditForm($request)
+  {
+    $uriPartials =  explode('/', $request->getUri());
+    return is_numeric($uriPartials[3]);
+  }
+
+  /**
+   * Retorna os botões paro formulário com base se é um formulário de edição ou não
+   * @param boolean $isEditForm
+   * @return string
+   */
+  private static function getFormButtons($isEditForm, $wine)
+  {
+    $buttons = '';
+
+    if ($isEditForm) {
+      $buttons .= View::render('partials/button', [
+        'type' => 'edit',
+        'title' => 'Editar',
+        'value' => '/dashboard/wine/' . $wine->id . '/edit',
+      ]);
+      $buttons .= View::render('partials/button', [
+        'type' => 'delete',
+        'title' => 'Deletar',
+        'value' => '/dashboard/wine/' . $wine->id . '/delete',
+      ]);
+    } else {
+      $buttons .= View::render('partials/button', [
+        'type' => 'add',
+        'title' => 'Adicionar',
+        'value' => '/dashboard/wine/add',
+      ]);
+    }
+
+    return $buttons;
+  }
+
+  /**
    * Retorna o conteúdo (View) da página de formulário de edição de vinho
    * @param Request $request
    * @param integer $id
@@ -210,7 +251,7 @@ class WineController
 
     $params = $request->getQueryParams();
 
-    $isEditForm = Form::isEditForm($request);
+    $isEditForm = self::isEditForm($request);
     $wine = $isEditForm ? Wine::getWineById($id) : null;
     $modal = $isEditForm ? Modal::getModal(
       'trash',
@@ -224,21 +265,21 @@ class WineController
       'header' => Layout::getDashboardHeader(),
       'title' => $isEditForm ? 'Editar vinho ' . $wine->name : 'Adicionar vinho',
       'modal' => $modal,
-      'id' => isset($wine->id) ? $wine->id : '',
-      'name' => isset($wine->name) ? $wine->name : '',
-      'winery' => isset($wine->winery) ? $wine->winery : '',
-      'grape' => isset($wine->grape) ? $wine->grape : '',
-      'region' => isset($wine->region) ? $wine->region : '',
+      'id' => $wine ? $wine->id : '',
+      'name' => $wine ? $wine->name : '',
+      'winery' => $wine ? $wine->winery : '',
+      'grape' => $wine ? $wine->grape : '',
+      'region' => $wine ? $wine->region : '',
       'region-options' => self::getRegionOptions(),
       'grape-options' => self::getGrapeOptions(),
-      'selected-region-id' => isset($wine->region_id) ? $wine->region_id : 'all-regions',
-      'selected-grape-id' => isset($wine->grape_id) ? $wine->grape_id : 'all-grapes',
-      'harvest_date' => isset($wine->harvest_date) ? $wine->harvest_date : '',
-      'bottling_date' => isset($wine->bottling_date) ? $wine->bottling_date : '',
+      'selected-region-id' => $wine ? $wine->region_id : 'all-regions',
+      'selected-grape-id' => $wine ? $wine->grape_id : 'all-grapes',
+      'harvest_date' => $wine ? $wine->harvest_date : '',
+      'bottling_date' => $wine ? $wine->bottling_date : '',
       'registration_date' => $isEditForm
         ? self::getInputRegistrationDate($wine->registration_date)
         : '',
-      'buttons' => Form::getFormButtons($isEditForm, $wine),
+      'buttons' => self::getFormButtons($isEditForm, $wine),
       'toast' => isset($params['status']) ? self::getToast($params['status']) : '',
     ]);
   }

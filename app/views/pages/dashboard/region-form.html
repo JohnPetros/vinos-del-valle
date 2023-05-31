@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="{{public_path}}/css/form.css" />
     <script defer src="{{public_path}}/js/global.js"></script>
     <script defer src="{{public_path}}/js/form.js"></script>
+    <script defer src="{{public_path}}/js/countries.js"></script>
+    <script defer src="{{public_path}}/js/options.js"></script>
     <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
     <title>Dashboard - Vinhos</title>
   </head>
@@ -31,8 +33,8 @@
 
       <div class="form-container">
         <header>
-          <i class="ph-bold ph-wine"></i>
-          <h2>Vinho</h2>
+          <i class="ph-bold ph-house-line"></i>
+          <h2>Região</h2>
         </header>
 
         <form action="" method="post">
@@ -53,7 +55,7 @@
 
           <div class="input-control">
             <label for="winery">
-              <i class="ph-bold ph-warehouse"></i>
+              <i class="ph-bold ph-buildings"></i>
               Cidade:
             </label>
             <input
@@ -67,7 +69,7 @@
 
           <div class="input-control">
             <label for="state">
-              <i class="ph-bold ph-warehouse"></i>
+              <i class="ph-bold ph-map-trifold"></i>
               Estado:
             </label>
             <input
@@ -80,13 +82,13 @@
           </div>
 
           <div class="input-control">
-            <label for="grape">
-              <i class="ph-bold ph-graph"></i>
+            <label for="country">
+              <i class="ph-bold ph-globe-hemisphere-west"></i>
               País:
             </label>
             <div class="select-container">
-              <div id="grape" class="select grape">
-                <button type="button" class="select-button grape">
+              <div id="country" class="select" data-insertoptions="true">
+                <button type="button" class="select-button">
                   <span
                     data-selected="{{selected-country-code}}"
                     data-value=""
@@ -95,7 +97,7 @@
                   </span>
                   <i class="ph-fill ph-caret-down"></i>
                 </button>
-                <div class="select-box">{{country-options}}</div>
+                <div class="select-box"></div>
               </div>
             </div>
           </div>

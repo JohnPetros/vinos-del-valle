@@ -42,16 +42,16 @@ class Region
    */
   public static function getRegions($countryCode = null)
   {
-    $query = "SELECT id, name, city, state, country_code FROM regions";
+    $query = "SELECT * FROM regions";
 
     if ($countryCode) {
       $query .= " WHERE country_code = ?";
     }
-    
+
     return Database::execute($query, [$countryCode])->fetchAll(\PDO::FETCH_CLASS, self::class);
   }
 
-   /**
+  /**
    * Retorna uma região do banco de dados com base em seu ID
    * @return Wine
    */
