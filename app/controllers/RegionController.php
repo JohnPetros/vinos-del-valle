@@ -156,7 +156,7 @@ class RegionController
   }
 
   /**
-   * Retorna o conteúdo (View) da página de formulário de edição de vinho
+   * Retorna o conteúdo (View) da página de formulário de edição de região
    * @param Request $request
    * @param integer $id
    * @return string
@@ -275,7 +275,7 @@ class RegionController
   public static function deleteRegion($request, $id)
   {
     Session::verifyLoggedUser('login', 'admin', $request);
-    
+
     $router = $request->getRouter();
 
     if (!is_numeric($id)) {

@@ -3,6 +3,7 @@ const inputs = document.querySelectorAll(".input");
 const inputsWrappers = document.querySelectorAll(".input-wrapper");
 const selects = document.querySelectorAll(".select");
 const selectsButtons = document.querySelectorAll(".select-button");
+const inputColors = document.querySelectorAll(".input-color");
 const buttons = document.querySelectorAll("form .button");
 const portugueseNames = {
   email: "e-mail",
@@ -206,6 +207,18 @@ function setSelectedItem(select) {
   }
 }
 
+function setColor(InputColor) {
+  const input = InputColor.querySelector("input");
+  const label = InputColor.querySelector("label");
+
+  label.textContent = input.value;
+  label.style.color = input.value;
+}
+
+function handleInputColorChange({ currentTarget }) {
+  setColor(currentTarget);
+}
+
 function handleButtonClick({ currentTarget }) {
   const type = currentTarget.id;
 
@@ -224,6 +237,10 @@ selects.forEach(checkFirstOption);
 selectsButtons.forEach((select) => {
   select.addEventListener("click", handleSelectClick);
   setSelectedItem(select.parentNode);
+});
+inputColors.forEach((inputColor) => {
+  setColor(inputColor);
+  inputColor.addEventListener("change", handleInputColorChange);
 });
 buttons.forEach((button) =>
   button.addEventListener("click", handleButtonClick)

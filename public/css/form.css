@@ -87,6 +87,18 @@ i.active,
   background-color: transparent;
 }
 
+.input-color {
+  display: flex;
+  gap: .8rem;
+  border-bottom: 2px solid var(--base-3);
+}
+
+.input-color input {
+  border: none;
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
 .form-container .action-buttons {
   margin-top: 2.4rem;
   padding-top: 1.2rem;

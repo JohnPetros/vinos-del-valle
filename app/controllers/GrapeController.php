@@ -11,7 +11,6 @@ use App\utils\Toast;
 
 class GrapeController
 {
-
   /**
    * Retorna o toast junto com a mensagem criada com base no status
    * @param string $status
@@ -104,6 +103,81 @@ class GrapeController
       'filters' => self::getFilters($params),
       'grape-cards' => self::getGrapeCards($params),
       'toast' => isset($params['status']) ? self::getToast($params['status']) : '',
+    ]);
+  }
+
+  /**
+   * Retorna os botões paro formulário com base se é um formulário de edição ou não
+   * @param boolean $isEditForm
+   * @return string
+   */
+  private static function getFormButtons($isEditForm, $grape)
+  {
+    $buttons = '';
+
+    if ($isEditForm) {
+      $buttons .= View::render('partials/button', [
+        'type' => 'edit',
+        'title' => 'Editar',
+        'value' => '/dashboard/grape/' . $grape->id . '/edit',
+      ]);
+      $buttons .= View::render('partials/button', [
+        'type' => 'delete',
+        'title' => 'Deletar',
+        'value' => '/dashboard/grape/' . $grape->id . '/delete',
+      ]);
+    } else {
+      $buttons .= View::render('partials/button', [
+        'type' => 'add',
+        'title' => 'Adicionar',
+        'value' => '/dashboard/grape/add',
+      ]);
+    }
+
+    return $buttons;
+  }
+
+  /**
+   * Verifica se o usuário está requisitando um formulário de edição
+   * @param Request $request
+   * @return boolean
+   */
+  private static function isEditForm($request)
+  {
+    $uriPartials =  explode('/', $request->getUri());
+    return is_numeric($uriPartials[3]);
+  }
+
+  /**
+   * Retorna o conteúdo (View) da página de formulário de edição de uva
+   * @param Request $request
+   * @param integer $id
+   * @return string
+   */
+  public static function getGrapeFormPage($request, $id)
+  {
+    Session::verifyLoggedUser('login', 'admin', $request);
+
+    $params = $request->getQueryParams();
+
+    $isEditForm = self::isEditForm($request);
+    $grape = $isEditForm ? Grape::getGrapeById($id) : null;
+    $modal = $isEditForm ? Modal::getModal(
+      'trash',
+      'Deletar região ' . $grape->name,
+      'Tem certeza que deseja deletar essa uva?',
+      '/dashboard/grape/' . $grape->id . '/delete',
+      'delete'
+    ) : '';
+
+    return View::render('pages/dashboard/grape-form', [
+      'header' => Layout::getDashboardHeader('grape'),
+      'title' => $isEditForm ? 'Editar uva ' . $grape->name : 'Adicionar uva',
+      'modal' => $modal,
+      'name' => $grape ? $grape->name : '',
+      'color_hex' => $grape ? $grape->color_hex : '',
+      'toast' => isset($params['status']) ? self::getToast($params['status']) : '',
+      'buttons' => self::getFormButtons($isEditForm, $grape),
     ]);
   }
 }

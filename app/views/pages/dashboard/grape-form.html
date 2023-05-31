@@ -23,7 +23,7 @@
     <script defer src="{{public_path}}/js/countries.js"></script>
     <script defer src="{{public_path}}/js/options.js"></script>
     <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
-    <title>Dashboard - Regiões | Vinos Del Valle</title>
+    <title>Dashboard - Uvas | Vinos Del Valle</title>
   </head>
   <body>
     <main class="container">
@@ -33,8 +33,8 @@
 
       <div class="form-container">
         <header>
-          <i class="ph-bold ph-house-line"></i>
-          <h2>Região</h2>
+          <i class="ph-bold ph-graph"></i>
+          <h2>Uva</h2>
         </header>
 
         <form action="" method="post">
@@ -54,51 +54,20 @@
           </div>
 
           <div class="input-control">
-            <label for="city">
-              <i class="ph-bold ph-buildings"></i>
-              Cidade:
+            <label for="color_hex">
+              <i class="ph-bold ph-palette"></i>
+              Cor:
             </label>
-            <input
-              class="input"
-              type="text"
-              id="city"
-              name="city"
-              value="{{city}}"
-            />
-          </div>
 
-          <div class="input-control">
-            <label for="state">
-              <i class="ph-bold ph-map-trifold"></i>
-              Estado:
-            </label>
-            <input
-              class="input"
-              type="text"
-              id="state"
-              name="state"
-              value="{{state}}"
-            />
-          </div>
-
-          <div class="input-control">
-            <label for="country">
-              <i class="ph-bold ph-globe-hemisphere-west"></i>
-              País:
-            </label>
-            <div class="select-container">
-              <div id="country" class="select" data-insertoptions="true">
-                <button type="button" class="select-button">
-                  <span
-                    data-selected="{{selected-country-code}}"
-                    data-value=""
-                    class="selected-item"
-                  >
-                  </span>
-                  <i class="ph-fill ph-caret-down"></i>
-                </button>
-                <div class="select-box"></div>
-              </div>
+            <div class="input-color">
+              <label for="color_hex">#f00000</label>
+              <input
+                class="input"
+                type="color"
+                id="color_hex"
+                name="color_hex"
+                value="{{color_hex}}"
+              />
             </div>
           </div>
 
