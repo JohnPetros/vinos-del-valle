@@ -5,7 +5,6 @@ namespace App\controllers;
 use App\core\Session;
 use App\core\View;
 use App\models\Region;
-use App\utils\Form;
 use App\utils\Layout;
 use App\utils\Modal;
 use App\utils\Toast;
@@ -197,7 +196,7 @@ class RegionController
    * @return boolean
    */
   private static function isValidateInput($data)
-  {
+  {    
     $data = array_map('trim', $data);
 
     $data = filter_input_array(INPUT_POST, $data);
@@ -218,6 +217,8 @@ class RegionController
    */
   public static function addRegion($request)
   {
+    Session::verifyLoggedUser('login', 'admin', $request);
+
     $router = $request->getRouter();
     $postVars = $request->getPostVars();
 
@@ -242,6 +243,8 @@ class RegionController
    */
   public static function editRegion($request, $id)
   {
+    Session::verifyLoggedUser('login', 'admin', $request);
+
     $router = $request->getRouter();
     $postVars = $request->getPostVars();
 
@@ -271,6 +274,8 @@ class RegionController
    */
   public static function deleteRegion($request, $id)
   {
+    Session::verifyLoggedUser('login', 'admin', $request);
+    
     $router = $request->getRouter();
 
     if (!is_numeric($id)) {

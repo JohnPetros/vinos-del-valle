@@ -315,6 +315,8 @@ class WineController
    */
   public static function addWine($request)
   {
+    Session::verifyLoggedUser('login', 'admin', $request);
+    
     $router = $request->getRouter();
     $postVars = $request->getPostVars();
 
@@ -339,6 +341,8 @@ class WineController
    */
   public static function editWine($request, $id)
   {
+    Session::verifyLoggedUser('login', 'admin', $request);
+
     $router = $request->getRouter();
     $postVars = $request->getPostVars();
 
@@ -368,6 +372,8 @@ class WineController
    */
   public static function deleteWine($request, $id)
   {
+    Session::verifyLoggedUser('login', 'admin', $request);
+
     $router = $request->getRouter();
 
     if (!is_numeric($id)) {
