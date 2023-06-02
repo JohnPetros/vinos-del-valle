@@ -38,22 +38,31 @@ function validateEmptyField(input) {
   }
 }
 
-function validateEmail(input) {
+function validateEmail(emailInput) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  if (input.value && !emailRegex.test(input.value)) {
+  if (emailInput.value && !emailRegex.test(emailInput.value)) {
     const errorEmailMessageText = `Este e-mail não é válido.`;
-    showErrorMessage(input, errorEmailMessageText);
+    showErrorMessage(emailInput, errorEmailMessageText);
   }
 }
 
-function validatePassword(input) {
+function validatePassword(passwordInput) {
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s])[A-Za-z\d\W\S]{6,}$/g;
 
-  if (input.value && !passwordRegex.test(input.value)) {
+  if (passwordInput.value && !passwordRegex.test(passwordInput.value)) {
     const errorEmailMessageText = `A senha deve conter pelo menos 6 caracteres, tendo no mínimo: uma maiúscula, uma minúscula e um caracter especial.`;
-    showErrorMessage(input, errorEmailMessageText);
+    showErrorMessage(passwordInput, errorEmailMessageText);
+  }
+}
+
+function validatePasswordConfirm(passwordConfirmInput) {
+  const passwordInput = form.querySelector("#password");
+
+  if (passwordInput.value !== passwordConfirmInput.value) {
+    const errorEmailMessageText = `As senhas não conferem.`;
+    showErrorMessage(passwordConfirmInput, errorEmailMessageText);
   }
 }
 
@@ -69,12 +78,15 @@ function hasErrors() {
 function validateInput(input) {
   validateEmptyField(input);
 
-  switch (input.type) {
+  switch (input.id) {
     case "email":
       validateEmail(input);
       break;
     case "password":
       validatePassword(input);
+      break;
+    case "password_confirm":
+      validatePasswordConfirm(input);
       break;
   }
 }
@@ -228,6 +240,7 @@ function handleInputColorChange({ currentTarget }) {
 }
 
 function handleAlterPasswordButton(button) {
+  removeAllErrors();
   const passwordInputs = form.querySelectorAll("input[type='password']");
   button.textContent = passwordInputs[0].parentNode.classList.contains("hidden")
     ? "Não alterar senha"

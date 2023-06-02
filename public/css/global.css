@@ -64,7 +64,7 @@ a:focus,
 button:focus,
 .button:focus {
   outline: none;
-  box-shadow: var(--outline);
+  box-shadow: var(--outline) !important;
   border-radius: 0.8rem;
 }
 

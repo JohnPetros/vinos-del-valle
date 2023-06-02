@@ -35,6 +35,10 @@
   font-size: 1.6rem;
 }
 
+.input-control input:focus-within {
+  border-color: var(--primary);
+}
+
 .input-control label {
   color: var(--primary);
   font-weight: 700;
@@ -49,8 +53,8 @@
 
 .input-control button.password-eye {
   position: absolute;
-  right: .4rem;
-  top: -.8rem;
+  right: 0.4rem;
+  top: -0.8rem;
   font-size: 2.4rem;
   background-color: transparent;
   color: var(--base-3);
@@ -76,8 +80,9 @@
   font-size: 2.4rem;
 }
 
-i.active,
-.input-wrapper:focus-within i {
+.input-wrapper .password-eye.active,
+input:focus + .password-eye,
+.input-wrapper:focus-within .password-eye {
   color: var(--primary);
 }
 
@@ -99,7 +104,7 @@ i.active,
 
 .input-color {
   display: flex;
-  gap: .8rem;
+  gap: 0.8rem;
   border-bottom: 2px solid var(--base-3);
 }
 
@@ -166,6 +171,11 @@ form a {
   gap: 1.2rem;
   background-color: transparent;
   border-bottom: 2px solid var(--base-3);
+}
+
+.select-button:focus {
+  border-color: var(--primary);
+  border-radius: 0;
 }
 
 .select-button.big {
