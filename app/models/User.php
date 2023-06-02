@@ -62,6 +62,7 @@ class User
     $query = "UPDATE users 
               SET name = ?,
                   email = ?,
+                  password = ?,
                   avatar = ?,
                   is_admin = ?,
                   creator_id = ?
@@ -70,16 +71,12 @@ class User
     $params = [
       $this->name,
       $this->email,
+      $this->password,
       $this->avatar,
       $this->is_admin,
       $this->creator_id,
+      $this->id,
     ];
-
-    if ($this->password) {
-      echo $this->password;
-    }
-
-    $params[] = $this->id;
 
     Database::execute($query, $params);
   }

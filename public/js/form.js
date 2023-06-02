@@ -170,13 +170,7 @@ function setInputColor(inputColor) {
 }
 
 function setInputAvatar(inputAvatar, file) {
-  const input = inputAvatar.querySelector("input");
   const img = inputAvatar.querySelector("img");
-
-  if (!file) {
-    img.src += input.dataset.value;
-    return;
-  }
 
   const reader = new FileReader();
   reader.onload = ({ target }) => (img.src = target.result);
@@ -301,13 +295,12 @@ selectsButtons.forEach((select) => {
   select.addEventListener("click", handleSelectClick);
   setSelectedItem(select.parentNode);
 });
-inputColors.forEach((inputColor) => {
+inputColors?.forEach((inputColor) => {
   setInputColor(inputColor);
   inputColor.addEventListener("change", handleInputColorChange);
 });
-setInputAvatar(inputAvatar);
 inputAvatar
-  .querySelector("input")
+  ?.querySelector("input")
   .addEventListener("change", handleInputFileChange);
 buttons.forEach((button) =>
   button.addEventListener("click", handleButtonClick)

@@ -87,6 +87,7 @@ class UserController
       $cards .= View::render('partials/user-card', [
         'id' => $user->id,
         'name' => $user->name,
+        'avatar' => $user->avatar,
         'user-type' => $user->is_admin ? 'administrador' : 'padrão',
         'color' => $user->is_admin ? 'var(--base-4)' : 'var(--primary)',
         'creator_name' => $user->creator_name,
@@ -120,7 +121,7 @@ class UserController
    * @param boolean $isEditForm
    * @return string
    */
-  private static function getFormButtons($isEditForm, $grape)
+  private static function getFormButtons($isEditForm, $user)
   {
     $buttons = '';
 
@@ -132,18 +133,18 @@ class UserController
       $buttons .= View::render('partials/button', [
         'type' => 'edit',
         'title' => 'Editar',
-        'value' => '/dashboard/grape/' . $grape->id . '/edit',
+        'value' => '/dashboard/user/' . $user->id . '/edit',
       ]);
       $buttons .= View::render('partials/button', [
         'type' => 'delete',
         'title' => 'Deletar',
-        'value' => '/dashboard/grape/' . $grape->id . '/delete',
+        'value' => '/dashboard/user/' . $user->id . '/delete',
       ]);
     } else {
       $buttons .= View::render('partials/button', [
         'type' => 'add',
         'title' => 'Adicionar',
-        'value' => '/dashboard/grape/add',
+        'value' => '/dashboard/user/add',
       ]);
     }
 
@@ -265,15 +266,22 @@ class UserController
     return !!$data;
   }
 
-  private function uploadFile($file, $router)
+  /**
+   * Faz o upload do avatar do usuário
+   * @param string $file
+   * @return string
+   */
+  private function uploadAvatar($avatar)
   {
-    $file = new File($file);
+    $file = new File($avatar);
 
     if ($file->error !== 0 || !in_array($file->extension, ['png', 'jpg', 'jpeg', 'svg'])) {
-      $router->redirect('/dashboard/user?status=avatar-fail');
+      return;
     }
 
     $file->upload(__DIR__ . '/../../public/uploads/avatars/');
+
+    return $file->name . '.' . $file->extension;
   }
 
   /**
@@ -315,12 +323,12 @@ class UserController
     $postVars = $request->getPostVars();
     $files = $request->getFiles();
 
-    if (isset($files) && $files['avatar']) self::uploadFile($files['avatar'], $router);
-
-    echo '<pre>';
-    print_r($files);
-    echo '</pre>';
-    exit;
+    if (isset($files) && $files['avatar']['error'] === 0) {
+      $avatar = self::uploadAvatar($files['avatar'], $router);
+      if (!is_string($avatar)) {
+        $router->redirect("/dashboard/user/$id/form?status=avatar-fail");
+      }
+    }
 
     if (!is_numeric($id) || !self::isValidateInput($postVars, true)) {
       $router->redirect("/dashboard/user/$id/form?status=edit-fail");
@@ -332,13 +340,12 @@ class UserController
       $router->redirect("/dashboard/user/$id/form?status=edit-fail");
     }
 
-    foreach ($postVars as $var => $value) {
-      if ($var === 'avatar' && $value === '') {
-        $user->{$var} = Session::getUserSession()['avatar'];
-        continue;
-      }
-      $user->{$var} = $value ?? $user->{$var};
-    }
+    $user->name = $postVars['name'] ?? '';
+    $user->email = $postVars['email'] ?? '';
+    $user->avatar = $avatar ?? $user->avatar;
+    $user->password = $postVars['password'] !== ''
+      ? password_hash($postVars['password'], PASSWORD_DEFAULT)
+      : $user->password;
 
     $user->update();
 

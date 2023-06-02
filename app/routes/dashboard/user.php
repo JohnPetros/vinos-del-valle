@@ -25,7 +25,7 @@ $router->get(
 // );
 
 $router->post(
-  '/dashboard/grape/{id}/edit',
+  '/dashboard/user/{id}/edit',
   function ($request, $id) {
     return new Response(200, UserController::editUser($request, $id));
   }

@@ -23,9 +23,12 @@ class Layout
       'logout',
     );
 
+    $user = Session::getUserSession();
+
     return View::render('partials/header', [
-      'name' => Session::getUserSession()['name'],
-      'email' => Session::getUserSession()['email'],
+      'name' => $user['name'],
+      'email' => $user['email'],
+      'avatar' => $user['avatar'],
       'modal' => $modal,
       $page => 'active',
     ]);

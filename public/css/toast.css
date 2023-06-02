@@ -41,13 +41,16 @@
   color: var(--danger);
 }
 
-.content .message {
+.toast .message {
   display: flex;
   flex-direction: column;
   margin-left: 1.2rem;
-
   font-size: 1.6rem;
   color: var(--base-4);
+}
+
+.toast .message .title {
+  text-align: start;
 }
 
 .toast button {

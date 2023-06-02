@@ -126,9 +126,9 @@
   font-size: 2.4rem;
 }
 
-.input-wrapper .password-eye.active,
-input:focus + .password-eye,
-.input-wrapper:focus-within .password-eye {
+.input-wrapper i.active,
+input:focus + i,
+.input-wrapper:focus-within i {
   color: var(--primary);
 }
 
