@@ -38,6 +38,7 @@ class GrapeController
 
   /**
    * Retorna os filtradores de uvas
+   * @param array $params
    * @return string
    */
   private static function getFilters($params)
@@ -47,9 +48,10 @@ class GrapeController
     ]);
   }
 
-  /**
+    /**
    * Filtra as uvas pelo nome
-   * @param array $wines
+   * @param Grape $grape
+   * @param string $search
    * @return array
    */
   private static function filterGrapes($grape, $search)

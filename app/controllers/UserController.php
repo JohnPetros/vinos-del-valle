@@ -37,22 +37,25 @@ class UserController
   }
 
   /**
-   * Retorna os filtradores de uvas
+   * Retorna os filtradores de usuários
+   * @param array $params
    * @return string
    */
   private static function getFilters($params)
   {
-    return View::render('partials/grape-filters', [
+    return View::render('partials/user-filters', [
       'search' => $params['search'] ?? '',
+      'selected-user-type' => $params['user'] ?? '',
     ]);
   }
 
   /**
-   * Filtra as uvas pelo nome
-   * @param array $wines
+   * Filtra os usuários pelo nome
+   * @param User $user
+   * @param string $search
    * @return array
    */
-  private static function filterGrapes($grape, $search)
+  private static function filterUsers($grape, $search)
   {
     return stripos(strtolower(trim($grape->name)), strtolower(trim($search))) !== false;
   }
@@ -64,13 +67,13 @@ class UserController
    */
   private static function getUserCards($params)
   {
-    $users = User::getUsers(Session::getUserSession()['id']);
+    $users = User::getUsers(Session::getUserSession()['id'], $params, );
     $cards = '';
 
     if (isset($params['search']) && $params['search'] !== '') {
       $users = array_filter(
         $users,
-        fn ($user) => self::filterGrapes($user, $params['search'])
+        fn ($user) => self::filterUsers($user, $params['search'])
       );
     }
 
@@ -80,7 +83,7 @@ class UserController
       $cards .= View::render('partials/user-card', [
         'id' => $user->id,
         'name' => $user->name,
-        'type' => $user->is_admin ? 'administrador' : 'padrão',
+        'user-type' => $user->is_admin ? 'administrador' : 'padrão',
         'color' => $user->is_admin ? 'var(--base-4)' : 'var(--primary)',
         'creator_name' => $user->creator_name,
       ]);

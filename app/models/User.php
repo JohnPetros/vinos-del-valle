@@ -51,18 +51,24 @@ class User
   /**
    * Retorna todos os registros de usuários do banco de dados
    * @param integer $loggedUserId
+   * @param array $params
    * @return array
    */
-  public static function getUsers($loggedUserId)
+  public static function getUsers($loggedUserId, $params)
   {
     $query = "SELECT U.*, UC.name AS creator_name
               FROM users AS U
               JOIN users AS UC ON UC.id = U.creator_id 
               WHERE U.id != ?";
-            
-    $params = [$loggedUserId];
 
-    return Database::execute($query, $params)->fetchAll(\PDO::FETCH_CLASS, self::class);
+    $queryParams = [$loggedUserId];
+
+    if (count($params)) {
+      $query .= ", is_admin = ?";
+      array_push($queryParams, $params['user-type']);
+    }
+
+    return Database::execute($query, $queryParams)->fetchAll(\PDO::FETCH_CLASS, self::class);
   }
 
   /**

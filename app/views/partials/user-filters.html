@@ -1,0 +1,48 @@
+<form>
+  <div class="selects">
+    <div id="user-type" class="select big">
+      <button type="button" class="select-button big">
+        <span
+          data-selected="{{selected-user-type}}"
+          data-value=""
+          class="selected-item"
+        ></span
+        ><i class="ph-fill ph-caret-down"></i>
+      </button>
+      <div class="select-box">
+        <div class="option active">
+          <input
+            type="radio"
+            name="user-type"
+            id="all-user-types"
+            value="all-user-types"
+          />
+          <label for="all-user-types">Todos os usuários</label>
+        </div>
+        <div class="option">
+          <input type="radio" name="user-type" id="user-type-1" value="1" />
+          <label for="user-type-admin">Administrador</label>
+        </div>
+        <div class="option">
+          <input type="radio" name="user-type" id="user-type-0" value="0" />
+          <label for="user-type-default">Padrão</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="search-wrapper">
+    <i class="ph-bold ph-magnifying-glass"></i>
+    <input
+      type="search"
+      class="search"
+      name="search"
+      id="search"
+      placeholder="Pesquisar usuário por nome"
+      value="{{search}}"
+    />
+  </div>
+</form>
+
+<span class="css" data-file="form"></span>
+<span class="css" data-file="filters"></span>
