@@ -144,6 +144,46 @@ class UserController
   }
 
   /**
+   * Retorna os usuários administradores que servirão como opções para o select input de usuário criador
+   * @return string
+   */
+  private function getCreatorsOptions()
+  {
+    $admins = User::getAdminUsers();
+    $options = '';
+
+    foreach ($admins as $admin) {
+      $options .= View::render('partials/creator-option', [
+        'id' => $admin->id,
+        'name' => $admin->name,
+      ]);
+    }
+
+    return $options;
+  }
+
+  /**
+   * Retorna os input de definição de senha de usuário
+   * @return string
+   */
+  private function getPasswordInputs()
+  {
+    $inputs = View::render('partials/input', [
+      'icon' => 'password',
+      'label' => 'Senha',
+      'field' => 'password',
+    ]);
+
+    $inputs .= View::render('partials/input', [
+      'icon' => 'password',
+      'label' => 'Confirmar Senha',
+      'field' => 'password-confirm',
+    ]);
+
+    return $inputs;
+  }
+
+  /**
    * Verifica se o usuário está requisitando um formulário de edição
    * @param Request $request
    * @return boolean
@@ -160,13 +200,16 @@ class UserController
    * @param integer $id
    * @return string
    */
-  public static function getGrapeFormPage($request, $id)
+  public static function getUserFormPage($request, $id)
   {
     Session::verifyLoggedUser('login', 'admin', $request);
 
     $params = $request->getQueryParams();
 
     $isEditForm = self::isEditForm($request);
+    /**
+     * @var User
+     */
     $user = $isEditForm ? User::getUserById($id) : null;
     $modal = $isEditForm ? Modal::getModal(
       'trash',
@@ -178,8 +221,14 @@ class UserController
 
     return View::render('pages/dashboard/user-form', [
       'header' => Layout::getDashboardHeader('user'),
-      'title' => $isEditForm ? 'Editar uva ' . $user->name : 'Adicionar uva',
+      'title' => $isEditForm ? 'Editar usuário ' . $user->name : 'Adicionar usuário',
       'modal' => $modal,
+      'name' => $user ? $user->name : '',
+      'email' => $user ? $user->email : '',
+      'password-inputs' => !$isEditForm ? self::getPasswordInputs() : '',
+      'creator_id' => $user ? $user->creator_id : '',
+      'selected-user-type' => $user ? $user->is_admin : '',
+      'creator-options' => self::getCreatorsOptions(),
       'toast' => isset($params['status']) ? self::getToast($params['status']) : '',
       'buttons' => self::getFormButtons($isEditForm, $user),
     ]);
@@ -221,7 +270,7 @@ class UserController
       $router->redirect("/dashboard/user/add/form?status=add-fail");
     }
 
-    $user = new Grape;
+    $user = new User;
     foreach ($postVars as $var => $value) {
       $user->{$var} = $value;
     }

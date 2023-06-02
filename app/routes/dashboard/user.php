@@ -10,12 +10,12 @@ $router->get(
   }
 );
 
-// $router->get(
-//   '/dashboard/grape/{id}/form',
-//   function ($request, $id) {
-//     return new Response(200, UserController::getGrapeFormPage($request, $id));
-//   }
-// );
+$router->get(
+  '/dashboard/user/{id}/form',
+  function ($request, $id) {
+    return new Response(200, UserController::getUserFormPage($request, $id));
+  }
+);
 
 // $router->post(
 //   '/dashboard/grape/add',

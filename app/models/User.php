@@ -63,8 +63,6 @@ class User
 
     $queryParams = [$loggedUserId];
 
-
-
     if (count($params)) {
       $query .= " AND U.is_admin = ?";
       $queryParams[] = $params['user-type'];
@@ -83,5 +81,32 @@ class User
     $query = "SELECT * FROM users WHERE email = ?";
 
     return Database::execute($query, [$email])->fetchObject(self::class);
+  }
+
+  /**
+   * Retorna um registro de usuário do banco de dados com base em seu ID
+   * @return User
+   */
+  public static function getUserById($id)
+  {
+    $query = "SELECT U.*, UC.id AS creator_id
+              FROM users AS U
+              JOIN users AS UC ON UC.id = U.creator_id 
+              WHERE U.id = ?";
+
+    return Database::execute($query, [$id])->fetchObject(self::class);
+  }
+
+  /**
+   * Retorna do banco de dados todos os registros de usuários administradores
+   * @return array
+   */
+  public static function getAdminUsers()
+  {
+    $query = "SELECT id, name 
+              FROM users
+              WHERE is_admin = 1";
+
+    return Database::execute($query)->fetchAll(\PDO::FETCH_CLASS, self::class);
   }
 }
