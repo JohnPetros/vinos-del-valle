@@ -31,9 +31,9 @@ $router->post(
   }
 );
 
-// $router->get(
-//   '/dashboard/grape/{id}/delete',
-//   function ($request, $id) {
-//     return new Response(200, UserController::deleteGrape($request, $id));
-//   }
-// );
+$router->get(
+  '/dashboard/user/{id}/delete',
+  function ($request, $id) {
+    return new Response(200, UserController::deleteUser($request, $id));
+  }
+);

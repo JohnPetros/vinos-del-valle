@@ -55,7 +55,7 @@ class User
   public $creator_name;
 
   /**
-   * Adiciona um registro de vinho no banco de dados com os dados da instância atual 
+   * Adiciona um registro de usuário no banco de dados com os dados da instância atual 
    */
   public function add()
   {
@@ -81,7 +81,7 @@ class User
   }
 
   /**
-   * Atualiza o registro de vinho no banco de dados com os dados da instância atual 
+   * Atualiza o registro de usuário no banco de dados com os dados da instância atual 
    */
   public function update()
   {
@@ -105,6 +105,16 @@ class User
     ];
 
     Database::execute($query, $params);
+  }
+
+  /**
+   * Deleta um registro de usuário no banco de dados com base no ID da instância atual
+   */
+  public function delete()
+  {
+    $query = "DELETE FROM users WHERE id = ?";
+
+    Database::execute($query, [$this->id]);
   }
 
   /**

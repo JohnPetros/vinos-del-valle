@@ -285,7 +285,7 @@ class RegionController
     $region = Region::getRegionById($id);
 
     if (!$region instanceof Region) {
-      $router->redirect("/dashboard/region/$id/edit");
+      $router->redirect("/dashboard/region/$id/edit?status=delete-fail");
     }
 
     $region->delete();

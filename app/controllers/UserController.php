@@ -198,7 +198,7 @@ class UserController
    */
   private static function isEditForm($request)
   {
-    $uriPartials =  explode('/', $request->getUri());
+    $uriPartials = explode('/', $request->getUri());
     return is_numeric($uriPartials[3]);
   }
 
@@ -218,8 +218,8 @@ class UserController
     $user = $isEditForm ? User::getUserById($id) : null;
     $modal = $isEditForm ? Modal::getModal(
       'trash',
-      'Deletar uva ' . $user->name,
-      'Tem certeza que deseja deletar essa uva?',
+      'Deletar usuário ' . $user->name,
+      'Tem certeza que deseja deletar esse usuário?',
       '/dashboard/user/' . $user->id . '/delete',
       'delete'
     ) : '';
@@ -381,8 +381,11 @@ class UserController
 
     $user = User::getUserById($id);
 
-    if (!$user instanceof User) {
-      $router->redirect("/dashboard/user/$id/edit");
+    if (
+      !$user instanceof User ||
+      !File::delete(__DIR__ . '/../../public/uploads/avatars/' . $user->avatar)
+    ) {
+      $router->redirect("/dashboard/user/$id/form?status=delete-fail");
     }
 
     $user->delete();

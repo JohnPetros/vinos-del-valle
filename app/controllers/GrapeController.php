@@ -278,7 +278,7 @@ class GrapeController
     $grape = Grape::getGrapeById($id);
 
     if (!$grape instanceof Grape) {
-      $router->redirect("/dashboard/grape/$id/edit");
+      $router->redirect("/dashboard/grape/$id/edit?status=delete-fail");
     }
 
     $grape->delete();

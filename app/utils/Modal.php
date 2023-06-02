@@ -7,7 +7,7 @@ use \App\core\View;
 class Modal
 {
   /**
-   * Retorna o Modal com seus dados
+   * Retorna o Modal
    * @param string $title
    * @param string $description
    * @param string $action

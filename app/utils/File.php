@@ -40,15 +40,34 @@ class File
    */
   public $size;
 
+  /**
+   * Define o nome de um arquivo
+   * @return boolean
+   */
   private function setName()
   {
     $this->name = time() . '-' . rand(1000, 9000) . '-' . uniqid();
   }
 
+  /**
+   * Faz o upload de um arquivo
+   * @return boolean
+   */
   public function upload($dir)
   {
     $path = $dir . $this->name . '.' . $this->extension;
-    move_uploaded_file($this->tmpName, $path);
+    return move_uploaded_file($this->tmpName, $path);
+  }
+
+  /**
+   * Deleta um arquivo
+   * @return boolean
+   */
+  public static function delete($path)
+  {
+    if (!file_exists($path)) return false;
+
+    return unlink($path);
   }
 
   /**

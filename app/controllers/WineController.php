@@ -383,7 +383,7 @@ class WineController
     $wine = Wine::getWineById($id);
 
     if (!$wine instanceof Wine) {
-      $router->redirect("/dashboard/wine/$id/edit");
+      $router->redirect("/dashboard/wine/$id/edit?status=delete-fail");
     }
 
     $wine->delete();
