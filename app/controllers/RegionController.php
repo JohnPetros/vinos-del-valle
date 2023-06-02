@@ -79,7 +79,7 @@ class RegionController
       );
     }
 
-    if (!count($regions)) return '<p class="empty-message">Nenhuma região cadastrada.</p>';
+    if (!count($regions)) return '<p class="empty-message">Nenhuma região encontrado.</p>';
 
     foreach ($regions as $region) {
       $cards .= View::render('partials/region-card', [

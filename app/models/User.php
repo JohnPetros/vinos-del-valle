@@ -63,9 +63,11 @@ class User
 
     $queryParams = [$loggedUserId];
 
+
+
     if (count($params)) {
-      $query .= ", is_admin = ?";
-      array_push($queryParams, $params['user-type']);
+      $query .= " AND U.is_admin = ?";
+      $queryParams[] = $params['user-type'];
     }
 
     return Database::execute($query, $queryParams)->fetchAll(\PDO::FETCH_CLASS, self::class);

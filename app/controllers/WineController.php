@@ -69,7 +69,7 @@ class WineController
       );
     }
 
-    if (!count($wines)) return '<p class="empty-message">Nenhum vinho cadastrado.</p>';
+    if (!count($wines)) return '<p class="empty-message">Nenhum vinho encontrado.</p>';
 
     foreach ($wines as $wine) {
       $cards .= View::render('partials/wine-card', [

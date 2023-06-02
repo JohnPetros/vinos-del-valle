@@ -45,7 +45,7 @@ class UserController
   {
     return View::render('partials/user-filters', [
       'search' => $params['search'] ?? '',
-      'selected-user-type' => $params['user'] ?? '',
+      'selected-user-type' => $params['user-type'] ?? '',
     ]);
   }
 
@@ -67,7 +67,8 @@ class UserController
    */
   private static function getUserCards($params)
   {
-    $users = User::getUsers(Session::getUserSession()['id'], $params, );
+    $loggedUserId = Session::getUserSession()['id'];
+    $users = User::getUsers($loggedUserId, $params);
     $cards = '';
 
     if (isset($params['search']) && $params['search'] !== '') {
@@ -77,7 +78,7 @@ class UserController
       );
     }
 
-    if (!count($users)) return '<p class="empty-message">Nenhum usuário cadastrado.</p>';
+    if (!count($users)) return '<p class="empty-message">Nenhum usuário encontrado.</p>';
 
     foreach ($users as $user) {
       $cards .= View::render('partials/user-card', [

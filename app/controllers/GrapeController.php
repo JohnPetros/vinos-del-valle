@@ -76,7 +76,7 @@ class GrapeController
       );
     }
 
-    if (!count($grapes)) return '<p class="empty-message">Nenhuma uva cadastrada.</p>';
+    if (!count($grapes)) return '<p class="empty-message">Nenhuma uva encontrada.</p>';
 
     foreach ($grapes as $grape) {
       $cards .= View::render('partials/grape-card', [
