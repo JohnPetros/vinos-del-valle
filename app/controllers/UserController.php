@@ -171,24 +171,24 @@ class UserController
   }
 
   /**
-   * Retorna os input de definição de senha de usuário
+   * Retorna o select conctendo os usuários adinistradores, ou seja, aqueles que podem criar um usuário
    * @return string
    */
-  private function getPasswordInputs()
+  private function getCreatorSelect()
   {
-    $inputs = View::render('partials/input', [
-      'icon' => 'password',
-      'label' => 'Senha',
-      'field' => 'password',
+    return View::render('partials/creator-select', [
+      'creator-options' => self::getCreatorsOptions(),
     ]);
+  }
 
-    $inputs .= View::render('partials/input', [
-      'icon' => 'password',
-      'label' => 'Confirmar Senha',
-      'field' => 'password-confirm',
-    ]);
-
-    return $inputs;
+  /**
+   * Retorna o input de criador contendo o id do usuário logado
+   * @return string
+   */
+  private function getCreatorInput()
+  {
+    $loggedUserId = Session::getUserSession()['id'];
+    return '<input type="number" class="hidden" name="creator_id" value="' . $loggedUserId . '" />';
   }
 
   /**
@@ -215,9 +215,6 @@ class UserController
     $params = $request->getQueryParams();
 
     $isEditForm = self::isEditForm($request);
-    /**
-     * @var User
-     */
     $user = $isEditForm ? User::getUserById($id) : null;
     $modal = $isEditForm ? Modal::getModal(
       'trash',
@@ -231,20 +228,20 @@ class UserController
       'header' => Layout::getDashboardHeader('user'),
       'title' => $isEditForm ? 'Editar usuário ' . $user->name : 'Adicionar usuário',
       'modal' => $modal,
-      'avatar' => $user ? $user->avatar : '',
-      'name' => $user ? $user->name : '',
-      'email' => $user ? $user->email : '',
-      'password-inputs' => !$isEditForm ? self::getPasswordInputs() : '',
-      'creator_id' => $user ? $user->creator_id : '',
-      'selected-user-type' => $user ? $user->is_admin : '',
-      'creator-options' => self::getCreatorsOptions(),
+      'avatar' => $user->avatar ?? 'default.png',
+      'name' =>  $user->name ?? '',
+      'email' =>  $user->email ?? '',
+      'creator_id' =>  $user->creator_id ?? '',
+      'hidden' =>  $isEditForm ? 'hidden' : '',
+      'selected-user-type' =>  $user->is_admin ?? '',
+      'creator-input' => $isEditForm ? self::getCreatorSelect() : self::getCreatorInput(),
       'toast' => isset($params['status']) ? self::getToast($params['status']) : '',
       'buttons' => self::getFormButtons($isEditForm, $user),
     ]);
   }
 
   /**
-   * Verifica se a entrada de dados do usuário é válido
+   * Verifica se a entrada de dados do usuário é válida
    * @param array $data 
    * @return boolean
    */
@@ -254,7 +251,7 @@ class UserController
 
     $data = filter_input_array(INPUT_POST, $data);
 
-    $execptions = $includeExceptions ? ['avatar', 'password', 'password_confirm'] : [];
+    $execptions = $includeExceptions ? ['password', 'password_confirm'] : [];
 
     foreach ($data as $key => $value) {
 
@@ -285,7 +282,7 @@ class UserController
   }
 
   /**
-   * Adiciona uma uva
+   * Adiciona um usuário
    * @param Request $request
    * @param integer $id
    */
@@ -296,14 +293,26 @@ class UserController
     $router = $request->getRouter();
     $postVars = $request->getPostVars();
 
-    if (!self::isValidateInput($postVars)) {
+    if (isset($files) && $files['avatar']['error'] === 0) {
+      $avatar = self::uploadAvatar($files['avatar'], $router);
+      if (!is_string($avatar)) {
+        $router->redirect("/dashboard/user/add/form?status=avatar-fail");
+      }
+    }
+
+    if (!self::isValidateInput($postVars, false)) {
       $router->redirect("/dashboard/user/add/form?status=add-fail");
     }
 
     $user = new User;
-    foreach ($postVars as $var => $value) {
-      $user->{$var} = $value;
-    }
+    $user->name = $postVars['name'] ?? '';
+    $user->email = $postVars['email'] ?? '';
+    $user->is_admin = $postVars['user-type'] ?? '';
+    $user->creator_id = $postVars['creator_id'] ?? '';
+    $user->avatar = $avatar ?? 'default.png';
+    $user->password = !empty($postVars['password'])
+      ? password_hash($postVars['password'], PASSWORD_DEFAULT)
+      : $user->password;
 
     $user->add();
 
@@ -311,7 +320,7 @@ class UserController
   }
 
   /**
-   * Atualiza uma uva com base em seu ID
+   * Atualiza um usuário com base em seu ID
    * @param Request $request
    * @param integer $id
    */
@@ -323,6 +332,7 @@ class UserController
     $postVars = $request->getPostVars();
     $files = $request->getFiles();
 
+    $avatar = '';
     if (isset($files) && $files['avatar']['error'] === 0) {
       $avatar = self::uploadAvatar($files['avatar'], $router);
       if (!is_string($avatar)) {
@@ -342,8 +352,10 @@ class UserController
 
     $user->name = $postVars['name'] ?? '';
     $user->email = $postVars['email'] ?? '';
-    $user->avatar = $avatar ?? $user->avatar;
-    $user->password = $postVars['password'] !== ''
+    $user->is_admin = $postVars['user-type'] ?? '';
+    $user->creator_id = $postVars['creator_id'] ?? '';
+    $user->avatar = empty($avatar) ? $user->avatar : $avatar;
+    $user->password = !empty($postVars['password'])
       ? password_hash($postVars['password'], PASSWORD_DEFAULT)
       : $user->password;
 
@@ -353,11 +365,11 @@ class UserController
   }
 
   /**
-   * Deleta uma uva com base em seu ID
+   * Deleta uma usuário com base em seu ID
    * @param Request $request
    * @param integer $id
    */
-  public static function deleteGrape($request, $id)
+  public static function deleteUser($request, $id)
   {
     Session::verifyLoggedUser('login', 'admin', $request);
 

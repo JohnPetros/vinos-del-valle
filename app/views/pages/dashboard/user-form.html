@@ -44,7 +44,7 @@
             </label>
             <button type="button" id="set-avatar" class="input-avatar" for="avatar">
               <img
-                width="100"
+                width="140"
                 class="avatar"
                 data-value="{{avatar}}"
                 alt="Imagem de avatar de usuário"
@@ -83,13 +83,13 @@
             />
           </div>
 
-          <div class="input-control hidden">
+          <div class="input-control {{hidden}}">
             <label for="password">
               <i class="ph-bold ph-password"></i>
               Senha:
             </label>
             <input
-              class="input hidden"
+              class="input {{hidden}}"
               type="password"
               id="password"
               name="password"
@@ -98,13 +98,13 @@
               <i class="ph-fill ph-eye"></i>
             </button>
           </div>
-          <div class="input-control hidden">
+          <div class="input-control {{hidden}}">
             <label for="password_confirm">
               <i class="ph-bold ph-password"></i>
               Confirmar Senha:
             </label>
             <input
-              class="input hidden"
+              class="input {{hidden}}"
               type="password"
               id="password_confirm"
               name="password_confirm"
@@ -135,46 +135,27 @@
                     <input
                       type="radio"
                       name="user-type"
-                      id="user-type-1"
-                      value="1"
+                      id="user-type-0"
+                      value="0"
                     />
-                    <label for="user-type-admin">Administrador</label>
+                    <label for="user-type-admin">Padrão</label>
                   </div>
                   <div class="option">
                     <input
                       type="radio"
                       name="user-type"
-                      id="user-type-0"
-                      value="0"
+                      id="user-type-1"
+                      value="1"
                     />
-                    <label for="user-type-admin">Padrão</label>
+                    <label for="user-type-admin">Administrador</label>
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="input-control">
-            <label for="creator">
-              <i class="ph-bold ph-users"></i>
-              Usuário criador:
-            </label>
-            <div class="select-container">
-              <div id="creator" class="select">
-                <button type="button" class="select-button">
-                  <span
-                    data-selected="{{selected-creator-id}}"
-                    data-value=""
-                    class="selected-item"
-                  >
-                  </span>
-                  <i class="ph-fill ph-caret-down"></i>
-                </button>
-                <div class="select-box">{{creator-options}}</div>
-              </div>
-            </div>
-          </div>
-
+          {{creator-input}}
+         
           <div class="action-buttons">{{buttons}}</div>
 
           {{modal}}

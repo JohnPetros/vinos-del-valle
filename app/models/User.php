@@ -55,17 +55,43 @@ class User
   public $creator_name;
 
   /**
+   * Adiciona um registro de vinho no banco de dados com os dados da instância atual 
+   */
+  public function add()
+  {
+    $query = "INSERT INTO users (
+                name,
+                email,
+                password,
+                avatar,
+                is_admin,
+                creator_id
+              ) VALUES (?, ?, ?, ?, ?, ?)";
+
+    $params = [
+      $this->name,
+      $this->email,
+      $this->password,
+      $this->avatar,
+      $this->is_admin,
+      $this->creator_id,
+    ];
+
+    Database::execute($query, $params);
+  }
+
+  /**
    * Atualiza o registro de vinho no banco de dados com os dados da instância atual 
    */
   public function update()
   {
     $query = "UPDATE users 
               SET name = ?,
-                  email = ?,
-                  password = ?,
-                  avatar = ?,
-                  is_admin = ?,
-                  creator_id = ?
+                email = ?,
+                password = ?,
+                avatar = ?,
+                is_admin = ?,
+                creator_id = ?
               WHERE id = ?";
 
     $params = [
@@ -96,7 +122,7 @@ class User
 
     $queryParams = [$loggedUserId];
 
-    if (count($params)) {
+    if (count($params) && !empty($params['user-type'])) {
       $query .= " AND U.is_admin = ?";
       $queryParams[] = $params['user-type'];
     }

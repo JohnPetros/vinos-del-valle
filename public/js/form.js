@@ -247,7 +247,7 @@ function handleBodyClick({ target }) {
 }
 
 function handleInputColorChange({ currentTarget }) {
-  setColor(currentTarget);
+  setInputColor(currentTarget);
 }
 
 function handleInputFileChange({ currentTarget }) {

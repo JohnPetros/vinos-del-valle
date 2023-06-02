@@ -66,10 +66,10 @@
 
 .input-control .input-avatar {
   display: block;
-  width: 12rem;
-  height: 12rem;
+  width: 14rem;
+  height: 14rem;
   cursor: pointer;
-  background-color: transparent;
+  background-color: var(--base-0);
   position: relative;
   border-radius: 50%;
   overflow: hidden;
@@ -91,19 +91,22 @@
   border-radius: 50%;
   text-align: center;
   height: 4rem;
-  padding-top: .4rem;
+  padding-top: 0.4rem;
 }
 
 .input-control .input-avatar:hover .caption {
   display: block;
+  z-index: 15;
 }
 
 .input-control .input-avatar img {
-  transition: filter .2s ease;
+  transition: filter 0.2s ease;
+  width: 100%;
+  border-radius: 50%;
 }
 
-.input-control .input-avatar:hover img {
-  filter: brightness(0.5);
+.input-control .input-avatar:hover {
+  border-radius: 50%;
 }
 
 .input-wrapper {

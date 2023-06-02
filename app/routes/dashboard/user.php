@@ -17,12 +17,12 @@ $router->get(
   }
 );
 
-// $router->post(
-//   '/dashboard/grape/add',
-//   function ($request) {
-//     return new Response(200, UserController::addGrape($request));
-//   }
-// );
+$router->post(
+  '/dashboard/user/add',
+  function ($request) {
+    return new Response(200, UserController::addUser($request));
+  }
+);
 
 $router->post(
   '/dashboard/user/{id}/edit',
