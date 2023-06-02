@@ -35,6 +35,10 @@
   font-size: 1.6rem;
 }
 
+.input-control input[type="file"] {
+  display: none;
+}
+
 .input-control input:focus-within {
   border-color: var(--primary);
 }
@@ -58,6 +62,48 @@
   font-size: 2.4rem;
   background-color: transparent;
   color: var(--base-3);
+}
+
+.input-control .input-avatar {
+  display: block;
+  width: 12rem;
+  height: 12rem;
+  cursor: pointer;
+  background-color: transparent;
+  position: relative;
+  border-radius: 50%;
+  overflow: hidden;
+  display: grid;
+  place-content: center;
+  border: 1px solid var(--base-3);
+}
+
+.input-control .input-avatar .caption {
+  display: none;
+  position: absolute;
+  background-color: var(--primary);
+  color: var(--base-1);
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.2rem;
+  width: 100%;
+  border-radius: 50%;
+  text-align: center;
+  height: 4rem;
+  padding-top: .4rem;
+}
+
+.input-control .input-avatar:hover .caption {
+  display: block;
+}
+
+.input-control .input-avatar img {
+  transition: filter .2s ease;
+}
+
+.input-control .input-avatar:hover img {
+  filter: brightness(0.5);
 }
 
 .input-wrapper {

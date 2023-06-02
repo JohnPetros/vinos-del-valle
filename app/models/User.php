@@ -30,6 +30,12 @@ class User
    */
   public $password;
 
+   /**
+   * Avatar do usuário
+   * @var string
+   */
+  public $avatar;
+
   /**
    * Verifica se o usuário é um administrator
    * @var boolean

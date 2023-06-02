@@ -227,6 +227,7 @@ class UserController
       'header' => Layout::getDashboardHeader('user'),
       'title' => $isEditForm ? 'Editar usuário ' . $user->name : 'Adicionar usuário',
       'modal' => $modal,
+      'avatar' => $user ? $user->avatar : '',
       'name' => $user ? $user->name : '',
       'email' => $user ? $user->email : '',
       'password-inputs' => !$isEditForm ? self::getPasswordInputs() : '',

@@ -5,7 +5,8 @@ const inputsControls = document.querySelectorAll(".input-control");
 const selects = document.querySelectorAll(".select");
 const selectsButtons = document.querySelectorAll(".select-button");
 const inputColors = document.querySelectorAll(".input-color");
-const buttons = document.querySelectorAll("form .button");
+const inputAvatar = document.querySelector(".input-avatar");
+const buttons = document.querySelectorAll("form button");
 const portugueseNames = {
   email: "e-mail",
   password: "senha",
@@ -159,12 +160,26 @@ function setSelectedItem(select) {
   }
 }
 
-function setColor(InputColor) {
-  const input = InputColor.querySelector("input");
-  const label = InputColor.querySelector("label");
+function setInputColor(inputColor) {
+  const input = inputColor.querySelector("input");
+  const label = inputColor.querySelector("label");
 
   label.textContent = input.value;
   label.style.color = input.value;
+}
+
+function setInputAvatar(inputAvatar, file) {
+  const input = inputAvatar.querySelector("input");
+  const img = inputAvatar.querySelector("img");
+
+  if (!file) {
+    img.src += input.dataset.value;
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = ({ target }) => (img.src = target.result);
+  reader.readAsDataURL(file);
 }
 
 function togglePasswordInputs(passwordInputs) {
@@ -239,6 +254,11 @@ function handleInputColorChange({ currentTarget }) {
   setColor(currentTarget);
 }
 
+function handleInputFileChange({ currentTarget }) {
+  const file = currentTarget.files[0];
+  setInputAvatar(inputAvatar, file);
+}
+
 function handleAlterPasswordButton(button) {
   removeAllErrors();
   const passwordInputs = form.querySelectorAll("input[type='password']");
@@ -250,7 +270,6 @@ function handleAlterPasswordButton(button) {
 
 function handleButtonClick({ currentTarget }) {
   const type = currentTarget.id;
-
   switch (type) {
     case "add":
     case "edit":
@@ -262,6 +281,9 @@ function handleButtonClick({ currentTarget }) {
       break;
     case "alter-password":
       handleAlterPasswordButton(currentTarget);
+      break;
+    case "set-avatar":
+      inputAvatar.querySelector("input").click();
       break;
     default:
       return;
@@ -278,9 +300,13 @@ selectsButtons.forEach((select) => {
   setSelectedItem(select.parentNode);
 });
 inputColors.forEach((inputColor) => {
-  setColor(inputColor);
+  setInputColor(inputColor);
   inputColor.addEventListener("change", handleInputColorChange);
 });
+setInputAvatar(inputAvatar);
+inputAvatar
+  .querySelector("input")
+  .addEventListener("change", handleInputFileChange);
 buttons.forEach((button) =>
   button.addEventListener("click", handleButtonClick)
 );

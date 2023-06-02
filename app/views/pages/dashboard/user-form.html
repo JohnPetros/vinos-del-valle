@@ -37,6 +37,23 @@
 
         <form action="" method="post">
           <div class="input-control">
+            <label for="avatar">
+              <i class="ph-bold ph-user-circle"></i>
+              avatar:
+            </label>
+            <button type="button" id="set-avatar" class="input-avatar" for="avatar">
+              <img
+                width="100"
+                class="avatar"
+                src="{{public_path}}/uploads/avatars/"
+                alt="Imagem de avatar de usuário"
+              />
+              <span class="caption">alterar avatar</span>
+              <input class="input" type="file" id="avatar" name="avatar" data-value="{{avatar}}"" />
+            </button>
+          </div>
+
+          <div class="input-control">
             <label for="name">
               <i class="ph-bold ph-tag"></i>
               Nome:
@@ -70,7 +87,12 @@
               <i class="ph-bold ph-password"></i>
               Senha:
             </label>
-            <input class="input" type="password" id="password" name="password" />
+            <input
+              class="input"
+              type="password"
+              id="password"
+              name="password"
+            />
             <button class="password-eye" type="button">
               <i class="ph-fill ph-eye"></i>
             </button>
