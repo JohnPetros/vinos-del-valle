@@ -77,8 +77,9 @@ function hasErrors() {
 }
 
 function validateInput(input) {
-  validateEmptyField(input);
+  if (input.classList.contains("hidden")) return;
 
+  validateEmptyField(input);
   switch (input.id) {
     case "email":
       validateEmail(input);
@@ -183,9 +184,10 @@ function setInputAvatar(inputAvatar, file) {
 }
 
 function togglePasswordInputs(passwordInputs) {
-  passwordInputs.forEach((passwordInput) =>
-    passwordInput.parentNode.classList.toggle("hidden")
-  );
+  passwordInputs.forEach((passwordInput) => {
+    passwordInput.classList.toggle("hidden");
+    passwordInput.parentNode.classList.toggle("hidden");
+  });
 }
 
 function handleSubmit(event) {

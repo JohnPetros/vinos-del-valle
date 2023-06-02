@@ -20,17 +20,17 @@ class UserController
   {
     switch ($status) {
       case 'add-success':
-        return Toast::getSuccess('Uva adicionada com sucesso!');
+        return Toast::getSuccess('Usuário adicionado com sucesso!');
       case 'add-fail':
         return Toast::getSuccess('Erro ao tentar adicionar com sucesso!');
       case 'edit-success':
-        return Toast::getSuccess('Uva editada com sucesso!');
+        return Toast::getSuccess('Usuário editado com sucesso!');
       case 'edit-fail':
-        return Toast::getError('Erro ao tentar editar a uva');
+        return Toast::getError('Erro ao tentar editar o Usuário');
       case 'delete-success':
-        return Toast::getSuccess('Uva deletada com sucesso');
+        return Toast::getSuccess('Usuário deletado com sucesso');
       case 'delete-fail':
-        return Toast::getError('Erro ao tentar deletar a uva');
+        return Toast::getError('Erro ao tentar deletar o Usuário');
       default:
         return Toast::getError('Escreva uma mensagem no toast');
     }
@@ -244,14 +244,17 @@ class UserController
    * @param array $data 
    * @return boolean
    */
-  private static function isValidateInput($data)
+  private static function isValidateInput($data, $includeExceptions)
   {
     $data = array_map('trim', $data);
 
     $data = filter_input_array(INPUT_POST, $data);
 
-    foreach ($data as $value) {
-      if ($value == '') {
+    $execptions = $includeExceptions ? ['avatar', 'password', 'password_confirm'] : [];
+
+    foreach ($data as $key => $value) {
+
+      if ($value === '' && !in_array($key, $execptions)) {
         return false;
       }
     }
@@ -290,30 +293,34 @@ class UserController
    * @param Request $request
    * @param integer $id
    */
-  public static function editgrape($request, $id)
+  public static function editUser($request, $id)
   {
     Session::verifyLoggedUser('login', 'admin', $request);
 
     $router = $request->getRouter();
     $postVars = $request->getPostVars();
 
-    if (!is_numeric($id) || !self::isValidateInput($postVars)) {
+    if (!is_numeric($id) || !self::isValidateInput($postVars, true)) {
       $router->redirect("/dashboard/grape/$id/form?status=edit-fail");
     }
 
-    $grape = User::getGrapeById($id);
+    $user = User::getUserById($id);
 
-    if (!$grape instanceof User) {
+    if (!$user instanceof User) {
       $router->redirect("/dashboard/user/$id/form?status=edit-fail");
     }
 
     foreach ($postVars as $var => $value) {
-      $grape->{$var} = $value ?? $grape->{$var};
+      if ($var === 'avatar' && $value === '') {
+        $user->{$var} = Session::getUserSession()['avatar'];
+        continue;
+      }
+      $user->{$var} = $value ?? $user->{$var};
     }
 
-    $grape->update();
+    $user->update();
 
-    $router->redirect("/dashboard/grape/$id/form?status=edit-success");
+    $router->redirect("/dashboard/user/$id/form?status=edit-success");
   }
 
   /**

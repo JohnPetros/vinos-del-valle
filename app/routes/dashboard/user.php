@@ -24,12 +24,12 @@ $router->get(
 //   }
 // );
 
-// $router->post(
-//   '/dashboard/grape/{id}/edit',
-//   function ($request, $id) {
-//     return new Response(200, UserController::editGrape($request, $id));
-//   }
-// );
+$router->post(
+  '/dashboard/grape/{id}/edit',
+  function ($request, $id) {
+    return new Response(200, UserController::editUser($request, $id));
+  }
+);
 
 // $router->get(
 //   '/dashboard/grape/{id}/delete',

@@ -30,7 +30,7 @@ class User
    */
   public $password;
 
-   /**
+  /**
    * Avatar do usuário
    * @var string
    */
@@ -53,6 +53,36 @@ class User
    * @var integer
    */
   public $creator_name;
+
+  /**
+   * Atualiza o registro de vinho no banco de dados com os dados da instância atual 
+   */
+  public function update()
+  {
+    $query = "UPDATE users 
+              SET name = ?,
+                  email = ?,
+                  avatar = ?,
+                  is_admin = ?,
+                  creator_id = ?
+              WHERE id = ?";
+
+    $params = [
+      $this->name,
+      $this->email,
+      $this->avatar,
+      $this->is_admin,
+      $this->creator_id,
+    ];
+
+    if ($this->password) {
+      echo $this->password;
+    }
+
+    $params[] = $this->id;
+
+    Database::execute($query, $params);
+  }
 
   /**
    * Retorna todos os registros de usuários do banco de dados

@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="{{public_path}}/css/form.css" />
     <script defer src="{{public_path}}/js/global.js"></script>
     <script defer src="{{public_path}}/js/form.js"></script>
+    <script defer src="{{public_path}}/js/avatar.js"></script>
     <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
     <title>Dashboard - Usuários | Vinos Del Valle</title>
   </head>
@@ -45,11 +46,11 @@
               <img
                 width="100"
                 class="avatar"
-                src="{{public_path}}/uploads/avatars/"
+                data-value="{{avatar}}"
                 alt="Imagem de avatar de usuário"
               />
               <span class="caption">alterar avatar</span>
-              <input class="input" type="file" id="avatar" name="avatar" data-value="{{avatar}}"" />
+              <input class="input hidden" type="file" id="avatar" name="avatar" />
             </button>
           </div>
 
@@ -88,7 +89,7 @@
               Senha:
             </label>
             <input
-              class="input"
+              class="input hidden"
               type="password"
               id="password"
               name="password"
@@ -103,7 +104,7 @@
               Confirmar Senha:
             </label>
             <input
-              class="input"
+              class="input hidden"
               type="password"
               id="password_confirm"
               name="password_confirm"
