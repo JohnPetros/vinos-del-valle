@@ -5,6 +5,7 @@ namespace App\controllers;
 use App\core\Session;
 use App\core\View;
 use App\models\User;
+use App\utils\File;
 use App\utils\Layout;
 use App\utils\Modal;
 use App\utils\Toast;
@@ -27,6 +28,8 @@ class UserController
         return Toast::getSuccess('Usuário editado com sucesso!');
       case 'edit-fail':
         return Toast::getError('Erro ao tentar editar o Usuário');
+      case 'avatar-fail':
+        return Toast::getError('Imagem de avatar inválido');
       case 'delete-success':
         return Toast::getSuccess('Usuário deletado com sucesso');
       case 'delete-fail':
@@ -262,12 +265,23 @@ class UserController
     return !!$data;
   }
 
+  private function uploadFile($file, $router)
+  {
+    $file = new File($file);
+
+    if ($file->error !== 0 || !in_array($file->extension, ['png', 'jpg', 'jpeg', 'svg'])) {
+      $router->redirect('/dashboard/user?status=avatar-fail');
+    }
+
+    $file->upload(__DIR__ . '/../../public/uploads/avatars/');
+  }
+
   /**
    * Adiciona uma uva
    * @param Request $request
    * @param integer $id
    */
-  public static function addGrape($request)
+  public static function addUser($request)
   {
     Session::verifyLoggedUser('login', 'admin', $request);
 
@@ -299,9 +313,17 @@ class UserController
 
     $router = $request->getRouter();
     $postVars = $request->getPostVars();
+    $files = $request->getFiles();
+
+    if (isset($files) && $files['avatar']) self::uploadFile($files['avatar'], $router);
+
+    echo '<pre>';
+    print_r($files);
+    echo '</pre>';
+    exit;
 
     if (!is_numeric($id) || !self::isValidateInput($postVars, true)) {
-      $router->redirect("/dashboard/grape/$id/form?status=edit-fail");
+      $router->redirect("/dashboard/user/$id/form?status=edit-fail");
     }
 
     $user = User::getUserById($id);

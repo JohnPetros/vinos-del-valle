@@ -35,6 +35,12 @@ class Request
   private $postVars = [];
 
   /** 
+   * Arquivos recebidas do POST da página ($_FILES)
+   * @var array
+   */
+  private $files = [];
+
+  /** 
    * Cabeçalho da requisição
    * @var array
    */
@@ -48,6 +54,7 @@ class Request
     $this->router = $router;
     $this->queryParams = $_GET ?? [];
     $this->postVars = $_POST ?? [];
+    $this->files = $_FILES ?? [];
     $this->headers = getallheaders();
     $this->httpMethod = $_SERVER['REQUEST_METHOD'] ?? '';
     $this->setUri();
@@ -116,5 +123,14 @@ class Request
   public function getPostVars()
   {
     return $this->postVars;
+  }
+
+  /**
+   * Retorna as arquivos enviados por POST da requisição
+   * @return array
+   */
+  public function getFiles()
+  {
+    return $this->files;
   }
 }

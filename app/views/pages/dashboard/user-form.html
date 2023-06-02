@@ -36,7 +36,7 @@
           <h2>Usuário</h2>
         </header>
 
-        <form action="" method="post">
+        <form action="" method="post" enctype="multipart/form-data">
           <div class="input-control">
             <label for="avatar">
               <i class="ph-bold ph-user-circle"></i>
@@ -50,7 +50,7 @@
                 alt="Imagem de avatar de usuário"
               />
               <span class="caption">alterar avatar</span>
-              <input class="input hidden" type="file" id="avatar" name="avatar" />
+              <input class="input hidden" type="file" id="avatar" name="avatar" accept="image/*" />
             </button>
           </div>
 
