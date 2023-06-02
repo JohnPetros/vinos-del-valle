@@ -27,6 +27,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   margin-top: 2.4rem;
+  position: relative;
 }
 
 .input-control input {
@@ -44,6 +45,15 @@
 
 .input-control label i {
   font-size: 2rem;
+}
+
+.input-control button.password-eye {
+  position: absolute;
+  right: .4rem;
+  top: -.8rem;
+  font-size: 2.4rem;
+  background-color: transparent;
+  color: var(--base-3);
 }
 
 .input-wrapper {

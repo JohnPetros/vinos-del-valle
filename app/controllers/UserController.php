@@ -123,6 +123,10 @@ class UserController
 
     if ($isEditForm) {
       $buttons .= View::render('partials/button', [
+        'type' => 'alter-password',
+        'title' => 'Alterar senha',
+      ]);
+      $buttons .= View::render('partials/button', [
         'type' => 'edit',
         'title' => 'Editar',
         'value' => '/dashboard/grape/' . $grape->id . '/edit',

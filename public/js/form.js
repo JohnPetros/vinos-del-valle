@@ -1,6 +1,7 @@
 const form = document.querySelector("form");
 const inputs = document.querySelectorAll(".input");
 const inputsWrappers = document.querySelectorAll(".input-wrapper");
+const inputsControls = document.querySelectorAll(".input-control");
 const selects = document.querySelectorAll(".select");
 const selectsButtons = document.querySelectorAll(".select-button");
 const inputColors = document.querySelectorAll(".input-color");
@@ -8,6 +9,7 @@ const buttons = document.querySelectorAll("form .button");
 const portugueseNames = {
   email: "e-mail",
   password: "senha",
+  password_confirm: "confirmar senha",
   name: "nome",
   winery: "vinícula",
   harvest_date: "data de colheita",
@@ -77,6 +79,88 @@ function validateInput(input) {
   }
 }
 
+function activeIcons(icon) {
+  icon.classList.add("active");
+}
+
+function desactiveIcons(icon) {
+  icon.classList.remove("active");
+}
+
+function openSelectBox(selectButton) {
+  const selectBox = selectButton.parentNode.querySelector(".select-box");
+  const isActive = selectBox.classList.contains("active");
+  selectBox.classList[isActive ? "remove" : "add"]("active");
+}
+
+function activeOption(option) {
+  const options = option.parentNode.querySelectorAll(".option");
+  options.forEach((option) => option.classList.remove("active"));
+  option.classList.add("active");
+}
+
+function checkOption(option, select) {
+  const radio = option.querySelector('input[type="radio"]');
+  const label = option.querySelector("label");
+  radio.click();
+
+  const selectedItem = select.querySelector(".selected-item");
+  selectedItem.dataset.value = radio.value;
+  selectedItem.innerHTML = label.innerHTML;
+
+  activeOption(label.parentNode);
+}
+
+function setInputsWrappers(wrapper) {
+  const passwordEye = wrapper.querySelector(".password-eye");
+  if (passwordEye) {
+    passwordEye.addEventListener("click", handlePasswordEyeClick);
+  }
+
+  wrapper.addEventListener("click", handleInputWrapperClick);
+}
+
+function checkFirstOption(select) {
+  const firstOption = select.querySelector(".option");
+  if (firstOption) checkOption(firstOption, select);
+}
+
+function hideSelectBox(select) {
+  const selectBox = select.querySelector(".select-box");
+  selectBox.classList.remove("active");
+}
+
+function containElement(element, select) {
+  return select.contains(element);
+}
+
+function setSelectedItem(select) {
+  const selectItem = select.querySelector(".selected-item").dataset.selected;
+  const targetOption = selectItem.includes("}")
+    ? null
+    : select.querySelector(`#${select.id}-${selectItem}`)?.parentNode;
+
+  if (targetOption) {
+    checkOption(targetOption, select);
+  } else {
+    checkFirstOption(select);
+  }
+}
+
+function setColor(InputColor) {
+  const input = InputColor.querySelector("input");
+  const label = InputColor.querySelector("label");
+
+  label.textContent = input.value;
+  label.style.color = input.value;
+}
+
+function togglePasswordInputs(passwordInputs) {
+  passwordInputs.forEach((passwordInput) =>
+    passwordInput.parentNode.classList.toggle("hidden")
+  );
+}
+
 function handleSubmit(event) {
   if (hasErrors()) removeAllErrors();
 
@@ -88,14 +172,6 @@ function handleSubmit(event) {
   }
 
   if (!(event instanceof Event)) event.submit();
-}
-
-function activeIcons(icon) {
-  icon.classList.add("active");
-}
-
-function desactiveIcons(icon) {
-  icon.classList.remove("active");
 }
 
 function handleInputChange({ currentTarget }) {
@@ -124,30 +200,6 @@ function handlePasswordEyeClick({ currentTarget }) {
   input.type = isClosed ? "password" : "text";
 }
 
-function openSelectBox(selectButton) {
-  const selectBox = selectButton.parentNode.querySelector(".select-box");
-  const isActive = selectBox.classList.contains("active");
-  selectBox.classList[isActive ? "remove" : "add"]("active");
-}
-
-function activeOption(option) {
-  const options = option.parentNode.querySelectorAll(".option");
-  options.forEach((option) => option.classList.remove("active"));
-  option.classList.add("active");
-}
-
-function checkOption(option, select) {
-  const radio = option.querySelector('input[type="radio"]');
-  const label = option.querySelector("label");
-  radio.click();
-
-  const selectedItem = select.querySelector(".selected-item");
-  selectedItem.dataset.value = radio.value;
-  selectedItem.innerHTML = label.innerHTML;
-
-  activeOption(label.parentNode);
-}
-
 function handleSelectClick({ currentTarget }) {
   const selectButton = currentTarget;
   openSelectBox(selectButton);
@@ -158,29 +210,6 @@ function handleSelectClick({ currentTarget }) {
       checkOption(currentTarget, selectButton)
     )
   );
-}
-
-function setInputsWrappers(wrapper) {
-  const passwordEye = wrapper.querySelector("#password-eye");
-  if (passwordEye) {
-    passwordEye.addEventListener("click", handlePasswordEyeClick);
-  }
-
-  wrapper.addEventListener("click", handleInputWrapperClick);
-}
-
-function checkFirstOption(select) {
-  const firstOption = select.querySelector(".option");
-  if (firstOption) checkOption(firstOption, select);
-}
-
-function hideSelectBox(select) {
-  const selectBox = select.querySelector(".select-box");
-  selectBox.classList.remove("active");
-}
-
-function containElement(element, select) {
-  return select.contains(element);
 }
 
 function handleBodyClick({ target }) {
@@ -194,45 +223,42 @@ function handleBodyClick({ target }) {
   }
 }
 
-function setSelectedItem(select) {
-  const selectItem = select.querySelector(".selected-item").dataset.selected;
-  const targetOption = selectItem.includes("}")
-    ? null
-    : select.querySelector(`#${select.id}-${selectItem}`)?.parentNode;
-
-  if (targetOption) {
-    checkOption(targetOption, select);
-  } else {
-    checkFirstOption(select);
-  }
-}
-
-function setColor(InputColor) {
-  const input = InputColor.querySelector("input");
-  const label = InputColor.querySelector("label");
-
-  label.textContent = input.value;
-  label.style.color = input.value;
-}
-
 function handleInputColorChange({ currentTarget }) {
   setColor(currentTarget);
+}
+
+function handleAlterPasswordButton(button) {
+  const passwordInputs = form.querySelectorAll("input[type='password']");
+  button.textContent = passwordInputs[0].parentNode.classList.contains("hidden")
+    ? "Não alterar senha"
+    : "Alterar senha";
+  togglePasswordInputs(passwordInputs);
 }
 
 function handleButtonClick({ currentTarget }) {
   const type = currentTarget.id;
 
-  if (type === "add" || type === "edit") {
-    form.action = currentTarget.value;
-    handleSubmit(form);
-  } else if (type === "delete") {
-    openModal("delete");
+  switch (type) {
+    case "add":
+    case "edit":
+      form.action = currentTarget.value;
+      handleSubmit(form);
+      break;
+    case "delete":
+      openModal("delete");
+      break;
+    case "alter-password":
+      handleAlterPasswordButton(currentTarget);
+      break;
+    default:
+      return;
   }
 }
 
 form.addEventListener("submit", handleSubmit);
 inputs.forEach((input) => input.addEventListener("change", handleInputChange));
 inputsWrappers.forEach(setInputsWrappers);
+inputsControls.forEach(setInputsWrappers);
 selects.forEach(checkFirstOption);
 selectsButtons.forEach((select) => {
   select.addEventListener("click", handleSelectClick);
