@@ -22,7 +22,7 @@ class GrapeController
       case 'add-success':
         return Toast::getSuccess('Uva adicionada com sucesso!');
       case 'add-fail':
-        return Toast::getSuccess('Erro ao tentar adicionar com sucesso!');
+        return Toast::getError('Erro ao tentar adicionar uva!');
       case 'edit-success':
         return Toast::getSuccess('Uva editada com sucesso!');
       case 'edit-fail':

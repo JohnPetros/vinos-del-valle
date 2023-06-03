@@ -123,6 +123,7 @@ function checkOption(option, select) {
   selectedItem.innerHTML = label.innerHTML;
 
   activeOption(label.parentNode);
+  hideSelectBox(select.parentNode)
 }
 
 function setInputsWrappers(wrapper) {
@@ -140,6 +141,7 @@ function checkFirstOption(select) {
 }
 
 function hideSelectBox(select) {
+  console.log(select);
   const selectBox = select.querySelector(".select-box");
   selectBox.classList.remove("active");
 }

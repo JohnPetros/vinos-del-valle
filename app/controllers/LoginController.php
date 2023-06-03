@@ -21,10 +21,10 @@ class LoginController
     Session::verifyLoggedUser('logout', null, $request);
 
     $logo = View::render('partials/logo');
-    $status = !is_null($errorMessage) ? Toast::getError($errorMessage) : '';
+    $toast =  !empty($errorMessage) ? Toast::getError($errorMessage) : '';
 
     return View::render('pages/login', [
-      'status' => $status,
+      'toast' => $toast,
       'logo' => $logo,
     ]);
   }
@@ -48,7 +48,7 @@ class LoginController
 
     Session::setUserSession($user);
 
-    $route = $user->is_admin ? '/dashboard/wine' : '/app';
+    $route = $user->is_admin ? '/dashboard/wine?status=welcome' : '/app';
 
     $request->getRouter()->redirect($route);
   }

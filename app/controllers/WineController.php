@@ -28,17 +28,17 @@ class WineController
       case 'add-success':
         return Toast::getSuccess('Vinho adicionado com sucesso!');
       case 'add-fail':
-        return Toast::getSuccess('Erro ao tentar adicionar um vinho');
+        return Toast::getError('Erro ao tentar adicionar vinho!');
       case 'edit-success':
-        return Toast::getSuccess('Vinho editado com sucesso');
+        return Toast::getSuccess('Vinho editado com sucesso!');
       case 'edit-fail':
-        return Toast::getError('Erro ao tentar editar o vinho');
+        return Toast::getError('Erro ao tentar editar o vinho!');
       case 'delete-success':
-        return Toast::getSuccess('Vinho deletado com sucesso');
+        return Toast::getSuccess('Vinho deletado com sucesso!');
       case 'delete-fail':
-        return Toast::getError('Erro ao tentar deletar o vinho');
+        return Toast::getError('Erro ao tentar deletar o vinho!');
       default:
-        return Toast::getError('Escreva uma mensagem no toast');
+        return Toast::getError('Escreva uma mensagem no toast...');
     }
   }
 

@@ -7,7 +7,6 @@ function hideToast() {
 
 function showToast() {
   toast.classList.add("active");
-
   setTimeout(hideToast, 3000);
 }
 

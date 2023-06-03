@@ -21,15 +21,17 @@ class UserController
   {
     switch ($status) {
       case 'add-success':
-        return Toast::getSuccess('Usuário adicionado com sucesso!');
+        return Toast::getSuccess('Usuário adicionado com sucesso');
       case 'add-fail':
-        return Toast::getSuccess('Erro ao tentar adicionar com sucesso!');
+        return Toast::getError('Erro ao tentar adicionar usuário');
       case 'edit-success':
-        return Toast::getSuccess('Usuário editado com sucesso!');
+        return Toast::getSuccess('Usuário editado com sucesso');
       case 'edit-fail':
         return Toast::getError('Erro ao tentar editar o Usuário');
+      case 'email-fail':
+        return Toast::getError('E-mail já em uso');
       case 'avatar-fail':
-        return Toast::getError('Imagem de avatar inválido');
+        return Toast::getError('Imagem de avatar inválida');
       case 'delete-success':
         return Toast::getSuccess('Usuário deletado com sucesso');
       case 'delete-fail':
@@ -241,6 +243,17 @@ class UserController
   }
 
   /**
+   * Verifica se um usuário já existe com um dado email
+   * @param string $email 
+   * @return boolean
+   */
+  private static function userExists($email)
+  {
+    $user = User::getUserByEmail($email);
+    return $user instanceof User;
+  }
+
+  /**
    * Verifica se a entrada de dados do usuário é válida
    * @param array $data 
    * @return boolean
@@ -292,9 +305,12 @@ class UserController
 
     $router = $request->getRouter();
     $postVars = $request->getPostVars();
+    $files = $request->getFiles();
 
+    $avatar = '';
     if (isset($files) && $files['avatar']['error'] === 0) {
       $avatar = self::uploadAvatar($files['avatar'], $router);
+
       if (!is_string($avatar)) {
         $router->redirect("/dashboard/user/add/form?status=avatar-fail");
       }
@@ -302,6 +318,10 @@ class UserController
 
     if (!self::isValidateInput($postVars, false)) {
       $router->redirect("/dashboard/user/add/form?status=add-fail");
+    }
+
+    if (self::userExists($postVars['email'])) {
+      $router->redirect("/dashboard/user/add/form?status=email-fail");
     }
 
     $user = new User;
@@ -313,6 +333,8 @@ class UserController
     $user->password = !empty($postVars['password'])
       ? password_hash($postVars['password'], PASSWORD_DEFAULT)
       : $user->password;
+
+
 
     $user->add();
 
@@ -348,6 +370,10 @@ class UserController
 
     if (!$user instanceof User) {
       $router->redirect("/dashboard/user/$id/form?status=edit-fail");
+    }
+
+    if ($user->email !==  $postVars['email'] && self::userExists($postVars['email'])) {
+      $router->redirect("/dashboard/user/$id/form?status=email-fail");
     }
 
     $user->name = $postVars['name'] ?? '';
