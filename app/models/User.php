@@ -55,7 +55,7 @@ class User
   public $creator_name;
 
   /**
-   * Adiciona um registro de usuário no banco de dados com os dados da instância atual 
+   * Adiciona um registro de usuário com os dados da instância atual 
    */
   public function add()
   {
@@ -81,7 +81,7 @@ class User
   }
 
   /**
-   * Atualiza o registro de usuário no banco de dados com os dados da instância atual 
+   * Atualiza um registro de usuário com os dados da instância atual 
    */
   public function update()
   {
@@ -108,7 +108,7 @@ class User
   }
 
   /**
-   * Deleta um registro de usuário no banco de dados com base no ID da instância atual
+   * Deleta um registro de usuário com base no ID da instância atual
    */
   public function delete()
   {
@@ -118,7 +118,7 @@ class User
   }
 
   /**
-   * Retorna todos os registros de usuários do banco de dados
+   * Retorna todos os registros de usuário
    * @param integer $loggedUserId
    * @param array $params
    * @return array
@@ -141,7 +141,7 @@ class User
   }
 
   /**
-   * Retorna um registro de usuário do banco de dados com base em seu email
+   * Retorna um registro de usuário com base em seu email
    * @param string $email
    * @return User
    */
@@ -153,7 +153,7 @@ class User
   }
 
   /**
-   * Retorna um registro de usuário do banco de dados com base em seu ID
+   * Retorna um registro de usuário com base em seu ID
    * @return User
    */
   public static function getUserById($id)
@@ -167,7 +167,7 @@ class User
   }
 
   /**
-   * Retorna do banco de dados todos os registros de usuários administradores
+   * Retorna todos os registros de usuário que são administradores
    * @return array
    */
   public static function getAdminUsers()
@@ -177,5 +177,16 @@ class User
               WHERE is_admin = 1";
 
     return Database::execute($query)->fetchAll(\PDO::FETCH_CLASS, self::class);
+  }
+
+  /**
+   * Retorna a quantidade de registros de usuário
+   * @return integer
+   */
+  public static function getUsersAmount()
+  {
+    $query = "SELECT COUNT(*) FROM users";
+
+    return Database::execute($query)->fetchColumn();
   }
 }

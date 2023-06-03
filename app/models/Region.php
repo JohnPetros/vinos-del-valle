@@ -37,7 +37,7 @@ class Region
   public $country_code;
 
   /**
-   * Adiciona um registro de região no banco de dados com os dados da instância atual 
+   * Adiciona um registro de região com os dados da instância atual 
    */
   public function add()
   {
@@ -60,7 +60,7 @@ class Region
   }
 
   /**
-   * Atualiza o registro de região no banco de dados com os dados da instância atual 
+   * Atualiza um registro de região com os dados da instância atual 
    */
   public function update()
   {
@@ -83,7 +83,7 @@ class Region
   }
 
   /**
-   * Deleta um registro de região no banco de dados com base no ID da instância atual
+   * Deleta um registro de região com base no ID da instância atual
    */
   public function delete()
   {
@@ -93,7 +93,7 @@ class Region
   }
 
   /**
-   * Retorna as regiões do banco de dados
+   * Retorna todos os registros de região
    * @param string $countryCode
    * @return array
    */
@@ -109,7 +109,7 @@ class Region
   }
 
   /**
-   * Retorna uma região do banco de dados com base em seu ID
+   * Retorna um registro de região com base em seu ID
    * @return Region
    */
   public static function getRegionById($id)
@@ -117,5 +117,16 @@ class Region
     $query = "SELECT * FROM regions WHERE id = ?";
 
     return Database::execute($query, [$id])->fetchObject(self::class);
+  }
+
+  /**
+   * Retorna a quantidade de registros de região
+   * @return integer
+   */
+  public static function getRegionsAmount()
+  {
+    $query = "SELECT COUNT(*) FROM regions";
+
+    return Database::execute($query)->fetchColumn();
   }
 }

@@ -19,13 +19,13 @@ class Grape
   public $name;
 
   /**
-   * Código hexadecimal da cor referente a uva
+   * Código hexadecimal da cor referente à uva
    * @var string
    */
   public $color_hex;
 
   /**
-   * Adiciona um registro de uva no banco de dados com os dados da instância atual 
+   * Adiciona um registro de uva com os dados da instância atual 
    */
   public function add()
   {
@@ -43,7 +43,7 @@ class Grape
   }
 
   /**
-   * Atualiza um registro de uva no banco de dados com os dados da instância atual 
+   * Atualiza um registro de uva com os dados da instância atual 
    */
   public function update()
   {
@@ -62,7 +62,7 @@ class Grape
   }
 
   /**
-   * Deleta um registro de uva no banco de dados com base no ID da instância atual
+   * Deleta um registro de uva com base no ID da instância atual
    */
   public function delete()
   {
@@ -72,7 +72,7 @@ class Grape
   }
 
   /**
-   * Retorna todos os registros de uvas do banco de dados
+   * Retorna todos os registros de uva
    * @return array
    */
   public static function getGrapes()
@@ -83,7 +83,7 @@ class Grape
   }
 
   /**
-   * Retorna uma uva do banco de dados com base em seu ID
+   * Retorna um registro de uva com base em seu ID
    * @return Region
    */
   public static function getGrapeById($id)
@@ -91,5 +91,16 @@ class Grape
     $query = "SELECT * FROM grapes WHERE id = ?";
 
     return Database::execute($query, [$id])->fetchObject(self::class);
+  }
+
+  /**
+   * Retorna a quantidade de registros de uva
+   * @return integer
+   */
+  public static function getGrapesAmount()
+  {
+    $query = "SELECT COUNT(*) FROM grapes";
+
+    return Database::execute($query)->fetchColumn();
   }
 }

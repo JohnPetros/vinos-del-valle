@@ -28,7 +28,7 @@ class Wine
    * Nome da região do vinho
    * @var integer
    */
-  public $region;
+  public $region_name;
 
   /**
    * ID da região do vinho
@@ -46,7 +46,7 @@ class Wine
    * Nome da uva do vinho
    * @var string
    */
-  public $grape;
+  public $grape_name;
 
   /**
    * Data de colheita do vinho
@@ -67,7 +67,7 @@ class Wine
   public $registration_date;
 
   /**
-   * Adiciona um registro de vinho no banco de dados com os dados da instância atual 
+   * Adiciona um registro de vinho com os dados da instância atual 
    */
   public function add()
   {
@@ -90,12 +90,12 @@ class Wine
       $this->bottling_date,
       $this->registration_date
     ];
-    
+
     Database::execute($query, $params);
   }
 
   /**
-   * Atualiza o registro de vinho no banco de dados com os dados da instância atual 
+   * Atualiza um registro de vinho com os dados da instância atual 
    */
   public function update()
   {
@@ -157,13 +157,15 @@ class Wine
   }
 
   /**
-   * Retorna os registros de vinhos do banco de dados
+   * Retorna todos os registros de vinho
    * @param array $params
    * @return array
    */
   public static function getWines($params)
   {
-    $query = "SELECT W.id, W.name, W.harvest_date, R.country_code, G.name AS grape, G.color_hex
+    $query = "SELECT W.id, W.name, W.harvest_date,
+                     R.country_code,
+                     G.name AS grape, G.color_hex
               FROM wines AS W
               JOIN regions AS R ON R.id = W.region_id
               JOIN grapes AS G ON G.id = W.grape_id";
@@ -189,19 +191,31 @@ class Wine
   }
 
   /**
-   * Retorna um registro de vinho do banco de dados com base em seu ID
+   * Retorna um registro de vinho em seu ID
    * @return Wine
    */
   public static function getWineById($id)
   {
     $query = "SELECT W.*,
                      W.region_id, W.grape_id,
-                     R.name AS region, R.country_code, G.name AS grape, G.color_hex
+                     R.name AS region_name, R.country_code, 
+                     G.name AS grape_name, G.color_hex
               FROM wines AS W
               JOIN regions AS R ON R.id = W.region_id
               JOIN grapes AS G ON G.id = W.grape_id
               WHERE W.id = ?";
 
     return Database::execute($query, [$id])->fetchObject(self::class);
+  }
+
+  /**
+   * Retorna a quantidade de registros de vinho
+   * @return integer
+   */
+  public static function getWinesAmount()
+  {
+    $query = "SELECT COUNT(*) FROM wines";
+
+    return Database::execute($query)->fetchColumn();
   }
 }

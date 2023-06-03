@@ -1,7 +1,9 @@
-<div class="panel">
+<a href="/dashboard/{{name}}" class="panel {{name}}">
   <div class="info">
-    <h4>Vihnos</h4>
-    <strong>24</strong>
-    <i class="ph-bold ph-beer-bottle"></i>
+    <h4 class="title">{{title}}</h4>
+    <strong class="amount">{{amount}}</strong>
   </div>
-</div>
+  <i class="ph-bold ph-{{icon}}"></i>
+</a>
+
+<span class="css" data-file="panel"></span>
