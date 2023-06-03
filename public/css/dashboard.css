@@ -7,6 +7,25 @@
   align-items: flex-start;
 }
 
+#panels-container {
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2.4rem;
+}
+
+.panel {
+  display: flex;
+  padding: 2.4rem;
+}
+
+.panel .title {
+  color: var(--base-3);
+}
+
+.panel .count {
+  font-size: 1.6rem;
+  color: var(--base-4);
+}
+
 .pagination-buttons {
   display: flex;
   gap: 1.2rem;
