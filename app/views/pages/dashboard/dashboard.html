@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{{public_path}}/css/header.css" />
     <link rel="stylesheet" href="{{public_path}}/css/dashboard.css" />
     <script defer src="{{public_path}}/js/global.js"></script>
+    <script defer src="{{public_path}}/js/header.js"></script>
     <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
     <title>Dashboard - Relatórios | Vinos Del Valle</title>
   </head>
@@ -27,27 +28,36 @@
       {{header}}
 
       <div id="panels-container">
-        <div class="info">
-          <h4>Vihnos</h4>
-          <strong>24</strong>
+        <a href="/dashboard/wine" class="panel wine">
+          <div class="info">
+            <h4 class="title">Vinhos</h4>
+            <strong class="count">24</strong>
+          </div>
+          <i class="ph-bold ph-beer-bottle"></i>
+        </a>
+        <div class="panel grape">
+          <div class="info">
+            <h4 class="title">Vinhos</h4>
+            <strong class="count">24</strong>
+          </div>
           <i class="ph-bold ph-beer-bottle"></i>
         </div>
-        <div class="info">
-          <h4>Vihnos</h4>
-          <strong>24</strong>
+        <div class="panel region">
+          <div class="info">
+            <h4 class="title">Vinhos</h4>
+            <strong class="count">24</strong>
+          </div>
           <i class="ph-bold ph-beer-bottle"></i>
         </div>
-        <div class="info">
-          <h4>Vihnos</h4>
-          <strong>24</strong>
-          <i class="ph-bold ph-beer-bottle"></i>
-        </div>
-        <div class="info">
-          <h4>Vihnos</h4>
-          <strong>24</strong>
+        <div class="panel user">
+          <div class="info">
+            <h4 class="title">Vinhos</h4>
+            <strong class="count">24</strong>
+          </div>
           <i class="ph-bold ph-beer-bottle"></i>
         </div>
       </div>
+
     </main>
   </body>
 </html>

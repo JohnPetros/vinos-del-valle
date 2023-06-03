@@ -1,7 +1,6 @@
 :root {
   --primary: #8b112e;
   --secondary: #feebeb;
-  --tertiary: #146C94;
   --base-4: #2e2e2e;
   --base-3: #c7c7c7;
   --base-2: #eeeded;
@@ -10,6 +9,11 @@
 
   --success: #5dda6a;
   --danger: #d32c3f;
+
+  --wine: var(--primary);
+  --grape: #ffd93d;
+  --region: #1b9c85;
+  --user: #0079FF;
 
   --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   --outline: 0 0 0 2px var(--primary), 0 0 0 0.6rem var(--secondary);
