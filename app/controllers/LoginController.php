@@ -48,7 +48,7 @@ class LoginController
 
     Session::setUserSession($user);
 
-    $route = $user->is_admin ? '/dashboard/wine?status=welcome' : '/app';
+    $route = $user->is_admin ? '/dashboard?status=welcome' : '/app';
 
     $request->getRouter()->redirect($route);
   }

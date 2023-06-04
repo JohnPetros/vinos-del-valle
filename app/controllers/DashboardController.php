@@ -10,9 +10,25 @@ use App\models\User;
 use App\models\Wine;
 use App\utils\Chart;
 use App\utils\Layout;
+use App\utils\Toast;
 
 class DashboardController
 {
+
+  /**
+   * Retorna o toast junto com a mensagem criada com base no status
+   * @param string $status
+   * @return string
+   */
+  private static function getToast($status)
+  {
+    switch ($status) {
+      case 'welcome':
+        return Toast::getSuccess('Seja bem-vindo ' . (Session::getUserSession()['name']));
+      default:
+        return Toast::getError('Escreva uma mensagem no toast...');
+    }
+  }
 
   /**
    * Retorna os gráficos de dashboard
@@ -24,6 +40,7 @@ class DashboardController
       Chart::getWinesByGrapeChartData(),
       Chart::getWinesByRegionChartData(),
       Chart::getWinesByCountryChartData(),
+      Chart::getWinesByHarvestYearChartData(),
     ];
     $charts = '';
 
@@ -95,10 +112,13 @@ class DashboardController
   {
     Session::verifyLoggedUser('login', 'admin', $request);
 
+    $params = $request->getQueryParams();
+
     return View::render('pages/dashboard/dashboard', [
       'header' => Layout::getDashboardHeader('dashboard'),
       'panels' => self::getPanels(),
       'charts' => self::getCharts(),
+      'toast' => isset($params['status']) ? self::getToast($params['status']) : '',
     ]);
   }
 }

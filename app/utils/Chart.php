@@ -24,7 +24,7 @@ class Chart
     return [
       'id' => 'wines-by-grape',
       'title' => 'Vinhos por uva',
-      'color' => '#0079FF',
+      'color' => '#8b112e',
       'data' =>  join(';', $data),
       'categories' => join(';', $categories),
     ];
@@ -48,7 +48,7 @@ class Chart
     return [
       'id' => 'wines-by-region',
       'title' => 'Vinhos por região',
-      'color' => '#1b9c85',
+      'color' => '#0079FF',
       'data' =>  join(';', $data),
       'categories' => join(';', $categories),
     ];
@@ -73,7 +73,40 @@ class Chart
     return [
       'id' => 'wines-by-country',
       'title' => 'Vinhos por país',
-      'color' => '#F79327',
+      'color' => '#1b9c85',
+      'data' =>  join(';', $data),
+      'categories' => join(';', $categories),
+    ];
+  }
+
+  private static function getWinesAmountByYear($wines, $year)
+  {
+    return count(array_filter($wines, function ($wine) use ($year) {
+      $harvest_year = date('Y', strtotime($wine->harvest_date));
+      return $harvest_year == $year;
+    }));
+  }
+
+  /**
+   * Retorna os dados do gráfico de quantidade de vinhos por ano de colheita
+   * @return array
+   */
+  public static function getWinesByHarvestYearChartData()
+  {
+
+    $years = [2023, 2022, 2021, 2020];
+    $wines = Wine::getWines([]);
+
+    $data = array_map(function ($year) use ($wines) {
+      return self::getWinesAmountByYear($wines, $year);
+    }, $years);
+
+    $categories = $years;
+
+    return [
+      'id' => 'wines-by-harvest-year',
+      'title' => 'Vinhos por ano de colheita',
+      'color' => '#ffd93d',
       'data' =>  join(';', $data),
       'categories' => join(';', $categories),
     ];

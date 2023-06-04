@@ -5,6 +5,7 @@ namespace App\controllers;
 use App\core\Session;
 use App\core\View;
 use App\models\Region;
+use App\utils\Country;
 use App\utils\Layout;
 use App\utils\Modal;
 use App\utils\Toast;
@@ -43,8 +44,7 @@ class RegionController
    */
   public static function getCountryCategories()
   {
-    $countriesData = file_get_contents(__DIR__ . '/../../public/data/countries.json');
-    $countries =  json_decode($countriesData);
+    $countries = Country::getCountries();
     $categories = '';
 
     foreach ($countries as $country) {
