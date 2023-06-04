@@ -70,7 +70,7 @@ class Form
     $execptions = $hasExceptions ? ['password', 'password_confirm'] : [];
 
     foreach ($input as $key => $value) {
-      if (empty($value) && !in_array($key, $execptions)) {
+      if ($value == '' && !in_array($key, $execptions)) {
         return false;
       }
     }
