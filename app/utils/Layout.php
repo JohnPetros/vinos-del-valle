@@ -2,6 +2,7 @@
 
 namespace App\utils;
 
+use App\controllers\UserController;
 use App\core\Session;
 use \App\core\View;
 use \App\utils\Modal;
@@ -24,11 +25,14 @@ class Layout
     );
 
     $user = Session::getUserSession();
+    $avatar =  UserController::verifyAvatarExists($user['avatar'])
+      ? $user['avatar']
+      : 'default.png';
 
     return View::render('partials/header', [
       'name' => $user['name'],
       'email' => $user['email'],
-      'avatar' => $user['avatar'],
+      'avatar' => $avatar,
       'modal' => $modal,
       $page => 'active',
     ]);

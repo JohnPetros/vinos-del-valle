@@ -5,12 +5,12 @@ namespace App\controllers;
 use App\core\Session;
 use App\core\View;
 use App\models\User;
-use App\utils\File;
 use App\utils\Form;
 use App\utils\Layout;
 use App\utils\Modal;
 use App\utils\Toast;
 use App\controllers\LoginController;
+use App\controllers\UserController;
 
 class ProfileController
 {
@@ -58,33 +58,18 @@ class ProfileController
       '/dashboard/user/' . $loggedUser['id'] . '/delete',
       'delete'
     );
+    $avatar = UserController::verifyAvatarExists($loggedUser['avatar'])
+      ? $loggedUser['avatar']
+      : 'default.png';
 
     return View::render('pages/dashboard/profile', [
       'header' => Layout::getDashboardHeader(''),
       'toast' => isset($params['status']) ? self::getToast($params['status']) : '',
       'name' => $loggedUser['name'],
       'email' => $loggedUser['email'],
-      'avatar' => $loggedUser['avatar'],
+      'avatar' => $avatar,
       'modal' => $modal,
     ]);
-  }
-
-  /**
-   * Faz o upload do avatar do usuário logado
-   * @param string $file
-   * @return string|boolean
-   */
-  private function uploadAvatar($avatar)
-  {
-    $file = new File($avatar);
-
-    if ($file->error !== 0 || !Form::validateImage($file->extension)) {
-      return false;
-    }
-
-    $file->upload(__DIR__ . '/../../public/uploads/avatars/');
-
-    return $file->name . '.' . $file->extension;
   }
 
   /**
@@ -127,25 +112,28 @@ class ProfileController
       $router->redirect("/dashboard/profile?status=password_confirm-fail");
     }
 
-    $avatar = '';
-    if (isset($files) && $files['avatar']['error'] === 0) {
-      $avatar = self::uploadAvatar($files['avatar'], $router);
-      if (is_bool($avatar)) {
-        $router->redirect("/dashboard/profile?status=avatar-fail");
-      }
-    }
-
     $user = User::getUserById($loggedUser['id']);
-
     if (!$user instanceof User) {
       $router->redirect("/dashboard/profile?status=edit-fail");
     }
 
     if (
-      $user->email !==  $postVars['email'] && 
+      $user->email !==  $postVars['email'] &&
       LoginController::verifyUserExists($postVars['email'])
     ) {
       $router->redirect("/dashboard/profile?status=email-fail");
+    }
+
+    if (isset($files) && $files['avatar']['error'] === 0) {
+      $avatar = UserController::uploadAvatar(
+        $files['avatar'],
+        $user->avatar != 'default.png'
+          ? $user->avatar
+          : ''
+      );
+      if (!is_string($avatar)) {
+        $router->redirect("/dashboard/profile?status=avatar-fail");
+      }
     }
 
     $user->name = $postVars['name'];
@@ -156,6 +144,8 @@ class ProfileController
       : $user->password;
 
     $user->update();
+
+    Session::setUserSession($user);
 
     $router->redirect("/dashboard/profile?status=edit-success");
   }

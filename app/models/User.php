@@ -134,6 +134,7 @@ class User
 
     if (
       count($params) &&
+      isset($params['user-type']) &&
       is_numeric($params['user-type']) &&
       in_array($params['user-type'], [0, 1])
     ) {

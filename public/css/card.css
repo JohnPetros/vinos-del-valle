@@ -29,7 +29,8 @@
 
 .image-wrapper img {
   max-width: 100%;
-  border-radius: 2.4rem;
+  object-fit: cover;
+  border-radius: 1.2rem;
 }
 
 .name {

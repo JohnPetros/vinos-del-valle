@@ -65,17 +65,15 @@
 }
 
 .input-control .input-avatar {
-  width: 14rem;
-  height: 14rem;
+  max-width: max-content;
   cursor: pointer;
   background-color: var(--base-0);
   position: relative;
-  border-radius: 50%;
   overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid var(--base-3);
+  border-radius: 50%;
 }
 
 .input-control .input-avatar .caption {
@@ -100,12 +98,16 @@
 }
 
 .input-control .input-avatar img {
-  transition: filter 0.2s ease;
-  width: 75%;
+  display: block;
+  object-fit: cover;
+  border-radius: 50%;
+  width: 14rem;
+  height: 14rem;
+  border: 1px solid var(--base-3);
 }
 
-.input-control .input-avatar:hover {
-  border-radius: 50%;
+.input-control .input-avatar:hover img {
+  border-color: var(--primary);
 }
 
 .input-wrapper {

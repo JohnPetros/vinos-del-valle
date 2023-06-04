@@ -41,26 +41,28 @@ class File
   public $size;
 
   /**
-   * Define o nome de um arquivo
+   * Define o nome do arquivo
    * @return boolean
    */
-  private function setName()
+  public function setName()
   {
     $this->name = time() . '-' . rand(1000, 9000) . '-' . uniqid();
   }
 
   /**
-   * Faz o upload de um arquivo
+   * Faz o upload do arquivo
+   * @param string $dir
    * @return boolean
    */
   public function upload($dir)
   {
     $path = $dir . $this->name . '.' . $this->extension;
+
     return move_uploaded_file($this->tmpName, $path);
   }
 
   /**
-   * Deleta um arquivo
+   * Deleta o arquivo
    * @return boolean
    */
   public static function delete($path)
@@ -83,6 +85,5 @@ class File
 
     $info = pathinfo($file['name']);
     $this->extension = $info['extension'];
-    $this->setName();
   }
 }

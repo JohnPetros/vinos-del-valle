@@ -75,6 +75,16 @@ class UserController
   }
 
   /**
+   * Verifica se um avatar se existe na aplicação
+   * @param string $avatar
+   * @return boolean
+   */
+  public static function verifyAvatarExists($avatar)
+  {
+    return file_exists(__DIR__ . '/../../public/uploads/avatars/' . $avatar);
+  }
+
+  /**
    * Retorna os cards de uva
    * @param array $params
    * @return string
@@ -98,7 +108,7 @@ class UserController
       $cards .= View::render('partials/user-card', [
         'id' => $user->id,
         'name' => $user->name,
-        'avatar' => $user->avatar,
+        'avatar' => self::verifyAvatarExists($user->avatar) ? $user->avatar : 'default.png',
         'user-type' => $user->is_admin ? 'administrador' : 'padrão',
         'color' => $user->is_admin ? 'var(--base-4)' : 'var(--primary)',
         'creator_name' => $user->creator_name,
@@ -254,16 +264,23 @@ class UserController
   /**
    * Faz o upload do avatar do usuário
    * @param string $avatar
+   * @param boolean $canOverride
    * @return mixed
    */
-  private function uploadAvatar($avatar)
+  public static function uploadAvatar($avatar, $previousAvatar = '')
   {
     $file = new File($avatar);
-
     if ($file->error !== 0 || !in_array($file->extension, ['png', 'jpg', 'jpeg', 'svg'])) {
       return;
     }
 
+    if ($previousAvatar === '') {
+      $file->setName();
+    } else {
+      $file->name = pathinfo($previousAvatar)['filename'];
+      $file->extension = pathinfo($previousAvatar)['extension'];
+    }
+    
     $file->upload(__DIR__ . '/../../public/uploads/avatars/');
 
     return $file->name . '.' . $file->extension;
@@ -290,12 +307,12 @@ class UserController
       $router->redirect("/dashboard/user/add/form?status=email-fail");
     }
 
-    if (!empty($postVars['password']) || Form::validatePassword($postVars['password'])) {
+    if (!empty($postVars['password']) && !Form::validatePassword($postVars['password'])) {
       $router->redirect("/dashboard/user/add/form?status=password-fail");
     }
 
     if (
-      !empty($postVars['password_confirm']) ||
+      !empty($postVars['password_confirm']) &&
       !Form::validatePasswordConfirm($postVars['password'], $postVars['password_confirm'])
     ) {
       $router->redirect("/dashboard/user/add/form?status=password_confirm-fail");
@@ -314,10 +331,10 @@ class UserController
     }
 
     $user = new User;
-    $user->name = $postVars['name'] ?? '';
-    $user->email = $postVars['email'] ?? '';
-    $user->is_admin = $postVars['user-type'] ?? '';
-    $user->creator_id = $postVars['creator_id'] ?? '';
+    $user->name = $postVars['name'];
+    $user->email = $postVars['email'];
+    $user->is_admin = $postVars['user-type'];
+    $user->creator_id = $postVars['creator_id'];
     $user->avatar = $avatar ?? 'default.png';
     $user->password = !empty($postVars['password'])
       ? password_hash($postVars['password'], PASSWORD_DEFAULT)
@@ -356,23 +373,15 @@ class UserController
       $router->redirect("/dashboard/user/$id/form?status=email-fail");
     }
 
-    if (!empty($postVars['password']) || Form::validatePassword($postVars['password'])) {
+    if (!empty($postVars['password']) && !Form::validatePassword($postVars['password'])) {
       $router->redirect("/dashboard/user/$id/form?status=password-fail");
     }
 
     if (
-      !empty($postVars['password_confirm']) ||
+      !empty($postVars['password_confirm']) &&
       !Form::validatePasswordConfirm($postVars['password'], $postVars['password_confirm'])
     ) {
       $router->redirect("/dashboard/user/$id/form?status=password_confirm-fail");
-    }
-
-    $avatar = '';
-    if (isset($files) && $files['avatar']['error'] === 0) {
-      $avatar = self::uploadAvatar($files['avatar'], $router);
-      if (!is_string($avatar)) {
-        $router->redirect("/dashboard/user/$id/form?status=avatar-fail");
-      }
     }
 
     $user = User::getUserById($id);
@@ -384,10 +393,23 @@ class UserController
       $router->redirect("/dashboard/user/$id/form?status=email-equal");
     }
 
-    $user->name = $postVars['name'] ?? '';
-    $user->email = $postVars['email'] ?? '';
-    $user->is_admin = $postVars['user-type'] ?? '';
-    $user->creator_id = $postVars['creator_id'] ?? '';
+    $avatar = '';
+    if (isset($files) && $files['avatar']['error'] === 0) {
+      $avatar = self::uploadAvatar(
+        $files['avatar'],
+        $files['avatar'] != $user->avatar && $user->avatar != 'default.png'
+          ? $user->avatar
+          : ''
+      );
+      if (!is_string($avatar)) {
+        $router->redirect("/dashboard/user/$id/form?status=avatar-fail");
+      }
+    }
+
+    $user->name = $postVars['name'];
+    $user->email = $postVars['email'];
+    $user->is_admin = $postVars['user-type'];
+    $user->creator_id = $postVars['creator_id'];
     $user->avatar = !empty($avatar) ? $avatar : $user->avatar;
     $user->password = !empty($postVars['password'])
       ? password_hash($postVars['password'], PASSWORD_DEFAULT)
