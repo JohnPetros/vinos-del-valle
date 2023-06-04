@@ -58,7 +58,6 @@ function setChart(chart) {
   const data = chart.dataset.data.split(";");
   const categories = chart.dataset.categories.split(";");
   const color = chart.dataset.color;
-  console.log(color);
   renderChart(id, data, categories, color);
 }
 

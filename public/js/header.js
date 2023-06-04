@@ -1,11 +1,16 @@
 const logoutButton = document.querySelector("button#logout");
+const profileButton = document.querySelector("button#profile");
 const modals = document.querySelector(".modal");
 const menu = document.querySelector(".menu");
 const menuHamburguerButton = document.querySelector(".menu-hamburguer");
 const menuCloseButton = document.querySelector(".menu-close");
 
 function handleLogoutButtonClick() {
-  openModal('logout');
+  openModal("logout");
+}
+
+function handleProfileButtonClick() {
+  location.href = "/dashboard/profile";
 }
 
 function handleMenuHamburguerButtonClick() {
@@ -19,3 +24,4 @@ function handleMenuCloseButtonClick() {
 menuHamburguerButton.addEventListener("click", handleMenuHamburguerButtonClick);
 menuCloseButton.addEventListener("click", handleMenuCloseButtonClick);
 logoutButton.addEventListener("click", handleLogoutButtonClick);
+profileButton.addEventListener("click", handleProfileButtonClick);

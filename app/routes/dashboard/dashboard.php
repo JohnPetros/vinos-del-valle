@@ -12,6 +12,9 @@ include __DIR__ . '/grape.php';
 // ROTAS DE USUÁRIO
 include __DIR__ . '/user.php';
 
+// ROTAS DE PERFIL
+include __DIR__ . '/profile.php';
+
 use \App\controllers\DashboardController;
 use \App\core\Response;
 
