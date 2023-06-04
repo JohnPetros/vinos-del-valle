@@ -2,7 +2,7 @@
   <div class="image-wrapper" data-color="backgroundColor:{{color_hex}}">
     <img
       width="64"
-      style="margin-top: -4rem;"
+      style="margin-top: -4rem"
       src="{{public_path}}/assets/images/wine.png"
       alt="Garrafa de vinho"
     />
@@ -10,7 +10,7 @@
   <div class="info">
     <strong class="name">{{name}}</strong>
     <small class="description">
-      Pais: <span class="country" data-code="{{country_code}}"></span> |
+      Pais: {{country_name}} |
       <span class="date" data-date="{{harvest_date}}"></span>
     </small>
     <span class="category" data-color="color:{{color_hex}}">{{grape}}</span>
@@ -20,5 +20,5 @@
 <span class="css" data-file="card"></span>
 <span class="css" data-file="pagination"></span>
 <span class="js" data-file="countries"></span>
-<span class="js" data-file="colors"></span> 
+<span class="js" data-file="colors"></span>
 <span class="js" data-file="date"></span>

@@ -6,6 +6,7 @@ use App\core\Session;
 use App\core\View;
 use App\models\User;
 use App\utils\File;
+use App\utils\Form;
 use App\utils\Layout;
 use App\utils\Modal;
 use App\utils\Toast;
@@ -349,8 +350,25 @@ class UserController
     Session::verifyLoggedUser('login', 'admin', $request);
 
     $router = $request->getRouter();
-    $postVars = $request->getPostVars();
+    $postVars = Form::cleanInput($request->getPostVars());
     $files = $request->getFiles();
+
+    if (
+      !Form::validateInput($postVars, true) ||
+      !is_numeric($id) ||
+      !is_numeric($postVars['creator_id']) ||
+      !Form::validateEmail($postVars['email'])
+    ) {
+      $router->redirect("/dashboard/user/$id/form?status=edit-fail");
+    }
+
+    if (
+      !empty($postVars['password']) &&
+      !Form::validatePassword($postVars['password']) &&
+      !Form::validatePasswordConfirm($postVars['password'], $postVars['password_confirm'])
+    ) {
+      $router->redirect("/dashboard/user/$id/form?status=edit-fail");
+    }
 
     $avatar = '';
     if (isset($files) && $files['avatar']['error'] === 0) {
@@ -358,10 +376,6 @@ class UserController
       if (!is_string($avatar)) {
         $router->redirect("/dashboard/user/$id/form?status=avatar-fail");
       }
-    }
-
-    if (!is_numeric($id) || !self::isValidateInput($postVars, true)) {
-      $router->redirect("/dashboard/user/$id/form?status=edit-fail");
     }
 
     $user = User::getUserById($id);
@@ -378,7 +392,7 @@ class UserController
     $user->email = $postVars['email'] ?? '';
     $user->is_admin = $postVars['user-type'] ?? '';
     $user->creator_id = $postVars['creator_id'] ?? '';
-    $user->avatar = empty($avatar) ? $user->avatar : $avatar;
+    $user->avatar = !empty($avatar) ? $avatar : $user->avatar;
     $user->password = !empty($postVars['password'])
       ? password_hash($postVars['password'], PASSWORD_DEFAULT)
       : $user->password;

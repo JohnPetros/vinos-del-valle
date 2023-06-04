@@ -3,6 +3,8 @@ const toastButton = toast.querySelector("button");
 
 function hideToast() {
   toast.classList.remove("active");
+  setTimeout(() => toast.classList.add('hidden'), 500);
+
 }
 
 function showToast() {

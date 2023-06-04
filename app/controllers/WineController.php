@@ -8,8 +8,11 @@ use \App\utils\Layout;
 use \App\models\Wine;
 use \App\models\Region;
 use App\models\Grape;
+use App\utils\Country;
+use App\utils\Form;
 use App\utils\Modal;
 use App\utils\Toast;
+use App\utils\Year;
 use DateTime;
 
 class WineController
@@ -23,8 +26,6 @@ class WineController
   private static function getToast($status)
   {
     switch ($status) {
-      case 'welcome':
-        return Toast::getSuccess('Seja bem-vindo ' . (Session::getUserSession()['name']));
       case 'add-success':
         return Toast::getSuccess('Vinho adicionado com sucesso!');
       case 'add-fail':
@@ -75,7 +76,7 @@ class WineController
       $cards .= View::render('partials/wine-card', [
         'id' => $wine->id,
         'name' => $wine->name,
-        'country_code' => $wine->country_code,
+        'country_name' => Country::getCountryByCode($wine->country_code)->name,
         'harvest_date' => $wine->harvest_date,
         'grape' => $wine->grape,
         'color_hex' => $wine->color_hex,
@@ -83,6 +84,24 @@ class WineController
     }
 
     return $cards;
+  }
+
+  /**
+   * Retorna os anos, que servirão como opções para o select de anos
+   * @return string
+   */
+  private static function getYearOptions()
+  {
+    $years = Year::getLastYears();
+    $options = '';
+
+    foreach ($years as $year) {
+      $options .= View::render('partials/year-option', [
+        'year' => $year,
+      ]);
+    }
+
+    return $options;
   }
 
   /**
@@ -159,6 +178,7 @@ class WineController
       'selected-year' => $params['year'] ?? 'all-years',
       'selected-region-id' => $params['region'] ?? 'all-regions',
       'search' => $params['search'] ?? '',
+      'year-options' => self::getYearOptions(),
       'region-options' => self::getRegionOptions(true),
       'grape-categories' => self::getGrapeCategories(),
     ]);
@@ -272,6 +292,7 @@ class WineController
       'region' => $wine ? $wine->region_name : '',
       'region-options' => self::getRegionOptions(),
       'grape-options' => self::getGrapeOptions(),
+      'year-options' => self::getYearOptions(),
       'selected-region-id' => $wine ? $wine->region_id : 'all-regions',
       'selected-grape-id' => $wine ? $wine->grape_id : 'all-grapes',
       'harvest_date' => $wine ? $wine->harvest_date : '',
@@ -285,42 +306,17 @@ class WineController
   }
 
   /**
-   * Verifica se a entrada de dados do usuário é válido
-   * @param array $data 
-   * @return boolean
-   */
-  private static function isValidateInput($data)
-  {
-    $data = array_map('trim', $data);
-
-    $data = filter_input_array(INPUT_POST, $data);
-
-    foreach ($data as $key => $value) {
-      if ($value == '') {
-        return false;
-      }
-
-      if (($key == 'region_id' || $key == 'grape_id') && !is_numeric($value)) {
-        return false;
-      }
-    }
-
-    return $data;
-  }
-
-  /**
    * Adiciona um vinho
    * @param Request $request
-   * @param integer $id
    */
   public static function addWine($request)
   {
     Session::verifyLoggedUser('login', 'admin', $request);
-    
-    $router = $request->getRouter();
-    $postVars = $request->getPostVars();
 
-    if (!self::isValidateInput($postVars)) {
+    $router = $request->getRouter();
+    $postVars = Form::cleanInput($request->getPostVars());
+
+    if (!Form::validateInput($postVars)) {
       $router->redirect("/dashboard/wine/add/form?status=add-fail");
     }
 
@@ -344,9 +340,14 @@ class WineController
     Session::verifyLoggedUser('login', 'admin', $request);
 
     $router = $request->getRouter();
-    $postVars = $request->getPostVars();
+    $postVars = Form::cleanInput($request->getPostVars());
 
-    if (!is_numeric($id) || !self::isValidateInput($postVars)) {
+    if (
+      !Form::validateInput($postVars) ||
+      !is_numeric($id) ||
+      !is_numeric($postVars['region_id']) ||
+      !is_numeric($postVars['grape_id'])
+    ) {
       $router->redirect("/dashboard/wine/$id/form?status=edit-fail");
     }
 

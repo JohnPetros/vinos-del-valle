@@ -94,7 +94,7 @@ class Chart
   public static function getWinesByHarvestYearChartData()
   {
 
-    $years = [2023, 2022, 2021, 2020];
+    $years = Year::getLastYears();
     $wines = Wine::getWines([]);
 
     $data = array_map(function ($year) use ($wines) {

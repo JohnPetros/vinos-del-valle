@@ -39,31 +39,33 @@ function validateEmptyField(input) {
   }
 }
 
-function validateEmail(emailInput) {
+function validateEmail(inputEmail) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  if (emailInput.value && !emailRegex.test(emailInput.value)) {
+  if (inputEmail.value && !emailRegex.test(inputEmail.value)) {
     const errorEmailMessageText = `Este e-mail não é válido.`;
-    showErrorMessage(emailInput, errorEmailMessageText);
+    showErrorMessage(inputEmail, errorEmailMessageText);
   }
 }
 
-function validatePassword(passwordInput) {
+function validatePassword(inputPassword) {
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s])[A-Za-z\d\W\S]{6,}$/g;
 
-  if (passwordInput.value && !passwordRegex.test(passwordInput.value)) {
+    console.log('password');
+
+  if (inputPassword.value && !passwordRegex.test(inputPassword.value)) {
     const errorEmailMessageText = `A senha deve conter pelo menos 6 caracteres, tendo no mínimo: uma maiúscula, uma minúscula e um caracter especial.`;
-    showErrorMessage(passwordInput, errorEmailMessageText);
+    showErrorMessage(inputPassword, errorEmailMessageText);
   }
 }
 
-function validatePasswordConfirm(passwordConfirmInput) {
+function validatePasswordConfirm(inputPasswordConfirm) {
   const passwordInput = form.querySelector("#password");
 
-  if (passwordInput.value !== passwordConfirmInput.value) {
+  if (passwordInput.value !== inputPasswordConfirm.value) {
     const errorEmailMessageText = `As senhas não conferem.`;
-    showErrorMessage(passwordConfirmInput, errorEmailMessageText);
+    showErrorMessage(inputPasswordConfirm, errorEmailMessageText);
   }
 }
 

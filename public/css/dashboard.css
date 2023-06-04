@@ -1,16 +1,16 @@
+#panels-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2.4rem;
+}
+
 #cards-container {
   margin-top: 3.2rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2.4rem;
   min-height: 34rem;
-  align-items: flex-start;
-}
-
-#panels-container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2.4rem;
+  align-content: flex-start;
 }
 
 #charts-container {

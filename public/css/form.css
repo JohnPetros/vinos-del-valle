@@ -65,7 +65,6 @@
 }
 
 .input-control .input-avatar {
-  display: block;
   width: 14rem;
   height: 14rem;
   cursor: pointer;
@@ -73,8 +72,9 @@
   position: relative;
   border-radius: 50%;
   overflow: hidden;
-  display: grid;
-  place-content: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border: 1px solid var(--base-3);
 }
 
@@ -101,7 +101,7 @@
 
 .input-control .input-avatar img {
   transition: filter 0.2s ease;
-  width: 100%;
+  width: 75%;
 }
 
 .input-control .input-avatar:hover {

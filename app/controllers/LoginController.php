@@ -43,7 +43,7 @@ class LoginController
     $password = $postVars['password'];
 
 
-    if (!Form::validateInput($email, $password)) {
+    if (!Form::validateInput([$email, $password])) {
       return self::getLoginPage($request, 'Sem entrada de dados');
     }
 
