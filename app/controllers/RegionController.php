@@ -39,6 +39,24 @@ class RegionController
   }
 
   /**
+   * Retorna os países, que servirão como opções para o select de país
+   * @return string
+   */
+  public static function getCountryOptions()
+  {
+    $countries = Country::getCountries();
+    $options = '';
+
+    foreach ($countries as $country) {
+      $options .= View::render('partials/country-option', [
+        'code' => $country->code,
+        'name' => $country->name,
+      ]);
+    }
+    return $options;
+  }
+
+  /**
    * Retorna os países, que servirão filtrar as regiões por país
    * @return string
    */
@@ -205,6 +223,7 @@ class RegionController
       'name' => $region ? $region->name : '',
       'city' => $region ? $region->city : '',
       'state' => $region ? $region->state : '',
+      'country-options' => self::getCountryOptions(),
       'selected-country-code' => $region ? $region->country_code : '',
       'toast' => isset($params['status']) ? self::getToast($params['status']) : '',
       'buttons' => self::getFormButtons($isEditForm, $region),

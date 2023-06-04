@@ -65,10 +65,6 @@ class LoginController
       return self::getLoginPage($request, 'Formato de senha incorreto');
     }
 
-    if (self::verifyUserExists($email)) {
-      return self::getLoginPage($request, 'E-mail já em uso');
-    }
-
     $user = User::getUserByEmail($email);
 
     if (!$user instanceof User || !password_verify($password, $user->password)) {

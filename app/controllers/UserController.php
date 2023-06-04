@@ -280,8 +280,9 @@ class UserController
       $file->name = pathinfo($previousAvatar)['filename'];
       $file->extension = pathinfo($previousAvatar)['extension'];
     }
-    
+
     $file->upload(__DIR__ . '/../../public/uploads/avatars/');
+    $file->resizeImage(300, 300);
 
     return $file->name . '.' . $file->extension;
   }
@@ -324,7 +325,7 @@ class UserController
 
     $avatar = '';
     if (isset($files) && $files['avatar']['error'] === 0) {
-      $avatar = self::uploadAvatar($files['avatar'], $router);
+      $avatar = self::uploadAvatar($files['avatar']);
       if (!is_string($avatar)) {
         $router->redirect("/dashboard/user/add/form?status=avatar-fail");
       }
@@ -335,7 +336,7 @@ class UserController
     $user->email = $postVars['email'];
     $user->is_admin = $postVars['user-type'];
     $user->creator_id = $postVars['creator_id'];
-    $user->avatar = $avatar ?? 'default.png';
+    $user->avatar = !empty($avatar) ? $avatar : 'default.png';
     $user->password = !empty($postVars['password'])
       ? password_hash($postVars['password'], PASSWORD_DEFAULT)
       : $user->password;
@@ -439,7 +440,7 @@ class UserController
 
     if (
       !$user instanceof User ||
-      !File::delete(__DIR__ . '/../../public/uploads/avatars/' . $user->avatar)
+      ($user->avatar != 'default.png' && !File::delete(__DIR__ . '/../../public/uploads/avatars/' . $user->avatar))
     ) {
       $router->redirect("/dashboard/user/$id/form?status=delete-fail");
     }

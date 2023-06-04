@@ -85,14 +85,11 @@ header .user .user-button:hover i {
   color: var(--primary);
 }
 
-header .user .avatar {
-  width: 4rem;
-  height: 4rem;
-}
 
 header .user .avatar img {
+  width: 4rem;
+  height: 4rem;
   border-radius: 1.2rem;
-  max-width: 100%;
   object-fit: cover;
 }
 
