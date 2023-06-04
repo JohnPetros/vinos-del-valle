@@ -132,7 +132,11 @@ class User
 
     $queryParams = [$loggedUserId];
 
-    if (count($params) && !empty($params['user-type'])) {
+    if (
+      count($params) &&
+      is_numeric($params['user-type']) &&
+      in_array($params['user-type'], [0, 1])
+    ) {
       $query .= " AND U.is_admin = ?";
       $queryParams[] = $params['user-type'];
     }
