@@ -155,8 +155,9 @@ function containElement(element, select) {
 function setSelectedItem(select) {
   const selectItem = select.querySelector(".selected-item").dataset.selected;
   const targetOption = selectItem.includes("}")
-    ? null
-    : select.querySelector(`#${select.id}-${selectItem}`)?.parentNode;
+  ? null
+  : select.querySelector(`#${select.id}-${selectItem}`)?.parentNode;
+  console.log(`#${select.id}-${selectItem}`);
 
   if (targetOption) {
     checkOption(targetOption, select);

@@ -6,6 +6,7 @@ use App\core\Session;
 use App\core\View;
 use App\models\Region;
 use App\utils\Country;
+use App\utils\Form;
 use App\utils\Layout;
 use App\utils\Modal;
 use App\utils\Toast;
@@ -29,6 +30,8 @@ class RegionController
         return Toast::getSuccess('Região editada com sucesso!');
       case 'edit-fail':
         return Toast::getError('Erro ao tentar editar a região');
+      case 'empty-input':
+        return Toast::getError('Entrada de dados não fornecida');
       case 'delete-success':
         return Toast::getSuccess('Região deletada com sucesso');
       case 'delete-fail':
@@ -231,26 +234,6 @@ class RegionController
   }
 
   /**
-   * Verifica se a entrada de dados do usuário é válido
-   * @param array $data 
-   * @return boolean
-   */
-  private static function isValidateInput($data)
-  {
-    $data = array_map('trim', $data);
-
-    $data = filter_input_array(INPUT_POST, $data);
-
-    foreach ($data as $value) {
-      if ($value == '') {
-        return false;
-      }
-    }
-
-    return !!$data;
-  }
-
-  /**
    * Adiciona uma região
    * @param Request $request
    * @param integer $id
@@ -260,10 +243,10 @@ class RegionController
     Session::verifyLoggedUser('login', 'admin', $request);
 
     $router = $request->getRouter();
-    $postVars = $request->getPostVars();
+    $postVars = Form::cleanInput($request->getPostVars());
 
-    if (!self::isValidateInput($postVars)) {
-      $router->redirect("/dashboard/region/add/form?status=add-fail");
+    if (!Form::validateInput($postVars)) {
+      $router->redirect("/dashboard/region/add/form?status=empty-input");
     }
 
     $region = new Region;
@@ -286,9 +269,13 @@ class RegionController
     Session::verifyLoggedUser('login', 'admin', $request);
 
     $router = $request->getRouter();
-    $postVars = $request->getPostVars();
+    $postVars = Form::cleanInput($request->getPostVars());
 
-    if (!is_numeric($id) || !self::isValidateInput($postVars)) {
+    if (!Form::validateInput($postVars)) {
+      $router->redirect("/dashboard/region/add/form?status=empty-input");
+    }
+
+    if (!is_numeric($id)) {
       $router->redirect("/dashboard/region/$id/form?status=edit-fail");
     }
 

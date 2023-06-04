@@ -195,10 +195,11 @@ class UserController
    * Retorna o select conctendo os usuários adinistradores, ou seja, aqueles que podem criar um usuário
    * @return string
    */
-  private function getCreatorSelect()
+  private function getCreatorSelect($creatorId)
   {
     return View::render('partials/creator-select', [
       'creator-options' => self::getCreatorsOptions(),
+      'selected-creator_id'=> $creatorId
     ]);
   }
 
@@ -255,7 +256,7 @@ class UserController
       'creator_id' =>  $user->creator_id ?? '',
       'hidden' =>  $isEditForm ? 'hidden' : '',
       'selected-user-type' =>  $user->is_admin ?? '',
-      'creator-input' => $isEditForm ? self::getCreatorSelect() : self::getCreatorInput(),
+      'creator-input' => $isEditForm ? self::getCreatorSelect($user->creator_id) : self::getCreatorInput(),
       'toast' => isset($params['status']) ? self::getToast($params['status']) : '',
       'buttons' => self::getFormButtons($isEditForm, $user),
     ]);
