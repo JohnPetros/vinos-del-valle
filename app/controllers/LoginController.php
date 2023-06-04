@@ -10,7 +10,6 @@ use App\utils\Toast;
 
 class LoginController
 {
-
   /**
    * Retorna o conteúdo (View) da página de login
    * @param Request $request
@@ -28,6 +27,17 @@ class LoginController
       'toast' => $toast,
       'logo' => $logo,
     ]);
+  }
+
+   /**
+   * Verifica se um usuário com um dado E-mail já existe
+   * @param string $email 
+   * @return boolean
+   */
+  public static function verifyUserExists($email)
+  {
+    $user = User::getUserByEmail($email);
+    return $user instanceof User;
   }
 
   /**
@@ -53,6 +63,10 @@ class LoginController
 
     if (!Form::validatePassword($password)) {
       return self::getLoginPage($request, 'Formato de senha incorreto');
+    }
+
+    if (self::verifyUserExists($email)) {
+      return self::getLoginPage($request, 'E-mail já em uso');
     }
 
     $user = User::getUserByEmail($email);

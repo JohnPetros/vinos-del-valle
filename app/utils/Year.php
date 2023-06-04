@@ -4,6 +4,10 @@ namespace App\utils;
 
 class Year
 {
+  /**
+   * Retorna os últimos 10 anos
+   * @return array
+   */
   public static function getLastYears()
   {
     $currentYear = date('Y');
@@ -12,6 +16,7 @@ class Year
     for ($i = 1; $i < 10; $i++) {
       $years[] = --$currentYear;
     }
+    
     return $years;
   }
 }

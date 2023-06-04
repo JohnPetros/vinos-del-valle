@@ -41,6 +41,7 @@ class DashboardController
       Chart::getWinesByRegionChartData(),
       Chart::getWinesByCountryChartData(),
       Chart::getWinesByHarvestYearChartData(),
+      Chart::getWinesAmountChartData(),
     ];
     $charts = '';
 

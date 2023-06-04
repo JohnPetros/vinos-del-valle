@@ -27,17 +27,19 @@ class WineController
   {
     switch ($status) {
       case 'add-success':
-        return Toast::getSuccess('Vinho adicionado com sucesso!');
+        return Toast::getSuccess('Vinho adicionado');
       case 'add-fail':
-        return Toast::getError('Erro ao tentar adicionar vinho!');
+        return Toast::getError('Erro ao tentar adicionar vinho');
       case 'edit-success':
-        return Toast::getSuccess('Vinho editado com sucesso!');
+        return Toast::getSuccess('Vinho editado');
       case 'edit-fail':
         return Toast::getError('Erro ao tentar editar o vinho!');
       case 'delete-success':
-        return Toast::getSuccess('Vinho deletado com sucesso!');
+        return Toast::getSuccess('Vinho deletado');
       case 'delete-fail':
-        return Toast::getError('Erro ao tentar deletar o vinho!');
+        return Toast::getError('Erro ao tentar deletar o vinho');
+      case 'grape-fail':
+        return Toast::getError('Vinhos com o mesmo nome não podem ter uvas diferentes');
       default:
         return Toast::getError('Escreva uma mensagem no toast...');
     }
@@ -46,6 +48,7 @@ class WineController
   /**
    * Filtra os vinhos pelo nome
    * @param array $wines
+   * @param string $search
    * @return array
    */
   private static function filterWines($wine, $search)
@@ -106,6 +109,7 @@ class WineController
 
   /**
    * Retorna as regiões, que servirão como opções para o select de regiões
+   * @param boolean $canIncludeAll
    * @return string
    */
   private static function getRegionOptions($canIncludeAll = false)
@@ -155,7 +159,7 @@ class WineController
   private static function getGrapeCategories()
   {
     $grapes = Grape::getGrapes();
-    $categories = "";
+    $categories = '';
 
     foreach ($grapes as $grape) {
       $categories .= View::render('partials/category', [
@@ -170,6 +174,7 @@ class WineController
 
   /**
    * Retorna os filtradores de vinhos
+   * @param array $params
    * @return string
    */
   private static function getFilters($params)
@@ -205,6 +210,7 @@ class WineController
 
   /**
    * Retorna o input de data de cadastro
+   * @param string $data
    * @return string
    */
   private static function getInputRegistrationDate($date)
@@ -231,6 +237,7 @@ class WineController
   /**
    * Retorna os botões paro formulário com base se é um formulário de edição ou não
    * @param boolean $isEditForm
+   * @param Wine $wine
    * @return string
    */
   private static function getFormButtons($isEditForm, $wine)
@@ -316,8 +323,17 @@ class WineController
     $router = $request->getRouter();
     $postVars = Form::cleanInput($request->getPostVars());
 
-    if (!Form::validateInput($postVars)) {
+    if (
+      !Form::validateInput($postVars) ||
+      !is_numeric($postVars['grape_id']) ||
+      !is_numeric($postVars['region_id'])
+    ) {
       $router->redirect("/dashboard/wine/add/form?status=add-fail");
+    }
+
+    $wine = Wine::getWineByName($postVars['name']);
+    if ($wine instanceof Wine && $wine->grape_id != $postVars['grape_id']) {
+      $router->redirect("/dashboard/wine/add/form?status=grape-fail");
     }
 
     $wine = new Wine;
@@ -351,8 +367,12 @@ class WineController
       $router->redirect("/dashboard/wine/$id/form?status=edit-fail");
     }
 
-    $wine = Wine::getWineById($id);
+    $wine = Wine::getWineByName($postVars['name']);
+    if ($wine instanceof Wine && $wine->grape_id != $postVars['grape_id']) {
+      $router->redirect("/dashboard/wine/$id/form?status=grape-fail");
+    }
 
+    $wine = Wine::getWineById($id);
     if (!$wine instanceof Wine) {
       $router->redirect("/dashboard/wine/$id/form?status=edit-fail");
     }

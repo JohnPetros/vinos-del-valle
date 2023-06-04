@@ -5,6 +5,7 @@ namespace App\controllers;
 use App\core\Session;
 use App\core\View;
 use App\models\Grape;
+use App\utils\Form;
 use App\utils\Layout;
 use App\utils\Modal;
 use App\utils\Toast;
@@ -48,7 +49,7 @@ class GrapeController
     ]);
   }
 
-    /**
+  /**
    * Filtra as uvas pelo nome
    * @param Grape $grape
    * @param string $search
@@ -111,6 +112,7 @@ class GrapeController
   /**
    * Retorna os botões paro formulário com base se é um formulário de edição ou não
    * @param boolean $isEditForm
+   * @param Grape $grape
    * @return string
    */
   private static function getFormButtons($isEditForm, $grape)
@@ -184,38 +186,17 @@ class GrapeController
   }
 
   /**
-   * Verifica se a entrada de dados do usuário é válido
-   * @param array $data 
-   * @return boolean
-   */
-  private static function isValidateInput($data)
-  {
-    $data = array_map('trim', $data);
-
-    $data = filter_input_array(INPUT_POST, $data);
-
-    foreach ($data as $value) {
-      if ($value == '') {
-        return false;
-      }
-    }
-
-    return !!$data;
-  }
-
-  /**
    * Adiciona uma uva
    * @param Request $request
-   * @param integer $id
    */
   public static function addGrape($request)
   {
     Session::verifyLoggedUser('login', 'admin', $request);
 
     $router = $request->getRouter();
-    $postVars = $request->getPostVars();
+    $postVars = Form::cleanInput($request->getPostVars());
 
-    if (!self::isValidateInput($postVars)) {
+    if (!Form::validateInput($postVars)) {
       $router->redirect("/dashboard/grape/add/form?status=add-fail");
     }
 
@@ -241,18 +222,17 @@ class GrapeController
     $router = $request->getRouter();
     $postVars = $request->getPostVars();
 
-    if (!is_numeric($id) || !self::isValidateInput($postVars)) {
+    if (Form::validateInput($postVars) || !is_numeric($id)) {
       $router->redirect("/dashboard/grape/$id/form?status=edit-fail");
     }
 
     $grape = Grape::getGrapeById($id);
-
     if (!$grape instanceof Grape) {
       $router->redirect("/dashboard/grape/$id/form?status=edit-fail");
     }
 
     foreach ($postVars as $var => $value) {
-      $grape->{$var} = $value ?? $grape->{$var};
+      $grape->{$var} = $value;
     }
 
     $grape->update();
@@ -276,7 +256,6 @@ class GrapeController
     }
 
     $grape = Grape::getGrapeById($id);
-
     if (!$grape instanceof Grape) {
       $router->redirect("/dashboard/grape/$id/edit?status=delete-fail");
     }

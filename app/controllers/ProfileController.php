@@ -10,6 +10,7 @@ use App\utils\Form;
 use App\utils\Layout;
 use App\utils\Modal;
 use App\utils\Toast;
+use App\controllers\LoginController;
 
 class ProfileController
 {
@@ -26,7 +27,15 @@ class ProfileController
         return Toast::getSuccess('Perfil editado');
       case 'edit-fail':
         return Toast::getError('Erro ao editar o perfil');
+      case 'empty-input':
+        return Toast::getError('Entrada de dados não fornecida');
       case 'email-fail':
+        return Toast::getError('Formato de E-mail inválido');
+      case 'password-fail':
+        return Toast::getError('Formato de senha inválido');
+      case 'password_confirm-fail':
+        return Toast::getError('Senhas não conferem');
+      case 'email-equal':
         return Toast::getError('E-mail já em uso');
       case 'avatar-fail':
         return Toast::getError('Imagem de avatar inválida');
@@ -78,46 +87,6 @@ class ProfileController
     return $file->name . '.' . $file->extension;
   }
 
-
-  /**
-   * Verifica se a entrada de dados do usuário é válida
-   * @param array $data 
-   * @return boolean
-   */
-  private static function isValidateInput($data)
-  {
-    $data = array_map('trim', $data);
-
-    $data = filter_input_array(INPUT_POST, $data);
-
-    $execptions = ['password', 'password_confirm'];
-
-    foreach ($data as $key => $value) {
-
-      if (empty($value) && !in_array($key, $execptions)) {
-        return false;
-      }
-
-      if (!empty($value) && $key === 'password') {
-
-        return false;
-      }
-    }
-
-    return !!$data;
-  }
-
-  /**
-   * Verifica se um usuário já existe com um dado E-mail
-   * @param string $email 
-   * @return boolean
-   */
-  private static function userExists($email)
-  {
-    $user = User::getUserByEmail($email);
-    return $user instanceof User;
-  }
-
   /**
    * Atualiza os dados do usuário logado
    * @param Request $request
@@ -132,23 +101,30 @@ class ProfileController
     $files = $request->getFiles();
     $loggedUser = Session::getUserSession();
 
+    if (!Form::validateInput($postVars, true)) {
+      $router->redirect("/dashboard/profile?status=empty-input");
+    }
+
     if (
       !isset($loggedUser['id']) ||
-      !is_numeric($loggedUser['id']) ||
-      !Form::validateInput($postVars, true)
+      !is_numeric($loggedUser['id'])
     ) {
       $router->redirect("/dashboard/profile?status=edit-fail");
     }
 
-    if (!empty($postVars['password']) || Form::validatePassword($postVars['password'])) {
-      $router->redirect("/dashboard/profile?status=edit-fail");
+    if (!Form::validateEmail($postVars['email'])) {
+      $router->redirect("/dashboard/profile?status=email-fail");
+    }
+
+    if (!empty($postVars['password']) && Form::validatePassword($postVars['password'])) {
+      $router->redirect("/dashboard/profile?status=password-fail");
     }
 
     if (
-      !empty($postVars['password_confirm']) ||
+      !empty($postVars['password_confirm']) &&
       !Form::validatePasswordConfirm($postVars['password'], $postVars['password_confirm'])
     ) {
-      $router->redirect("/dashboard/profile?status=edit-fail");
+      $router->redirect("/dashboard/profile?status=password_confirm-fail");
     }
 
     $avatar = '';
@@ -165,7 +141,10 @@ class ProfileController
       $router->redirect("/dashboard/profile?status=edit-fail");
     }
 
-    if ($user->email !==  $postVars['email'] && self::userExists($postVars['email'])) {
+    if (
+      $user->email !==  $postVars['email'] && 
+      LoginController::verifyUserExists($postVars['email'])
+    ) {
       $router->redirect("/dashboard/profile?status=email-fail");
     }
 

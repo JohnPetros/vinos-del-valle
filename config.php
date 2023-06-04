@@ -6,7 +6,7 @@ use App\core\Environment;
 use App\core\View;
 use App\core\Database;
 
-// CARREGA VARIÁVEIS DE AMBIENTE
+// CARREGA AS VARIÁVEIS DE AMBIENTE
 Environment::load(__DIR__);
 
 // CONFIGURA O BANCO DE DADOS

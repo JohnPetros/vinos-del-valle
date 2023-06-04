@@ -23,7 +23,7 @@ class Chart
 
     return [
       'id' => 'wines-by-grape',
-      'title' => 'Vinhos por uva',
+      'title' => 'Quantidade de vinhos por uva',
       'color' => '#8b112e',
       'data' =>  join(';', $data),
       'categories' => join(';', $categories),
@@ -47,7 +47,7 @@ class Chart
 
     return [
       'id' => 'wines-by-region',
-      'title' => 'Vinhos por região',
+      'title' => 'Quantidade de vinhos por região',
       'color' => '#0079FF',
       'data' =>  join(';', $data),
       'categories' => join(';', $categories),
@@ -72,7 +72,7 @@ class Chart
 
     return [
       'id' => 'wines-by-country',
-      'title' => 'Vinhos por país',
+      'title' => 'Quantidade de vinhos por país',
       'color' => '#1b9c85',
       'data' =>  join(';', $data),
       'categories' => join(';', $categories),
@@ -105,8 +105,32 @@ class Chart
 
     return [
       'id' => 'wines-by-harvest-year',
-      'title' => 'Vinhos por ano de colheita',
+      'title' => 'Quantidade de vinhos por ano de colheita',
       'color' => '#ffd93d',
+      'data' =>  join(';', $data),
+      'categories' => join(';', $categories),
+    ];
+  }
+
+  /**
+   * Retorna os dados do gráfico de quantidade de cada vinho
+   * @return array
+   */
+  public static function getWinesAmountChartData()
+  {
+    $data = [];
+    $categories = [];
+    $wines = Wine::getWinesByAmount();
+
+    foreach ($wines as $wine) {
+      $data[] = $wine['amount'];
+      $categories[] = $wine['name'];
+    }
+
+    return [
+      'id' => 'wines-by-amount',
+      'title' => 'Quantidade de cada vinho',
+      'color' => '#9336B4',
       'data' =>  join(';', $data),
       'categories' => join(';', $categories),
     ];

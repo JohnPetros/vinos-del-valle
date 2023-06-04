@@ -22,19 +22,25 @@ class UserController
   {
     switch ($status) {
       case 'add-success':
-        return Toast::getSuccess('Usuário adicionado com sucesso');
+        return Toast::getSuccess('Usuário adicionado');
       case 'add-fail':
         return Toast::getError('Erro ao tentar adicionar usuário');
       case 'edit-success':
-        return Toast::getSuccess('Usuário editado com sucesso');
+        return Toast::getSuccess('Usuário editado');
       case 'edit-fail':
-        return Toast::getError('Erro ao tentar editar o Usuário');
+        return Toast::getError('Erro ao tentar editar usuário');
       case 'email-fail':
+        return Toast::getError('Formato de E-mail inválido');
+      case 'password-fail':
+        return Toast::getError('Formato de senha inválido');
+      case 'password_confirm-fail':
+        return Toast::getError('Senhas não conferem');
+      case 'email-equal':
         return Toast::getError('E-mail já em uso');
       case 'avatar-fail':
         return Toast::getError('Imagem de avatar inválida');
       case 'delete-success':
-        return Toast::getSuccess('Usuário deletado com sucesso');
+        return Toast::getSuccess('Usuário deletado');
       case 'delete-fail':
         return Toast::getError('Erro ao tentar deletar o Usuário');
       default:
@@ -254,33 +260,11 @@ class UserController
     return $user instanceof User;
   }
 
-  /**
-   * Verifica se a entrada de dados do usuário é válida
-   * @param array $data 
-   * @return boolean
-   */
-  private static function isValidateInput($data, $includeExceptions)
-  {
-    $data = array_map('trim', $data);
-
-    $data = filter_input_array(INPUT_POST, $data);
-
-    $execptions = $includeExceptions ? ['password', 'password_confirm'] : [];
-
-    foreach ($data as $key => $value) {
-
-      if ($value === '' && !in_array($key, $execptions)) {
-        return false;
-      }
-    }
-
-    return !!$data;
-  }
 
   /**
    * Faz o upload do avatar do usuário
-   * @param string $file
-   * @return string
+   * @param string $avatar
+   * @return mixed
    */
   private function uploadAvatar($avatar)
   {
@@ -305,24 +289,42 @@ class UserController
     Session::verifyLoggedUser('login', 'admin', $request);
 
     $router = $request->getRouter();
-    $postVars = $request->getPostVars();
+    $postVars = Form::cleanInput($request->getPostVars());
     $files = $request->getFiles();
 
     $avatar = '';
     if (isset($files) && $files['avatar']['error'] === 0) {
       $avatar = self::uploadAvatar($files['avatar'], $router);
-
       if (!is_string($avatar)) {
         $router->redirect("/dashboard/user/add/form?status=avatar-fail");
       }
     }
 
-    if (!self::isValidateInput($postVars, false)) {
-      $router->redirect("/dashboard/user/add/form?status=add-fail");
+    if (!Form::validateInput($postVars)) {
+      $router->redirect("/dashboard/user/add/form?status=empty-input");
+    }
+
+    if (!Form::validateEmail($postVars['email'])) {
+      $router->redirect("/dashboard/profile?status=email-fail");
+    }
+
+    if (!empty($postVars['password']) || Form::validatePassword($postVars['password'])) {
+      $router->redirect("/dashboard/profile?status=password-fail");
+    }
+
+    if (
+      !empty($postVars['password_confirm']) ||
+      !Form::validatePasswordConfirm($postVars['password'], $postVars['password_confirm'])
+    ) {
+      $router->redirect("/dashboard/profile?status=password_confirm-fail");
     }
 
     if (self::userExists($postVars['email'])) {
       $router->redirect("/dashboard/user/add/form?status=email-fail");
+    }
+
+    if (LoginController::verifyUserExists($postVars['email'])) {
+      $router->redirect("/dashboard/profile?status=email-equal");
     }
 
     $user = new User;

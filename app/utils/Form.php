@@ -60,7 +60,8 @@ class Form
   }
 
   /**
-   * Valida a entrada de dados do usuário
+   * Valida a entrada de dados do usuário está vazia ou não
+   * @param array $input
    * @param boolean $hasExceptions
    * @return boolean
    */

@@ -84,7 +84,7 @@ class Grape
 
   /**
    * Retorna um registro de uva com base em seu ID
-   * @return Region
+   * @return Grape
    */
   public static function getGrapeById($id)
   {
