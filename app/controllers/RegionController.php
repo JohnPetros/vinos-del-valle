@@ -38,6 +38,26 @@ class RegionController
   }
 
   /**
+   * Retorna os países, que servirão filtrar as regiões por país
+   * @return string
+   */
+  public static function getCountryCategories()
+  {
+    $countriesData = file_get_contents(__DIR__ . '/../../public/data/countries.json');
+    $countries =  json_decode($countriesData);
+    $categories = '';
+
+    foreach ($countries as $country) {
+      $categories .= View::render('partials/category', [
+        'id' => $country->code,
+        'name' => $country->name,
+        'color_hex' => $country->color_hex,
+      ]);
+    }
+    return $categories;
+  }
+
+  /**
    * Retorna os filtradores de regiões
    * @return string
    */
@@ -45,6 +65,7 @@ class RegionController
   {
     return View::render('partials/region-filters', [
       'search' => $params['search'] ?? '',
+      'country-categories' => self::getCountryCategories(),
     ]);
   }
 
@@ -196,7 +217,7 @@ class RegionController
    * @return boolean
    */
   private static function isValidateInput($data)
-  {    
+  {
     $data = array_map('trim', $data);
 
     $data = filter_input_array(INPUT_POST, $data);

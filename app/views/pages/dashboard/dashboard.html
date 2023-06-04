@@ -18,8 +18,18 @@
     <link rel="stylesheet" href="{{public_path}}/css/global.css" />
     <link rel="stylesheet" href="{{public_path}}/css/header.css" />
     <link rel="stylesheet" href="{{public_path}}/css/dashboard.css" />
+    <link rel="stylesheet" href="{{public_path}}/css/chart.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.40.0/apexcharts.min.css"
+      integrity="sha512-tJYqW5NWrT0JEkWYxrI4IK2jvT7PAiOwElIGTjALSyr8ZrilUQf+gjw2z6woWGSZqeXASyBXUr+WbtqiQgxUYg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <script defer src="{{public_path}}/js/global.js"></script>
     <script defer src="{{public_path}}/js/header.js"></script>
+    <script defer src="{{public_path}}/js/countries.js"></script>
+    <script defer src="{{public_path}}/js/charts.js"></script>
     <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
     <title>Dashboard - Relatórios | Vinos Del Valle</title>
   </head>
@@ -27,10 +37,18 @@
     <main class="container">
       {{header}}
 
-      <div id="panels-container">
-       {{panels}}
-      </div>
+      <div id="panels-container">{{panels}}</div>
 
+      <div id="charts-container">
+       {{charts}}
+      </div>
     </main>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.40.0/apexcharts.min.js"
+      integrity="sha512-Kr1p/vGF2i84dZQTkoYZ2do8xHRaiqIa7ysnDugwoOcG0SbIx98erNekP/qms/hBDiBxj336//77d0dv53Jmew=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
   </body>
 </html>

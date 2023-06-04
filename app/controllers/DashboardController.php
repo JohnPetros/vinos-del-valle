@@ -8,13 +8,40 @@ use App\models\Grape;
 use App\models\Region;
 use App\models\User;
 use App\models\Wine;
+use App\utils\Chart;
 use App\utils\Layout;
 
 class DashboardController
 {
 
   /**
-   * Retorna os paineis que exibem quantos registros há em cada tabela
+   * Retorna os gráficos de dashboard
+   * @return string
+   */
+  private static function getCharts()
+  {
+    $chartsData = [
+      Chart::getWinesByGrapeChartData(),
+      Chart::getWinesByRegionChartData(),
+      Chart::getWinesByCountryChartData(),
+    ];
+    $charts = '';
+
+    foreach ($chartsData as $chartData) {
+      $charts .= View::render('partials/chart', [
+        'id' => $chartData['id'],
+        'title' => $chartData['title'],
+        'color' => $chartData['color'],
+        'data' => $chartData['data'],
+        'categories' => $chartData['categories'],
+      ]);
+    }
+
+    return $charts;
+  }
+
+  /**
+   * Retorna os paineis que exibem quantos registros há em cada entidade do banco de dados
    * @return string
    */
   private static function getPanels()
@@ -71,6 +98,7 @@ class DashboardController
     return View::render('pages/dashboard/dashboard', [
       'header' => Layout::getDashboardHeader('dashboard'),
       'panels' => self::getPanels(),
+      'charts' => self::getCharts(),
     ]);
   }
 }

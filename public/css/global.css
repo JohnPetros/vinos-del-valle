@@ -11,9 +11,9 @@
   --danger: #d32c3f;
 
   --wine: var(--primary);
-  --grape: #ffd93d;
+  --grape: #0079FF;
   --region: #1b9c85;
-  --user: #0079FF;
+  --user: #ffd93d;
 
   --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   --outline: 0 0 0 2px var(--primary), 0 0 0 0.6rem var(--secondary);

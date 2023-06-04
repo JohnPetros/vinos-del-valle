@@ -218,4 +218,33 @@ class Wine
 
     return Database::execute($query)->fetchColumn();
   }
+
+  /**
+   * Retorna a quantidade de registros de vinho agrupados por uva
+   * @return array
+   */
+  public static function getWinesAmountByGrape()
+  {
+    $query = "SELECT COUNT(*) AS amount, G.name AS grape_name
+              FROM wines AS W
+              JOIN grapes AS G ON G.id = W.grape_id
+              GROUP BY W.grape_id;";
+
+    return Database::execute($query)->fetchAll();
+  }
+
+  /**
+   * Retorna a quantidade de registros de vinho agrupados por região
+   * @return array
+   */
+  public static function getWinesAmountByRegion()
+  {
+    $query = "SELECT COUNT(*) AS amount, 
+                    R.name AS region_name, R.country_code
+              FROM wines AS W
+              JOIN regions AS R ON R.id = W.region_id
+              GROUP BY W.region_id;";
+
+    return Database::execute($query)->fetchAll();
+  }
 }

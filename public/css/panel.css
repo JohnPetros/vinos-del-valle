@@ -4,7 +4,7 @@
   align-items: center;
   box-shadow: var(--shadow);
   border-radius: 1.2rem;
-  padding: 2.4rem;
+  padding: 1.2rem 2.4rem;
   border-left: 4px solid transparent;
   cursor: pointer;
   transition: transform 0.2s ease;

@@ -1,5 +1,6 @@
 const css = document.querySelectorAll(".css");
 const js = document.querySelectorAll(".js");
+const URL = "http://localhost:8000";
 const PUBLIC_PATH = "../../../public";
 
 function appendTag(tag) {
