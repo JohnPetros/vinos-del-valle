@@ -50,8 +50,20 @@
   text-align: center;
 }
 
+@media (max-width: 1240px) {
+  #charts-container {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 1080px) {
   #cards-container {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 750px) {
+  #panels-container {
     grid-template-columns: 1fr 1fr;
   }
 }

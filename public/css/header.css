@@ -85,7 +85,6 @@ header .user .user-button:hover i {
   color: var(--primary);
 }
 
-
 header .user .avatar img {
   width: 4rem;
   height: 4rem;
@@ -108,7 +107,7 @@ header .user .info .email {
   font-weight: 700;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1032px) {
   header .menu-hamburguer {
     display: flex;
     flex-direction: column;
@@ -128,17 +127,18 @@ header .user .info .email {
     top: 0;
     z-index: 20;
 
-    flex: none;
+    display: none;
     gap: 4rem;
     box-shadow: var(--shadow);
     background-color: var(--base-1);
-    padding: 2.4rem 0;
+    padding: 2.4rem;
     border-radius: 2.4rem 0 0 2.4rem;
     width: 32rem;
     transition: all .35s ease-in-out;
   }
 
   header .menu.active {
+    display: flex;
     right: 0;
   }
 
