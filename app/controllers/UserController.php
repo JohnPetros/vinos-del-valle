@@ -243,7 +243,7 @@ class UserController
   }
 
   /**
-   * Verifica se um usuário já existe com um dado email
+   * Verifica se um usuário já existe com um dado E-mail
    * @param string $email 
    * @return boolean
    */
@@ -333,8 +333,6 @@ class UserController
     $user->password = !empty($postVars['password'])
       ? password_hash($postVars['password'], PASSWORD_DEFAULT)
       : $user->password;
-
-
 
     $user->add();
 

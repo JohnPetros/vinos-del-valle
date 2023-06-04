@@ -17,8 +17,7 @@
     />
     <link rel="stylesheet" href="{{public_path}}/css/global.css" />
     <link rel="stylesheet" href="{{public_path}}/css/header.css" />
-    <link rel="stylesheet" href="{{public_path}}/css/dashboard.css" />
-    <link rel="stylesheet" href="{{public_path}}/css/chart.css" />
+    <link rel="stylesheet" href="{{public_path}}/css/form.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.40.0/apexcharts.min.css"
@@ -28,8 +27,7 @@
     />
     <script defer src="{{public_path}}/js/global.js"></script>
     <script defer src="{{public_path}}/js/header.js"></script>
-    <script defer src="{{public_path}}/js/countries.js"></script>
-    <script defer src="{{public_path}}/js/charts.js"></script>
+    <script defer src="{{public_path}}/js/form.js"></script>
     <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
     <title>Dashboard - Perfil | Vinos Del Valle</title>
   </head>
@@ -37,9 +35,117 @@
     <main class="container">
       {{header}}
 
+      <div class="form-container">
+        <header>
+          <i class="ph-bold ph-user"></i>
+          <h2>Perfil de usuário</h2>
+        </header>
+
+        <form action="" method="post" enctype="multipart/form-data">
+          <div class="input-control">
+            <label for="avatar">
+              <i class="ph-bold ph-user-circle"></i>
+              avatar:
+            </label>
+            <button
+              type="button"
+              id="set-avatar"
+              class="input-avatar"
+              for="avatar"
+            >
+              <img
+                class="avatar"
+                data-value="{{avatar}}"
+                alt="Imagem de avatar de usuário"
+              />
+              <span class="caption">alterar avatar</span>
+              <input
+                class="input hidden"
+                type="file"
+                id="avatar"
+                name="avatar"
+                accept="image/*"
+              />
+            </button>
+          </div>
+
+          <div class="input-control">
+            <label for="name">
+              <i class="ph-bold ph-tag"></i>
+              Nome:
+            </label>
+            <input
+              class="input"
+              type="text"
+              id="name"
+              name="name"
+              value="{{name}}"
+              autofocus
+            />
+          </div>
+
+          <div class="input-control">
+            <label for="email">
+              <i class="ph-bold ph-envelope"></i>
+              E-mail:
+            </label>
+            <input
+              class="input"
+              type="text"
+              id="email"
+              name="email"
+              value="{{email}}"
+            />
+          </div>
+
+          <div class="input-control hidden">
+            <label for="password">
+              <i class="ph-bold ph-password"></i>
+              Senha:
+            </label>
+            <input
+              class="input hidden"
+              type="password"
+              id="password"
+              name="password"
+            />
+            <button class="password-eye" type="button">
+              <i class="ph-fill ph-eye"></i>
+            </button>
+          </div>
+          <div class="input-control hidden">
+            <label for="password_confirm">
+              <i class="ph-bold ph-password"></i>
+              Confirmar Senha:
+            </label>
+            <input
+              class="input hidden"
+              type="password"
+              id="password_confirm"
+              name="password_confirm"
+            />
+            <button class="password-eye" type="button">
+              <i class="ph-fill ph-eye"></i>
+            </button>
+          </div>
+
+          <div class="action-buttons">
+            <button id="alter-password" class="button" type="button">
+              Editar senha
+            </button>
+            <button id="edit" class="button" type="button" value="/dashboard/profile/edit">
+              Editar perfil
+            </button>
+            <button id="delete" class="button" type="button" value="/dashboard/profile/delete">
+              Deletar perfil
+            </button>
+          </div>
+
+          {{modal}}
+        </form>
+      </div>
     </main>
 
     {{toast}}
-
   </body>
 </html>

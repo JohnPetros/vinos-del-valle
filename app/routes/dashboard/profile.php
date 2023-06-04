@@ -9,3 +9,10 @@ $router->get(
     return new Response(200, ProfileController::getProfilePage($request));
   }
 );
+
+$router->post(
+  '/dashboard/profile/edit',
+  function ($request) {
+    return new Response(200, ProfileController::editProfile($request));
+  }
+);
