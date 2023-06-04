@@ -208,7 +208,7 @@ class Wine
     return Database::execute($query, [$id])->fetchObject(self::class);
   }
 
-   /**
+  /**
    * Retorna um registro de vinho em ID de uva
    * @return Wine
    */
@@ -261,7 +261,24 @@ class Wine
     return Database::execute($query)->fetchAll();
   }
 
-   /**
+  /**
+   * Retorna a quantidade de registros de vinho agrupados por região
+   * @return array
+   */
+  public static function getWinesAmountByCountry()
+  {
+    $query = "SELECT COUNT(*) AS amount, 
+                     R.country_code
+              FROM wines AS W
+              JOIN regions AS R ON R.id = W.region_id
+              GROUP BY R.country_code";
+
+    return Database::execute($query)->fetchAll();
+  }
+
+
+
+  /**
    * Retorna a quantidade de cada vinho
    * @return array
    */

@@ -62,12 +62,11 @@ class Chart
   {
     $data = [];
     $categories = [];
-    $wines = Wine::getWinesAmountByRegion();
+    $wines = Wine::getWinesAmountByCountry();
 
     foreach ($wines as $wine) {
       $data[] = $wine['amount'];
-      $country = Country::getCountryByCode($wine['country_code']);
-      $categories[] = $country->name;
+      $categories[] = Country::getCountryByCode($wine['country_code'])->name;
     }
 
     return [
