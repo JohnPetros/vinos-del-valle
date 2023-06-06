@@ -178,8 +178,8 @@ class GrapeController
       'header' => Layout::getDashboardHeader('grape'),
       'title' => $isEditForm ? 'Editar uva ' . $grape->name : 'Adicionar uva',
       'modal' => $modal,
-      'name' => $grape ? $grape->name : '',
-      'color_hex' => $grape ? $grape->color_hex : '',
+      'name' => $grape->name ?? '',
+      'color_hex' => $grape->color_hex ?? '',
       'toast' => isset($params['status']) ? self::getToast($params['status']) : '',
       'buttons' => self::getFormButtons($isEditForm, $grape),
     ]);
