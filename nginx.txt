@@ -20,13 +20,10 @@ http {
     tcp_nopush   on;
     server_names_hash_bucket_size 128; # this seems to be required for some vhosts
 
-
-    client_max_body_size 20M;  # Modify this to fit your needs
-
     server {
         listen 7997;
         listen [::]:7997;
-        server_name railway;
+        server_name localhost;
 
         root /app;
 
@@ -41,18 +38,7 @@ http {
             try_files $uri $uri/ /index.php?$query_string;
         }
      
-        location = /favicon.ico { access_log off; log_not_found off; }
-        location = /robots.txt  { access_log off; log_not_found off; }
-
         error_page 404 /index.php;
      
-        location ~ \.php$ {
-            fastcgi_pass 127.0.0.1:9000;
-            fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
-        }
-
-        location ~ /\.(?!well-known).* {
-            deny all;
-        }
     }
 }
