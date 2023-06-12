@@ -3,6 +3,11 @@
 // INCLUI AS CONFIGURAÇÕES DO PROJETO
 require __DIR__ . '/config.php';
 
+echo '<pre>';
+print_r('TESTE');
+echo '</pre>';
+exit;
+
 use \App\core\Router;
 
 // INICIA O ROUTEADOR
