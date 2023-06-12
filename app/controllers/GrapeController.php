@@ -222,7 +222,7 @@ class GrapeController
     $router = $request->getRouter();
     $postVars = $request->getPostVars();
 
-    if (Form::validateInput($postVars) || !is_numeric($id)) {
+    if (!Form::validateInput($postVars) || !is_numeric($id)) {
       $router->redirect("/dashboard/grape/$id/form?status=edit-fail");
     }
 

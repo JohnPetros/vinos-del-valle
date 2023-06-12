@@ -20,8 +20,6 @@
 }
 
 .image-wrapper {
-  width: 7.2rem;
-  height: 7.2rem;
   border-radius: 2.4rem;
   display: grid;
   place-content: center;

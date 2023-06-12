@@ -1,6 +1,6 @@
 const controller = document.querySelector("main").id;
 const categories = document.querySelectorAll("button.category");
-const searchForm = document.querySelectorAll("form");
+const search = document.querySelector(".search");
 const selectOptions = document.querySelectorAll(".option");
 
 function removeActive(category) {
@@ -10,6 +10,8 @@ function removeActive(category) {
 
 function addActive(category) {
   categories.forEach(removeActive);
+  const radio = category.parentNode.querySelector('input[type="radio"]');
+  radio.click();
   category.classList.add("active");
   category.style.backgroundColor = category.dataset.color;
 }
@@ -30,10 +32,17 @@ function getCategoryParam() {
   return `${param}=${activeCategory.id.trim()}`;
 }
 
+function getSearchParam() {
+  return `search=${search.value.trim()}`;
+}
+
 function filterData() {
   const selectParams = [...selects].map(getSelectParam);
   const categoryParam = getCategoryParam();
-  const queryParams = selectParams.concat(categoryParam).join("&");
+  const searchParam = getSearchParam();
+  const queryParams = selectParams
+    .concat([categoryParam, searchParam])
+    .join("&");
 
   location.href = `/dashboard/${controller}?${queryParams}`;
 }
@@ -57,6 +66,8 @@ function setSelectedCategory() {
     (category) => category.id === categoryId
   );
 
+  console.log(targetCategory);
+
   if (targetCategory) {
     addActive(targetCategory);
   } else {
@@ -71,9 +82,6 @@ categories.forEach((category) => {
 selectOptions.forEach((option) =>
   option.addEventListener("click", handleSelectOptionClick)
 );
-
-
-// searchForm.addEventListener("submit", handleSearchFormSubmit);
 
 if (categories.length) {
   setSelectedCategory();

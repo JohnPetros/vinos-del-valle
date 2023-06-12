@@ -52,8 +52,6 @@ function validatePassword(inputPassword) {
   const passwordRegex =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s])[A-Za-z\d\W\S]{6,}$/g;
 
-    console.log('password');
-
   if (inputPassword.value && !passwordRegex.test(inputPassword.value)) {
     const errorEmailMessageText = `A senha deve conter pelo menos 6 caracteres, tendo no mínimo: uma maiúscula, uma minúscula e um caracter especial.`;
     showErrorMessage(inputPassword, errorEmailMessageText);
@@ -143,7 +141,6 @@ function checkFirstOption(select) {
 }
 
 function hideSelectBox(select) {
-  console.log(select);
   const selectBox = select.querySelector(".select-box");
   selectBox.classList.remove("active");
 }
@@ -157,7 +154,6 @@ function setSelectedItem(select) {
   const targetOption = selectItem.includes("}")
   ? null
   : select.querySelector(`#${select.id}-${selectItem}`)?.parentNode;
-  console.log(`#${select.id}-${selectItem}`);
 
   if (targetOption) {
     checkOption(targetOption, select);

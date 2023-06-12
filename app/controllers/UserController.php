@@ -176,7 +176,7 @@ class UserController
    * Retorna os usuários administradores que servirão como opções para o select input de usuário criador
    * @return string
    */
-  private function getCreatorsOptions()
+  private static function getCreatorsOptions()
   {
     $admins = User::getAdminUsers();
     $options = '';
@@ -195,11 +195,11 @@ class UserController
    * Retorna o select conctendo os usuários adinistradores, ou seja, aqueles que podem criar um usuário
    * @return string
    */
-  private function getCreatorSelect($creatorId)
+  private static function getCreatorSelect($creatorId)
   {
     return View::render('partials/creator-select', [
       'creator-options' => self::getCreatorsOptions(),
-      'selected-creator_id'=> $creatorId
+      'selected-creator_id' => $creatorId
     ]);
   }
 
@@ -207,7 +207,7 @@ class UserController
    * Retorna o input de criador contendo o id do usuário logado
    * @return string
    */
-  private function getCreatorInput()
+  private static function getCreatorInput()
   {
     $loggedUserId = Session::getUserSession()['id'];
     return '<input type="number" class="hidden" name="creator_id" value="' . $loggedUserId . '" />';
@@ -275,6 +275,8 @@ class UserController
       return;
     }
 
+  
+
     if ($previousAvatar === '') {
       $file->setName();
     } else {
@@ -283,7 +285,7 @@ class UserController
     }
 
     $file->upload(__DIR__ . '/../../public/uploads/avatars/');
-    $file->resizeImage(300, 300);
+    // $file->resizeImage(300, 300);
 
     return $file->name . '.' . $file->extension;
   }

@@ -182,7 +182,7 @@ class WineController
   {
     return View::render('partials/wine-filters', [
       'selected-year' => $params['year'] ?? 'all-years',
-      'selected-region-id' => $params['region'] ?? 'all-regions',
+      'selected-region-id' => $params['region_id'] ?? 'all-regions',
       'search' => $params['search'] ?? '',
       'year-options' => self::getYearOptions(),
       'region-options' => self::getRegionOptions(true),
@@ -200,7 +200,6 @@ class WineController
     Session::verifyLoggedUser('login', 'admin', $request);
 
     $params = $request->getQueryParams();
-
 
     return View::render('pages/dashboard/wine-dashboard', [
       'header' => Layout::getDashboardHeader('wine'),

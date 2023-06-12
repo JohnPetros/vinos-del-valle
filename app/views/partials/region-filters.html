@@ -10,14 +10,20 @@
       value="{{search}}"
     />
   </div>
-</form>
 
-<ul class="categories" id="countries">
-  <button id="all-categories" data-color="#B04759" class="category">
-    Todas os países
-  </button>
-  {{country-categories}}
-</ul>
+  <ul class="categories" id="countries">
+    <input
+      type="radio"
+      name="category"
+      id="category-all-categories"
+      value="all-categories"
+    />
+    <button id="all-categories" data-color="#B04759" class="category" type="button">
+      Todas os países
+    </button>
+    {{country-categories}}
+  </ul>
+</form>
 
 <span class="css" data-file="form"></span>
 <span class="css" data-file="filters"></span>

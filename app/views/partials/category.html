@@ -1,9 +1,6 @@
 <li>
-  <button
-    id="{{id}}"
-    class="category"
-    data-color="{{color_hex}}"
-  >
-    {{name}}
+  <input type="radio" name="category" id="category-{{id}}" value="{{id}}" />
+  <button id="{{id}}" class="category" data-color="{{color_hex}}" type="button">
+    <label for="category-{{id}}">{{name}}</label>
   </button>
 </li>

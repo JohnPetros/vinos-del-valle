@@ -20,7 +20,7 @@
 
     <div class="select-container">
       <span>Região:</span>
-      <div id="region" class="select">
+      <div id="region_id" class="select">
         <button type="button" class="select-button region">
           <span
             data-selected="{{selected-region-id}}"
@@ -46,14 +46,28 @@
       value="{{search}}"
     />
   </div>
-</form>
 
   <ul class="categories">
-    <button id="all-categories" data-color="#B04759" class="category">
-      Todas as uvas
-    </button>
+    <li>
+      <input
+        type="radio"
+        name="category"
+        id="category-all-categories"
+        value="all-categories"
+      />
+      <button
+        id="all-categories"
+        data-color="#B04759"
+        class="category"
+        type="button"
+      >
+        Todas as uvas
+      </button>
+    </li>
+
     {{grape-categories}}
   </ul>
+</form>
 
 <span class="css" data-file="form"></span>
 <span class="css" data-file="filters"></span>

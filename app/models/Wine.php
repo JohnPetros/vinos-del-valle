@@ -159,7 +159,7 @@ class Wine
     switch ($param) {
       case 'year':
         return "YEAR(W.harvest_date) = $value";
-      case 'region':
+      case 'region_id':
         return "W.region_id = $value";
       case 'category':
         return "W.grape_id = $value";
