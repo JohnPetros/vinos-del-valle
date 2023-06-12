@@ -18,6 +18,7 @@ Database::config(
   getenv('DB_PORT')
 );
 
+
 echo '<pre>';
 print_r(getenv('PORT'));
 echo '</pre>';
