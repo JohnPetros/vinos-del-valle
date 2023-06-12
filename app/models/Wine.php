@@ -67,6 +67,18 @@ class Wine
   public $registration_date;
 
   /**
+   * Código de país do vinho
+   * @var string
+   */
+  public $country_code;
+
+  /**
+   * Código hexadecimal da uva do vinho
+   * @var string
+   */
+  public $color_hex;
+
+  /**
    * Adiciona um registro de vinho com os dados da instância atual 
    */
   public function add()
@@ -165,14 +177,14 @@ class Wine
   {
     $query = "SELECT W.id, W.name, W.harvest_date,
                      R.country_code,
-                     G.name AS grape, G.color_hex
+                     G.name AS grape_name, G.color_hex
               FROM wines AS W
               JOIN regions AS R ON R.id = W.region_id
               JOIN grapes AS G ON G.id = W.grape_id";
 
     if (count($params)) {
       $filters = array_map(
-        'self::getFilters',
+        [self::class, 'getFilters'],
         array_keys($params),
         array_values($params)
       );
@@ -275,8 +287,6 @@ class Wine
 
     return Database::execute($query)->fetchAll();
   }
-
-
 
   /**
    * Retorna a quantidade de cada vinho

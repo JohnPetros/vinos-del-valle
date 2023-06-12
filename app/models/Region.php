@@ -100,12 +100,14 @@ class Region
   public static function getRegions($countryCode = null)
   {
     $query = "SELECT * FROM regions";
+    $queryParams = [];
 
     if ($countryCode) {
       $query .= " WHERE country_code = ?";
+      $queryParams[] = $countryCode;
     }
-
-    return Database::execute($query, [$countryCode])->fetchAll(\PDO::FETCH_CLASS, self::class);
+  
+    return Database::execute($query, $queryParams)->fetchAll(\PDO::FETCH_CLASS, self::class);
   }
 
   /**

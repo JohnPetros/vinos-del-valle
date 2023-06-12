@@ -81,7 +81,7 @@ class WineController
         'name' => $wine->name,
         'country_name' => Country::getCountryByCode($wine->country_code)->name,
         'harvest_date' => $wine->harvest_date,
-        'grape' => $wine->grape,
+        'grape_name' => $wine->grape_name,
         'color_hex' => $wine->color_hex,
       ]);
     }
@@ -114,6 +114,7 @@ class WineController
    */
   private static function getRegionOptions($canIncludeAll = false)
   {
+
     $regions = Region::getRegions();
     $options = $canIncludeAll ? View::render('partials/region-option', [
       'id' => 'all-regions',
@@ -199,6 +200,7 @@ class WineController
     Session::verifyLoggedUser('login', 'admin', $request);
 
     $params = $request->getQueryParams();
+
 
     return View::render('pages/dashboard/wine-dashboard', [
       'header' => Layout::getDashboardHeader('wine'),
