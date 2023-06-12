@@ -18,6 +18,12 @@ Database::config(
   getenv('DB_PORT')
 );
 
+
+echo '<pre>';
+print_r(getenv('PORT'));
+echo '</pre>';
+exit;
+
 // DEFINE AS VARIÁVEIS GLOBAIS DA APLICAÇÃO
 define('URL', getenv('URL'));
 
