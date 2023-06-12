@@ -1,5 +1,10 @@
 <?php
 
+echo '<pre>';
+print_r($_SERVER['SERVER_PORT']);
+echo '</pre>';
+exit;
+
 // INCLUI AS CONFIGURAÇÕES DO PROJETO
 require __DIR__ . '/config.php';
 
