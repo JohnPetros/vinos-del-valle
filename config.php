@@ -20,6 +20,7 @@ Database::config(
 
 echo '<pre>';
 print_r(getenv('PORT'));
+print_r($_SERVER['SEVER_PORT']);
 echo '</pre>';
 exit;
 
