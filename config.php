@@ -18,11 +18,6 @@ Database::config(
   getenv('DB_PORT')
 );
 
-echo '<pre>';
-print_r(getenv('PORT'));
-print_r($_SERVER['SEVER_PORT']);
-echo '</pre>';
-exit;
 
 // DEFINE AS VARIÁVEIS GLOBAIS DA APLICAÇÃO
 define('URL', getenv('URL'));
