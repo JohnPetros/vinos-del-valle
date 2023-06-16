@@ -323,7 +323,6 @@ inputsWrappers.forEach(setInputsWrappers);
 inputsControls.forEach(setInputsWrappers);
 selects.forEach((select) => {
   setSelectedItem(select);
-  checkFirstOption(select);
 
   const label = form.querySelector(`label[for="${select.id}"`);
   const button = select.querySelector(".select-button");
