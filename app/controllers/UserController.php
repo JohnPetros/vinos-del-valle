@@ -268,20 +268,23 @@ class UserController
    * @param boolean $canOverride
    * @return mixed
    */
-  public static function uploadAvatar($avatar, $previousAvatar = '')
+  public static function uploadAvatar($avatar, $oldAvatar = '')
   {
     $file = new File($avatar);
-    if ($file->error !== 0 || !in_array($file->extension, ['png', 'jpg', 'jpeg', 'svg'])) {
+   
+    if (
+      $file->error !== 0 ||
+      !in_array($file->extension, ['png', 'jpg', 'jpeg', 'svg']) ||
+      $file->size > 5242880
+    ) {
       return;
     }
 
-  
-
-    if ($previousAvatar === '') {
+    if ($oldAvatar === '') {
       $file->setName();
     } else {
-      $file->name = pathinfo($previousAvatar)['filename'];
-      $file->extension = pathinfo($previousAvatar)['extension'];
+      $file->name = pathinfo($oldAvatar)['filename'];
+      $file->extension = pathinfo($oldAvatar)['extension'];
     }
 
     $file->upload(__DIR__ . '/../../public/uploads/avatars/');

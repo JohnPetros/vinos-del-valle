@@ -3,7 +3,6 @@ const inputs = document.querySelectorAll(".input");
 const inputsWrappers = document.querySelectorAll(".input-wrapper");
 const inputsControls = document.querySelectorAll(".input-control");
 const selects = document.querySelectorAll(".select");
-const selectsButtons = document.querySelectorAll(".select-button");
 const inputColors = document.querySelectorAll(".input-color");
 const inputAvatar = document.querySelector(".input-avatar");
 const buttons = document.querySelectorAll("form button");
@@ -101,10 +100,41 @@ function desactiveIcons(icon) {
   icon.classList.remove("active");
 }
 
+function addTabindex(label) {
+  label.setAttribute("tabindex", 0);
+}
+
+function removeTabindex(label) {
+  label.removeAttribute("tabindex");
+}
+
+function rotateArrow(arrow, direction) {
+  arrow.style.transform = `rotate(${direction === "up" ? 180 : 360}deg)`;
+}
+
 function openSelectBox(selectButton) {
   const selectBox = selectButton.parentNode.querySelector(".select-box");
+  const arrow = selectButton.querySelector("i.ph-caret-down");
+  const labels = selectBox.querySelectorAll("label");
+  labels.forEach(addTabindex);
+  rotateArrow(arrow, "up");
+
   const isActive = selectBox.classList.contains("active");
-  selectBox.classList[isActive ? "remove" : "add"]("active");
+  if (isActive) {
+    hideSelectBox(selectButton.parentNode);
+  } else {
+    selectBox.classList.add("active");
+  }
+}
+
+function hideSelectBox(select) {
+  const selectBox = select.querySelector(".select-box");
+  const arrow = select.querySelector("i.ph-caret-down");
+  const labels = selectBox.querySelectorAll("label");
+
+  selectBox.classList.remove("active");
+  labels.forEach(removeTabindex);
+  rotateArrow(arrow, "down");
 }
 
 function activeOption(option) {
@@ -123,7 +153,7 @@ function checkOption(option, select) {
   selectedItem.innerHTML = label.innerHTML;
 
   activeOption(label.parentNode);
-  hideSelectBox(select.parentNode)
+  hideSelectBox(select.parentNode);
 }
 
 function setInputsWrappers(wrapper) {
@@ -140,11 +170,6 @@ function checkFirstOption(select) {
   if (firstOption) checkOption(firstOption, select);
 }
 
-function hideSelectBox(select) {
-  const selectBox = select.querySelector(".select-box");
-  selectBox.classList.remove("active");
-}
-
 function containElement(element, select) {
   return select.contains(element);
 }
@@ -152,8 +177,8 @@ function containElement(element, select) {
 function setSelectedItem(select) {
   const selectItem = select.querySelector(".selected-item").dataset.selected;
   const targetOption = selectItem.includes("}")
-  ? null
-  : select.querySelector(`#${select.id}-${selectItem}`)?.parentNode;
+    ? null
+    : select.querySelector(`#${select.id}-${selectItem}`)?.parentNode;
 
   if (targetOption) {
     checkOption(targetOption, select);
@@ -224,11 +249,11 @@ function handlePasswordEyeClick({ currentTarget }) {
   input.type = isClosed ? "password" : "text";
 }
 
-function handleSelectClick({ currentTarget }) {
+function handleSelectButtonClick({ currentTarget }) {
   const selectButton = currentTarget;
   openSelectBox(selectButton);
 
-  const options = currentTarget.parentNode.querySelectorAll(".option");
+  const options = selectButton.parentNode.querySelectorAll(".option");
   options.forEach((option) =>
     option.addEventListener("click", ({ currentTarget }) =>
       checkOption(currentTarget, selectButton)
@@ -236,8 +261,13 @@ function handleSelectClick({ currentTarget }) {
   );
 }
 
+function handleLabelKeyup({ key, currentTarget }) {
+  if (key === "Enter") {
+    currentTarget.click();
+  }
+}
+
 function handleBodyClick({ target }) {
-  const selects = document.querySelectorAll(".select");
   const canHideSelectBox = ![...selects].some((select) =>
     containElement(target, select)
   );
@@ -291,11 +321,24 @@ form.addEventListener("submit", handleSubmit);
 inputs.forEach((input) => input.addEventListener("change", handleInputChange));
 inputsWrappers.forEach(setInputsWrappers);
 inputsControls.forEach(setInputsWrappers);
-selects.forEach(checkFirstOption);
-selectsButtons.forEach((select) => {
-  select.addEventListener("click", handleSelectClick);
-  setSelectedItem(select.parentNode);
+selects.forEach((select) => {
+  setSelectedItem(select);
+  checkFirstOption(select);
+
+  const label = form.querySelector(`label[for="${select.id}"`);
+  const button = select.querySelector(".select-button");
+  const options = select.querySelectorAll(".option");
+
+  button.addEventListener("click", handleSelectButtonClick);
+  options.forEach((option) => {
+    const labels = option.querySelectorAll("label");
+    labels.forEach((label) =>
+      label.addEventListener("keyup", handleLabelKeyup)
+    );
+  });
+  label?.addEventListener("click", button.click);
 });
+
 inputColors?.forEach((inputColor) => {
   setInputColor(inputColor);
   inputColor.addEventListener("change", handleInputColorChange);

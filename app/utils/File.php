@@ -2,6 +2,8 @@
 
 namespace App\utils;
 
+use GdImage;
+
 class File
 {
   /**
@@ -94,7 +96,7 @@ class File
 
   /**
    * Cria uma nova imagem usando a biblioteca GD
-   * @return \GdImage|boolean
+   * @return GdImage|boolean
    */
   public function createImage()
   {
@@ -108,9 +110,10 @@ class File
   }
 
   /**
-   * Salva a nova imagem criada pela a biblioteca GD
-   * @param \GdImage $image
+   * Salva a nova imagem criada pela biblioteca GD
+   * @param GdImage $image
    * @param integer $quality
+   * @return boolean
    */
   public function saveNewImage($image, $quality)
   {

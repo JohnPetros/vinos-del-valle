@@ -42,7 +42,12 @@
               <i class="ph-bold ph-user-circle"></i>
               avatar:
             </label>
-            <button type="button" id="set-avatar" class="input-avatar" for="avatar">
+            <button
+              type="button"
+              id="set-avatar"
+              class="input-avatar"
+              for="avatar"
+            >
               <img
                 class="avatar"
                 width="140"
@@ -50,7 +55,13 @@
                 alt="Imagem de avatar de usuário"
               />
               <span class="caption">alterar avatar</span>
-              <input class="input hidden" type="file" id="avatar" name="avatar" accept="image/*" />
+              <input
+                class="input hidden"
+                type="file"
+                id="avatar"
+                name="avatar"
+                accept="image/*"
+              />
             </button>
           </div>
 
@@ -147,7 +158,9 @@
                       id="user-type-1"
                       value="1"
                     />
-                    <label for="user-type-admin">Administrador</label>
+                    <label for="user-type-admin"
+                      >Administrador</label
+                    >
                   </div>
                 </div>
               </div>
@@ -155,7 +168,7 @@
           </div>
 
           {{creator-input}}
-         
+
           <div class="action-buttons">{{buttons}}</div>
 
           {{modal}}

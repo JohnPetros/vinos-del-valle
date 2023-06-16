@@ -71,11 +71,13 @@ class LoginController
       return self::getLoginPage($request, 'Usuário não encontrado');
     }
 
+    if (!$user->is_admin) {
+      return self::getLoginPage($request, 'Acesso permitido apenas para administradores');
+    }
+
     Session::setUserSession($user);
 
-    $route = $user->is_admin ? '/dashboard?status=welcome' : '/app';
-
-    $request->getRouter()->redirect($route);
+    $request->getRouter()->redirect('/dashboard?status=welcome');
   }
 
   /**

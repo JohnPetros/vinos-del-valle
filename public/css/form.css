@@ -50,6 +50,7 @@
   display: flex;
   align-items: center;
   gap: 0.8rem;
+  cursor: pointer;
 }
 
 .input-control label i {
@@ -224,17 +225,18 @@ form a {
   border-bottom: 2px solid var(--base-3);
 }
 
-.select-button:focus {
+.select-button:focus:focus {
   border-color: var(--primary);
   border-radius: 0;
+  box-shadow: none;
 }
 
 .select-button.big {
   border-color: var(--primary);
 }
 
-.select-button:focus {
-  box-shadow: none;
+.select-button.big:focus {
+  border-color: var(--secondary);
 }
 
 .selected-item {
@@ -252,6 +254,10 @@ form a {
 .select .select-button.big {
   font-size: 2.4rem;
   color: var(--primary);
+}
+
+.select .select-button i {
+  transition: transform .25s ease;
 }
 
 .select .select-box {
@@ -314,6 +320,10 @@ form a {
 .option.active label {
   cursor: pointer;
   color: var(--primary);
+}
+
+.option label {
+  outline-color: var(--primary);
 }
 
 .select .select-box .option input[type="radio"] {
