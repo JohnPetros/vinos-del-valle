@@ -172,6 +172,7 @@ input:focus + i,
   width: max-content;
   margin-left: auto;
   display: flex;
+  flex-wrap: wrap;
   gap: 1.2rem;
 }
 
@@ -257,7 +258,7 @@ form a {
 }
 
 .select .select-button i {
-  transition: transform .25s ease;
+  transition: transform 0.25s ease;
 }
 
 .select .select-box {
@@ -356,4 +357,17 @@ form a {
   width: 100%;
   margin-left: 1.2rem;
   background-color: transparent;
+}
+
+@media (max-width: 435px) {
+  .input-control,
+  input {
+    font-size: 1.4rem;
+  }
+  .input-control label {
+    max-width: 8rem;
+  }
+  .select-button {
+    gap: 0;
+  }
 }

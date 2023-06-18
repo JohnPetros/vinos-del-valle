@@ -4,6 +4,7 @@ function renderChart(id, data, categories, color) {
   const options = {
     series: [
       {
+        name: "Quantidade",
         data: data,
       },
     ],

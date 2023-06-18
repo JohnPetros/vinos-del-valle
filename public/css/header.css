@@ -18,6 +18,7 @@ header .logo h2 {
 header .menu {
   flex: 1;
   display: flex;
+  transition: all 0.5s ease-in-out;
 }
 
 header .menu-hamburguer {
@@ -28,7 +29,7 @@ header .menu-hamburguer {
 header .menu-hamburguer span {
   display: block;
   width: 2rem;
-  height: .4rem;
+  height: 0.4rem;
   border-radius: 1.2rem;
   background-color: var(--base-4);
 }
@@ -43,9 +44,10 @@ header nav {
 
 header nav ul {
   display: flex;
+  gap: 0.8rem;
 }
 
-header nav ul li.nav-link {
+header nav ul li.nav-link a {
   color: var(--base-4);
   font-weight: 500;
   display: block;
@@ -53,7 +55,7 @@ header nav ul li.nav-link {
   border-radius: 0.8rem;
 }
 
-header nav ul li.nav-link.active,
+header nav ul li.nav-link.active a,
 .user-button {
   background-color: var(--base-2);
   font-weight: 700;
@@ -111,7 +113,7 @@ header .user .info .email {
   header .menu-hamburguer {
     display: flex;
     flex-direction: column;
-    gap: .4rem;
+    gap: 0.4rem;
   }
 
   header .menu,
@@ -127,24 +129,21 @@ header .user .info .email {
     top: 0;
     z-index: 20;
 
-    display: none;
     gap: 4rem;
     box-shadow: var(--shadow);
     background-color: var(--base-1);
     padding: 2.4rem;
     border-radius: 2.4rem 0 0 2.4rem;
     width: 32rem;
-    transition: all .35s ease-in-out;
   }
 
   header .menu.active {
-    display: flex;
     right: 0;
   }
 
   header .menu .menu-close {
     position: absolute;
-    top: 0;
+    top: 2.4rem;
     left: 2.4rem;
     display: block;
   }

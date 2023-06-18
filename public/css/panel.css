@@ -10,6 +10,10 @@
   transition: transform 0.2s ease;
 }
 
+.panel:focus {
+  border-color: var(--wine) !important;
+}
+
 .panel:hover {
   transform: scale(1.05);
 }
