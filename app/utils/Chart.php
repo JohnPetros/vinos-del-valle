@@ -78,6 +78,12 @@ class Chart
     ];
   }
 
+  /**
+   * Retorna a quantidade de vinhos agrupado por determninado ano
+   * @param array $wines
+   * @param integer $year
+   * @return integer
+   */
   private static function getWinesAmountByYear($wines, $year)
   {
     return count(array_filter($wines, function ($wine) use ($year) {

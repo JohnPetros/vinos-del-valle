@@ -173,13 +173,14 @@ class User
 
   /**
    * Retorna todos os registros de usuário que são administradores
+   * @param integer $currentUserId
    * @return array
    */
-  public static function getAdminUsers()
+  public static function getAdminUsers($currentUserId)
   {
     $query = "SELECT id, name 
               FROM users
-              WHERE is_admin = 1";
+              WHERE is_admin = 1 AND id != $currentUserId";
 
     return Database::execute($query)->fetchAll(\PDO::FETCH_CLASS, self::class);
   }

@@ -190,7 +190,6 @@ class Wine
       );
       $filters = array_filter($filters);
 
-
       if (count($filters)) {
         $query .= ' WHERE ';
         $query .= join(' AND ', $filters);
@@ -221,7 +220,7 @@ class Wine
   }
 
   /**
-   * Retorna um registro de vinho em ID de uva
+   * Retorna um registro de vinho com base no nome fornecido
    * @return Wine
    */
   public static function getWineByName($name)
@@ -253,7 +252,7 @@ class Wine
     $query = "SELECT COUNT(*) AS amount, G.name AS grape_name
               FROM wines AS W
               JOIN grapes AS G ON G.id = W.grape_id
-              GROUP BY W.grape_id;";
+              GROUP BY W.grape_id";
 
     return Database::execute($query)->fetchAll();
   }
@@ -268,7 +267,7 @@ class Wine
                     R.name AS region_name, R.country_code
               FROM wines AS W
               JOIN regions AS R ON R.id = W.region_id
-              GROUP BY W.region_id;";
+              GROUP BY W.region_id";
 
     return Database::execute($query)->fetchAll();
   }

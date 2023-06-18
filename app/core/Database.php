@@ -67,7 +67,11 @@ class Database
     private static function setConnection()
     {
         try {
-            self::$connection = new PDO('mysql:host=' . self::$host . ';dbname=' . self::$name . ';port=' . self::$port, self::$user, self::$pass);
+            self::$connection = new PDO(
+                'mysql:host=' . self::$host . ';dbname=' . self::$name . ';port=' . self::$port,
+                self::$user,
+                self::$pass
+            );
             self::$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $error) {
             die('ERROR: ' . $error->getMessage());

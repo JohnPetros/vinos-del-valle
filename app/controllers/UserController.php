@@ -176,9 +176,9 @@ class UserController
    * Retorna os usuários administradores que servirão como opções para o select input de usuário criador
    * @return string
    */
-  private static function getCreatorsOptions()
+  private static function getCreatorsOptions($currentUserId)
   {
-    $admins = User::getAdminUsers();
+    $admins = User::getAdminUsers($currentUserId);
     $options = '';
 
     foreach ($admins as $admin) {
@@ -193,12 +193,14 @@ class UserController
 
   /**
    * Retorna o select conctendo os usuários adinistradores, ou seja, aqueles que podem criar um usuário
+   * @param integer $currentUserId
+   * @param integer $creatorId
    * @return string
    */
-  private static function getCreatorSelect($creatorId)
+  private static function getCreatorSelect($currentUserId, $creatorId)
   {
     return View::render('partials/creator-select', [
-      'creator-options' => self::getCreatorsOptions(),
+      'creator-options' => self::getCreatorsOptions($currentUserId),
       'selected-creator_id' => $creatorId
     ]);
   }
@@ -256,7 +258,7 @@ class UserController
       'creator_id' =>  $user->creator_id ?? '',
       'hidden' =>  $isEditForm ? 'hidden' : '',
       'selected-user-type' =>  $user->is_admin ?? '',
-      'creator-input' => $isEditForm ? self::getCreatorSelect($user->creator_id) : self::getCreatorInput(),
+      'creator-input' => $isEditForm ? self::getCreatorSelect($id, $user->creator_id) : self::getCreatorInput(),
       'toast' => isset($params['status']) ? self::getToast($params['status']) : '',
       'buttons' => self::getFormButtons($isEditForm, $user),
     ]);
