@@ -44,6 +44,7 @@ function filterData() {
     .concat([categoryParam, searchParam])
     .join("&");
 
+  const URL = document.querySelector('#URL').value
   location.href = `${URL}/dashboard/${controller}?${queryParams}`;
 }
 

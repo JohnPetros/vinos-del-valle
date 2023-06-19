@@ -9,6 +9,8 @@ function openModal(id) {
 
 function handleConfirmButton({ currentTarget }) {
   const { action } = currentTarget.dataset;
+  console.log(action);
+  return
   location.href = action;
 }
 

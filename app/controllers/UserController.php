@@ -216,17 +216,6 @@ class UserController
   }
 
   /**
-   * Verifica se o usuário está requisitando um formulário de edição
-   * @param Request $request
-   * @return boolean
-   */
-  private static function isEditForm($request)
-  {
-    $uriPartials = explode('/', $request->getUri());
-    return is_numeric($uriPartials[3]);
-  }
-
-  /**
    * Retorna o conteúdo (View) da página de formulário de edição de uva
    * @param Request $request
    * @param integer $id
@@ -238,7 +227,7 @@ class UserController
 
     $params = $request->getQueryParams();
 
-    $isEditForm = self::isEditForm($request);
+    $isEditForm = is_numeric($id);
     $user = $isEditForm ? User::getUserById($id) : null;
     $modal = $isEditForm ? Modal::getModal(
       'trash',

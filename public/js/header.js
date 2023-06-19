@@ -9,8 +9,8 @@ function handleLogoutButtonClick() {
   openModal("logout");
 }
 
-function handleProfileButtonClick() {
-  location.href = "/dashboard/profile";
+function handleProfileButtonClick({ currentTarget }) {
+  location.href = currentTarget.value;
 }
 
 function handleMenuHamburguerButtonClick() {

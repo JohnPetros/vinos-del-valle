@@ -225,17 +225,6 @@ class WineController
   }
 
   /**
-   * Verifica se o usuário está requisitando um formulário de edição
-   * @param Request $request
-   * @return boolean
-   */
-  private static function isEditForm($request)
-  {
-    $uriPartials =  explode('/', $request->getUri());
-    return is_numeric($uriPartials[3]);
-  }
-
-  /**
    * Retorna os botões paro formulário com base se é um formulário de edição ou não
    * @param boolean $isEditForm
    * @param Wine $wine
@@ -279,13 +268,13 @@ class WineController
 
     $params = $request->getQueryParams();
 
-    $isEditForm = self::isEditForm($request);
+    $isEditForm = is_numeric($id);
     $wine = $isEditForm ? Wine::getWineById($id) : null;
     $modal = $isEditForm ? Modal::getModal(
       'trash',
       'Deletar vinho ' . $wine->name,
       'Tem certeza que deseja deletar esse vinho?',
-      '/dashboard/wine/' . $wine->id . '/delete',
+      URL . '/dashboard/wine/' . $wine->id . '/delete',
       'delete'
     ) : '';
 

@@ -63,7 +63,7 @@ class ProfileController
       'warning-circle',
       'Deletar perfil',
       'TEM CERTEZA MESMO QUE DESEJA DELETAR SUA CONTA!?',
-      '/dashboard/profile/delete',
+      URL . '/dashboard/profile/delete',
       'delete'
     );
     $avatar = UserController::verifyAvatarExists($loggedUser['avatar'])
