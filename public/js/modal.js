@@ -3,14 +3,11 @@ const cancelButtons = document.querySelectorAll(".modal .button.cancel");
 
 function openModal(id) {
   const modal = document.querySelector(`.modal#${id}`);
-  console.log({modal});
   modal.showModal();
 }
 
 function handleConfirmButton({ currentTarget }) {
   const { action } = currentTarget.dataset;
-  console.log(action);
-  return
   location.href = action;
 }
 
