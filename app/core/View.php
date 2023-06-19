@@ -13,7 +13,7 @@ class View
 
   /**
    * Define os variáveis globais entra todas Views
-   * @return array $vars
+   * @return array $globalVars
    */
   public static function init($globalVars = [])
   {
@@ -22,7 +22,7 @@ class View
 
   /**
    * Retorna o conteúdo de uma View
-   * @param  string $view
+   * @param  string $viewName
    * @return string 
    */
   private static function getViewContent($viewName)
@@ -34,8 +34,8 @@ class View
 
   /**
    * Retorna o conteúdo renderizado de uma View
-   * @param  string $view
-   * @param  array  $vars (string/numeric)
+   * @param  string $viewName
+   * @param  array  $vars
    * @return string
    */
   public static function render($viewName, $vars = [])

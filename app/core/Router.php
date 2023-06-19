@@ -51,7 +51,7 @@ class Router
   {
     // INFORMAÇÕES DA URL ATUAL
     $parseUrl = parse_url($this->url);
-
+   
     // DEFINE O PREFIXO
     $this->prefix = $parseUrl['path'] ?? '';
   }
@@ -60,7 +60,7 @@ class Router
    * Adiciona uma rota na classe
    * @param string $method
    * @param string $route
-   * @param array  $params
+   * @param function  $controller
    */
   private function addRoute($method, $route, $controller)
   {
@@ -107,7 +107,7 @@ class Router
   /**
    * Método responsável por definir uma rota de PUT
    * @param string $route
-   * @param array  $controller
+   * @param function  $controller
    */
   public function put($route, $controller)
   {
@@ -132,10 +132,10 @@ class Router
   {
     // URI DA REQUEST
     $uri = $this->request->getUri();
-
+ 
     // FATIA A URI COM O PREFIXO
     $xUri = strlen($this->prefix) ? explode($this->prefix, $uri) : [$uri];
-
+   
     // RETORNA URI SEM PREFIXO
     return end($xUri);
   }
@@ -154,6 +154,7 @@ class Router
 
     // VALIDA AS ROTAS
     foreach ($this->routes as $patternRoute => $methods) {
+    
       // VERIFICA SE A URI BATE COM O PADRÃO
       if (preg_match($patternRoute, $uri, $matches)) {
         // VERIFICA O MÉTODO
@@ -177,23 +178,6 @@ class Router
     }
     // URL NÃO ENCONTRADA 
     throw new Exception("URL não encontrada", 404);
-  }
-
-  /**
-   * Lida com erros de rota
-   * @param Exeception $error;
-   * @return $string;
-   */
-  private function handleError($error)
-  {
-    $code = $error->getCode();
-
-    switch ($code) {
-      case 404:
-        return new Response($code, View::render('pages/404.html'));
-      default:
-        return new Response($code, $error->getMessage());
-    }
   }
 
   /**

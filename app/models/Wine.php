@@ -203,6 +203,7 @@ class Wine
 
   /**
    * Retorna um registro de vinho em seu ID
+   * @param integer $id
    * @return Wine
    */
   public static function getWineById($id)
@@ -217,19 +218,6 @@ class Wine
               WHERE W.id = ?";
 
     return Database::execute($query, [$id])->fetchObject(self::class);
-  }
-
-  /**
-   * Retorna um registro de vinho com base no nome fornecido
-   * @return Wine
-   */
-  public static function getWineByName($name)
-  {
-    $query = "SELECT name, grape_id
-              FROM wines
-              WHERE name = ?";
-
-    return Database::execute($query, [$name])->fetchObject(self::class);
   }
 
   /**

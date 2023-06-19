@@ -168,18 +168,18 @@ class RegionController
       $buttons .= View::render('partials/button', [
         'type' => 'edit',
         'title' => 'Editar',
-        'value' => '/dashboard/region/' . $region->id . '/edit',
+        'value' => URL . '/dashboard/region/' . $region->id . '/edit',
       ]);
       $buttons .= View::render('partials/button', [
         'type' => 'delete',
         'title' => 'Deletar',
-        'value' => '/dashboard/region/' . $region->id . '/delete',
+        'value' => URL . '/dashboard/region/' . $region->id . '/delete',
       ]);
     } else {
       $buttons .= View::render('partials/button', [
         'type' => 'add',
         'title' => 'Adicionar',
-        'value' => '/dashboard/region/add',
+        'value' => URL . '/dashboard/region/add',
       ]);
     }
 

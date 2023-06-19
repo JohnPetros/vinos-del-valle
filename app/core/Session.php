@@ -35,6 +35,9 @@ class Session
     ];
   }
 
+  /**
+   * Retorna a sessão do usuário
+   */
   public static function getUserSession()
   {
     self::init();
@@ -43,6 +46,7 @@ class Session
 
   /**
    * Define a rota anterior acessada pelo usuário
+   * @param string $previousRoute
    */
   public static function setPreviousRoute($previousRoute)
   {
@@ -59,7 +63,7 @@ class Session
   }
 
   /**
-   * Verifica se o usuário é admin
+   * Verifica se o usuário é administrador
    * @return boolean
    */
   public static function isUserAdmin()
@@ -68,8 +72,10 @@ class Session
   }
 
   /**
-   * Redireciona para rota anterior dependendo do caso se o usuário está logado ou não, bem como o tipo rota que está sendo acessada
-   * @param 
+   * Redireciona para rota anterior dependendo do caso se o usuário está logado ou não, bem como o tipo de rota que está sendo acessada
+   * @param string $requirement
+   * @param string $routerType
+   * @param Request $request
    */
   public static function verifyLoggedUser($requirement, $routerType, $request)
   {
@@ -88,8 +94,7 @@ class Session
   }
 
   /**
-   * Método responsável por executar o logout do usuário
-   * @return boolean
+   * Executar o logout do usuário
    */
   public static function logout()
   {

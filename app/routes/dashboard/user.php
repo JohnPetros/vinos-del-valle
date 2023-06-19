@@ -20,7 +20,7 @@ $router->get(
 $router->post(
   '/dashboard/user/add',
   function ($request) {
-    return new Response(200, UserController::addUser($request));
+    return new Response(201, UserController::addUser($request));
   }
 );
 

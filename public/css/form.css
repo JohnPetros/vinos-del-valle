@@ -45,6 +45,7 @@
 }
 
 .input-control label {
+  margin: 0;
   color: var(--primary);
   font-weight: 700;
   display: flex;
@@ -113,7 +114,6 @@
 }
 
 .input-wrapper {
-  margin-top: 2.4rem;
   border: 1px solid var(--base-3);
   padding: 0.8rem;
   border-radius: 0.8rem;
@@ -209,6 +209,14 @@ form p {
 form a {
   color: var(--primary);
   font-weight: 700;
+}
+
+form > label {
+  display: block;
+  margin-top: 1.2rem;
+  margin-bottom: .8rem;
+  color: var(--base-4);
+  font-weight: 500;
 }
 
 .select {

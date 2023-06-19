@@ -1,4 +1,4 @@
-.wine-card {
+.card {
   border-radius: 2.4rem;
   display: flex;
   gap: 2.4rem;
@@ -9,7 +9,7 @@
   cursor: pointer;
 }
 
-.wine-card:hover {
+.card:hover {
   transform: scale(1.05);
 }
 

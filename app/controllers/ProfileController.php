@@ -11,6 +11,7 @@ use App\utils\Modal;
 use App\utils\Toast;
 use App\controllers\LoginController;
 use App\controllers\UserController;
+use App\utils\File;
 
 class ProfileController
 {
@@ -39,11 +40,18 @@ class ProfileController
         return Toast::getError('E-mail já em uso');
       case 'avatar-fail':
         return Toast::getError('Imagem de avatar inválida');
+      case 'delete-fail':
+        return Toast::getError('Erro ao tentar deletar o perfil');
       default:
         return Toast::getError('Escreva uma mensagem no toast...');
     }
   }
 
+  /**
+   * Retorna o conteúdo (View) da página de perfil do usuário logado
+   * @param Request $request
+   * @return string
+   */
   public static function getProfilePage($request)
   {
     Session::verifyLoggedUser('login', 'admin', $request);
@@ -55,7 +63,7 @@ class ProfileController
       'warning-circle',
       'Deletar perfil',
       'TEM CERTEZA MESMO QUE DESEJA DELETAR SUA CONTA!?',
-      '/dashboard/user/' . $loggedUser['id'] . '/delete',
+      '/dashboard/profile/delete',
       'delete'
     );
     $avatar = UserController::verifyAvatarExists($loggedUser['avatar'])
@@ -75,7 +83,6 @@ class ProfileController
   /**
    * Atualiza os dados do usuário logado
    * @param Request $request
-   * @param integer $id
    */
   public static function editProfile($request)
   {
@@ -148,5 +155,35 @@ class ProfileController
     Session::setUserSession($user);
 
     $router->redirect("/dashboard/profile?status=edit-success");
+  }
+
+  /**
+   * Deleta o perfil do usuário logado
+   * @param Request $request
+   */
+  public static function deleteProfile($request)
+  {
+    Session::verifyLoggedUser('login', 'admin', $request);
+    $id = Session::getUserSession()['id'];
+
+    $router = $request->getRouter();
+
+    if (!is_numeric($id)) {
+      $router->redirect("/dashboard/user/$id/form?status=delete-fail");
+    }
+
+    $user = User::getUserById($id);
+
+    if (
+      !$user instanceof User ||
+      ($user->avatar != 'default.png' && !File::delete(__DIR__ . '/../../public/uploads/avatars/' . $user->avatar))
+    ) {
+      $router->redirect("/dashboard/profile?status=delete-fail");
+    }
+
+    $user->delete();
+
+    Session::logout();
+    $request->getRouter()->redirect('/');
   }
 }

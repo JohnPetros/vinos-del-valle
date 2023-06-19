@@ -20,7 +20,7 @@ $router->get(
 $router->post(
   '/dashboard/wine/add',
   function ($request, $id) {
-    return new Response(200, WineController::addWine($request, $id));
+    return new Response(201, WineController::addWine($request, $id));
   }
 );
 

@@ -123,18 +123,18 @@ class GrapeController
       $buttons .= View::render('partials/button', [
         'type' => 'edit',
         'title' => 'Editar',
-        'value' => '/dashboard/grape/' . $grape->id . '/edit',
+        'value' => URL . '/dashboard/grape/' . $grape->id . '/edit',
       ]);
       $buttons .= View::render('partials/button', [
         'type' => 'delete',
         'title' => 'Deletar',
-        'value' => '/dashboard/grape/' . $grape->id . '/delete',
+        'value' => URL . '/dashboard/grape/' . $grape->id . '/delete',
       ]);
     } else {
       $buttons .= View::render('partials/button', [
         'type' => 'add',
         'title' => 'Adicionar',
-        'value' => '/dashboard/grape/add',
+        'value' => URL . '/dashboard/grape/add',
       ]);
     }
 

@@ -15,12 +15,11 @@ class Layout
    */
   public static function getDashboardHeader($page)
   {
-
     $modal = Modal::getModal(
       'sign-out',
       'Fazer logout',
       'Tem certeza que deseja sair da sua conta?',
-      '/logout',
+      URL . '/logout',
       'logout',
     );
 

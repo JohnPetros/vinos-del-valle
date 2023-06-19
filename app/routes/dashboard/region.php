@@ -20,7 +20,7 @@ $router->get(
 $router->post(
   '/dashboard/region/add',
   function ($request) {
-    return new Response(200, RegionController::addRegion($request));
+    return new Response(201, RegionController::addRegion($request));
   }
 );
 

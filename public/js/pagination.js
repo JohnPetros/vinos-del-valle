@@ -1,5 +1,5 @@
 const cardsContainer = document.querySelector("#cards-container");
-const cards = cardsContainer.querySelectorAll("[class$='-card']");
+const cards = cardsContainer.querySelectorAll(".card");
 const paginationButtonsContainer = document.querySelector(
   ".pagination-buttons"
 );
@@ -58,4 +58,4 @@ function setPagination() {
   }
 }
 
-setTimeout(setPagination, 80) // bug fix
+setTimeout(setPagination, 250) // bug fix

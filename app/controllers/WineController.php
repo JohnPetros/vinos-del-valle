@@ -249,18 +249,18 @@ class WineController
       $buttons .= View::render('partials/button', [
         'type' => 'edit',
         'title' => 'Editar',
-        'value' => '/dashboard/wine/' . $wine->id . '/edit',
+        'value' => URL . '/dashboard/wine/' . $wine->id . '/edit',
       ]);
       $buttons .= View::render('partials/button', [
         'type' => 'delete',
         'title' => 'Deletar',
-        'value' => '/dashboard/wine/' . $wine->id . '/delete',
+        'value' => URL . '/dashboard/wine/' . $wine->id . '/delete',
       ]);
     } else {
       $buttons .= View::render('partials/button', [
         'type' => 'add',
         'title' => 'Adicionar',
-        'value' => '/dashboard/wine/add',
+        'value' => URL . '/dashboard/wine/add',
       ]);
     }
 
@@ -293,18 +293,18 @@ class WineController
       'header' => Layout::getDashboardHeader('wine'),
       'title' => $isEditForm ? 'Editar vinho ' . $wine->name : 'Adicionar vinho',
       'modal' => $modal,
-      'id' => $wine ? $wine->id : '',
-      'name' => $wine ? $wine->name : '',
-      'winery' => $wine ? $wine->winery : '',
-      'grape' => $wine ? $wine->grape_name : '',
-      'region' => $wine ? $wine->region_name : '',
+      'id' => $wine->id ?? '',
+      'name' => $wine->name ?? '',
+      'winery' => $wine->winery ?? '',
+      'grape' => $wine->grape_name ?? '',
+      'region' => $wine->region_name ?? '',
       'region-options' => self::getRegionOptions(),
       'grape-options' => self::getGrapeOptions(),
       'year-options' => self::getYearOptions(),
-      'selected-region-id' => $wine ? $wine->region_id : 'all-regions',
-      'selected-grape-id' => $wine ? $wine->grape_id : 'all-grapes',
-      'harvest_date' => $wine ? $wine->harvest_date : '',
-      'bottling_date' => $wine ? $wine->bottling_date : '',
+      'selected-region-id' => $wine->region_id ?? 'all-regions',
+      'selected-grape-id' => $wine->grape_id ?? 'all-grapes',
+      'harvest_date' => $wine->harvest_date ?? '',
+      'bottling_date' => $wine->bottling_date ?? '',
       'registration_date' => $isEditForm
         ? self::getInputRegistrationDate($wine->registration_date)
         : '',
@@ -330,11 +330,6 @@ class WineController
       !is_numeric($postVars['region_id'])
     ) {
       $router->redirect("/dashboard/wine/add/form?status=add-fail");
-    }
-
-    $wine = Wine::getWineByName($postVars['name']);
-    if ($wine instanceof Wine && $wine->grape_id != $postVars['grape_id']) {
-      $router->redirect("/dashboard/wine/add/form?status=grape-fail");
     }
 
     $wine = new Wine;
@@ -366,11 +361,6 @@ class WineController
       !is_numeric($postVars['grape_id'])
     ) {
       $router->redirect("/dashboard/wine/$id/form?status=edit-fail");
-    }
-
-    $wine = Wine::getWineByName($postVars['name']);
-    if ($wine instanceof Wine && $wine->grape_id != $postVars['grape_id']) {
-      $router->redirect("/dashboard/wine/$id/form?status=grape-fail");
     }
 
     $wine = Wine::getWineById($id);

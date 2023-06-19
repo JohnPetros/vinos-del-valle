@@ -20,7 +20,7 @@ $router->get(
 $router->post(
   '/dashboard/grape/add',
   function ($request) {
-    return new Response(200, GrapeController::addGrape($request));
+    return new Response(201, GrapeController::addGrape($request));
   }
 );
 

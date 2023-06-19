@@ -112,6 +112,7 @@ class Region
 
   /**
    * Retorna um registro de região com base em seu ID
+   * @param integer $id
    * @return Region
    */
   public static function getRegionById($id)

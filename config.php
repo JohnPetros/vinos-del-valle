@@ -18,11 +18,11 @@ Database::config(
   getenv('DB_PORT')
 );
 
-// DEFINE AS VARIÁVEIS GLOBAIS DA APLICAÇÃO
+// DEFINE A URL BASE DA APLICAÇÃO CASO TENHA
 define('URL', getenv('URL'));
 
-// DEFINE O VALOR DAS VARIÁVEIS COMUNS A TODAS AS VIEWS
+// DEFINE O VALOR VARIÁVEIS GLOBAIS DA APLICAÇÃO QUE SERÃO COMUNS A TODAS AS VIEWS
 View::init([
   'URL' => URL,
-  'public_path' => '../../../public'
+  'public_path' => URL . '/public'
 ]);

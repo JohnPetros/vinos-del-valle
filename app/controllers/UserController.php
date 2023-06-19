@@ -154,18 +154,18 @@ class UserController
       $buttons .= View::render('partials/button', [
         'type' => 'edit',
         'title' => 'Editar',
-        'value' => '/dashboard/user/' . $user->id . '/edit',
+        'value' => URL . '/dashboard/user/' . $user->id . '/edit',
       ]);
       $buttons .= View::render('partials/button', [
         'type' => 'delete',
         'title' => 'Deletar',
-        'value' => '/dashboard/user/' . $user->id . '/delete',
+        'value' => URL . '/dashboard/user/' . $user->id . '/delete',
       ]);
     } else {
       $buttons .= View::render('partials/button', [
         'type' => 'add',
         'title' => 'Adicionar',
-        'value' => '/dashboard/user/add',
+        'value' => URL . '/dashboard/user/add',
       ]);
     }
 
@@ -244,7 +244,7 @@ class UserController
       'trash',
       'Deletar usuário ' . $user->name,
       'Tem certeza que deseja deletar esse usuário?',
-      '/dashboard/user/' . $user->id . '/delete',
+      URL . '/dashboard/user/' . $user->id . '/delete',
       'delete'
     ) : '';
 
@@ -267,13 +267,13 @@ class UserController
   /**
    * Faz o upload do avatar do usuário
    * @param string $avatar
-   * @param boolean $canOverride
+   * @param string $oldAvatar
    * @return mixed
    */
   public static function uploadAvatar($avatar, $oldAvatar = '')
   {
     $file = new File($avatar);
-   
+
     if (
       $file->error !== 0 ||
       !in_array($file->extension, ['png', 'jpg', 'jpeg', 'svg']) ||
@@ -298,7 +298,6 @@ class UserController
   /**
    * Adiciona um usuário
    * @param Request $request
-   * @param integer $id
    */
   public static function addUser($request)
   {

@@ -44,7 +44,7 @@ function filterData() {
     .concat([categoryParam, searchParam])
     .join("&");
 
-  location.href = `/dashboard/${controller}?${queryParams}`;
+  location.href = `${URL}/dashboard/${controller}?${queryParams}`;
 }
 
 function handleCategoryClick({ currentTarget }) {
@@ -65,8 +65,6 @@ function setSelectedCategory() {
   const targetCategory = [...categories].find(
     (category) => category.id === categoryId
   );
-
-  console.log(targetCategory);
 
   if (targetCategory) {
     addActive(targetCategory);
