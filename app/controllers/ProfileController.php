@@ -176,7 +176,9 @@ class ProfileController
 
     if (
       !$user instanceof User ||
-      ($user->avatar != 'default.png' && !File::delete(__DIR__ . '/../../public/uploads/avatars/' . $user->avatar))
+      ($user->avatar != 'default.png' &&
+        !File::delete(__DIR__ . '/../../public/uploads/avatars/' . $user->avatar)
+      )
     ) {
       $router->redirect("/dashboard/profile?status=delete-fail");
     }

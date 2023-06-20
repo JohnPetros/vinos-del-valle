@@ -60,6 +60,19 @@ class Form
   }
 
   /**
+   * Valida um ano, verificando ele está na faixa de 2014 e 2023
+   * @param string $date
+   * @return boolean
+   */
+  public static function validateYear($date)
+  {
+    $year = date('Y', strtotime($date));
+    $acceptedYears = Year::getLastYears();
+    
+    return in_array($year, $acceptedYears);
+  }
+
+  /**
    * Valida a entrada de dados do usuário está vazia ou não
    * @param array $input
    * @param boolean $hasExceptions

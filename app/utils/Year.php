@@ -13,8 +13,9 @@ class Year
     $currentYear = date('Y');
     $years = [];
 
-    for ($i = 1; $i < 10; $i++) {
-      $years[] = --$currentYear;
+    for ($i = 1; $i <= 10; $i++) {
+      $years[] = $currentYear;
+      --$currentYear;
     }
     
     return $years;

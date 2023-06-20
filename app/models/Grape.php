@@ -30,9 +30,9 @@ class Grape
   public function add()
   {
     $query = "INSERT INTO grapes (
-                name,
-                color_hex
-              ) VALUES (?, ?)";
+        name,
+        color_hex
+    ) VALUES (?, ?)";
 
     $params = [
       $this->name,

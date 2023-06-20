@@ -38,6 +38,8 @@ class WineController
         return Toast::getSuccess('Vinho deletado');
       case 'delete-fail':
         return Toast::getError('Erro ao tentar deletar o vinho');
+      case 'date-fail':
+        return Toast::getError('O ano inserido deve estar entre os últimos dez anos');
       case 'grape-fail':
         return Toast::getError('Vinhos com o mesmo nome não podem ter uvas diferentes');
       default:
@@ -350,6 +352,14 @@ class WineController
       !is_numeric($postVars['grape_id'])
     ) {
       $router->redirect("/dashboard/wine/$id/form?status=edit-fail");
+    }
+
+    if (
+      !Form::validateYear($postVars['harvest_date']) ||
+      !Form::validateYear($postVars['bottling_date']) ||
+      !Form::validateYear($postVars['registration_date'])
+    ) {
+      $router->redirect("/dashboard/wine/$id/form?status=date-fail");
     }
 
     $wine = Wine::getWineById($id);
