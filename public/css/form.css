@@ -357,6 +357,13 @@ form > label {
   color: var(--primary);
 }
 
+.search-wrapper button.search-button {
+  background-color: transparent;
+  max-width: fit-content;
+  padding: 0;
+  margin: 0;
+}
+
 .search-wrapper i {
   color: var(--base-4);
 }

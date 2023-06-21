@@ -23,11 +23,11 @@ class RegionController
   {
     switch ($status) {
       case 'add-success':
-        return Toast::getSuccess('Região adicionada com sucesso!');
+        return Toast::getSuccess('Região adicionada');
       case 'add-fail':
-        return Toast::getSuccess('Erro ao tentar adicionar com sucesso!');
+        return Toast::getSuccess('Erro ao tentar adicionar região');
       case 'edit-success':
-        return Toast::getSuccess('Região editada com sucesso!');
+        return Toast::getSuccess('Região editada');
       case 'edit-fail':
         return Toast::getError('Erro ao tentar editar a região');
       case 'empty-input':
@@ -121,7 +121,7 @@ class RegionController
       );
     }
 
-    if (!count($regions)) return '<p class="empty-message">Nenhuma região encontrado.</p>';
+    if (!count($regions)) return '<p class="empty-message">Nenhuma região encontrada.</p>';
 
     foreach ($regions as $region) {
       $cards .= View::render('partials/region-card', [

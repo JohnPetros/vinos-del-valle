@@ -40,6 +40,8 @@ class WineController
         return Toast::getError('Erro ao tentar deletar o vinho');
       case 'date-fail':
         return Toast::getError('O ano inserido deve estar entre os últimos dez anos');
+      case 'harvest_date-fail':
+        return Toast::getError('A data de colheita não pode ser maior que a data de envase');
       case 'grape-fail':
         return Toast::getError('Vinhos com o mesmo nome não podem ter uvas diferentes');
       default:
@@ -323,6 +325,17 @@ class WineController
       $router->redirect("/dashboard/wine/add/form?status=add-fail");
     }
 
+    if (
+      !Form::validateYear($postVars['harvest_date']) ||
+      !Form::validateYear($postVars['bottling_date'])
+    ) {
+      $router->redirect("/dashboard/wine/add/form?status=date-fail");
+    }
+
+    if ((new DateTime($postVars['harvest_date'])) > (new DateTime($postVars['bottling_date']))) {
+      $router->redirect("/dashboard/wine/add/form?status=harvest_date-fail");
+    }
+
     $wine = new Wine;
     foreach ($postVars as $var => $value) {
       $wine->{$var} = $value;
@@ -360,6 +373,10 @@ class WineController
       !Form::validateYear($postVars['registration_date'])
     ) {
       $router->redirect("/dashboard/wine/$id/form?status=date-fail");
+    }
+
+    if ((new DateTime($postVars['harvest_date'])) > (new DateTime($postVars['bottling_date']))) {
+      $router->redirect("/dashboard/wine/$id/form?status=harvest_date-fail");
     }
 
     $wine = Wine::getWineById($id);

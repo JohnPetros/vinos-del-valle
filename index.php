@@ -5,7 +5,7 @@ require __DIR__ . '/config.php';
 
 use \App\core\Router;
 
-// INICIA O ROUTEADOR
+// INICIA O ROTEADOR
 $router = new Router(URL);
 
 // INCLUI AS ROTAS DO PROJETO
